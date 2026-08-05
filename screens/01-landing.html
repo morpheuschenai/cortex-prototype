@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex — Landing (URL input)</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .landing {
+      max-width: 720px;
+      margin: 80px auto 40px;
+      padding: 0 32px;
+      text-align: center;
+    }
+    .landing-eyebrow {
+      font: 500 12px/1.4 var(--font-mono);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 16px;
+    }
+    .landing-title {
+      font: 700 44px/1.15 var(--font-sans);
+      letter-spacing: -.02em;
+      margin: 0 0 16px;
+    }
+    .landing-subtitle {
+      font: 400 18px/1.6 var(--font-sans);
+      color: var(--color-neutral-500);
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+    .url-form {
+      display: flex;
+      gap: 12px;
+      max-width: 560px;
+      margin: 0 auto 32px;
+    }
+    .url-input {
+      flex: 1;
+      font: 400 15px/1.5 var(--font-sans);
+      padding: 14px 18px;
+      border: 1px solid var(--color-neutral-300);
+      border-radius: var(--radius-md);
+      background: var(--color-neutral-0);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .url-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-primary-container);
+    }
+    .url-submit {
+      font: 600 15px/1 var(--font-sans);
+      color: var(--color-on-primary);
+      background: var(--color-primary);
+      border: 1px solid var(--color-primary);
+      border-radius: var(--radius-md);
+      padding: 14px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: background .15s;
+    }
+    .url-submit:hover {
+      background: var(--color-primary-hover);
+    }
+
+    /* social proof */
+    .social-proof {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .social-proof-label {
+      font: 500 12px/1.4 var(--font-mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .social-proof-stats {
+      display: flex;
+      gap: 32px;
+    }
+    .social-proof-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .social-proof-number {
+      font: 700 28px/1 var(--font-sans);
+      color: var(--color-primary);
+    }
+    .social-proof-desc {
+      font: 400 13px/1.4 var(--font-sans);
+      color: var(--color-neutral-500);
+    }
+
+    /* footer hint */
+    .landing-hint {
+      max-width: 720px;
+      margin: 32px auto 0;
+      text-align: center;
+      font: 400 13px/1.5 var(--font-sans);
+      color: var(--color-neutral-500);
+    }
+  </style>
+</head>
+<body>
+  <nav class="proto-nav">
+    <span class="proto-nav-label">Cortex Proto</span>
+    <a href="../index.html" class="proto-nav-link">目錄</a>
+    <a href="01-landing.html" class="proto-nav-link active">1. Landing</a>
+    <a href="02-media-fit.html" class="proto-nav-link">2. Media Fit</a>
+    <a href="03-chat.html" class="proto-nav-link">3. Chat 訪談</a>
+    <span class="proto-nav-spacer"></span>
+    <a href="../index.html" class="proto-nav-back">← 回目錄</a>
+  </nav>
+
+  <main class="proto-main">
+    <section class="landing">
+      <div class="landing-eyebrow">Stage 0 · 首次接觸</div>
+      <h1 class="landing-title">輸入品牌網址,<br />看見合適的媒體機會</h1>
+      <p class="landing-subtitle">
+        Cortex 分析你的品牌,自動媒合合適的媒體平台,<br />
+        以 native 延伸閱讀的形式呈現你的內容。
+      </p>
+
+      <form class="url-form" onsubmit="event.preventDefault(); window.location.href='02-media-fit.html';">
+        <input
+          type="url"
+          class="url-input"
+          placeholder="https://your-brand.com"
+          value="https://health-forward.tw"
+        />
+        <button type="submit" class="url-submit">開始分析</button>
+      </form>
+
+      <div class="social-proof">
+        <span class="social-proof-label">健康生活垂直 · 同品類品牌已在使用</span>
+        <div class="social-proof-stats">
+          <div class="social-proof-stat">
+            <span class="social-proof-number">12</span>
+            <span class="social-proof-desc">個平台已媒合</span>
+          </div>
+          <div class="social-proof-stat">
+            <span class="social-proof-number">38%</span>
+            <span class="social-proof-desc">平均月曝光成長</span>
+          </div>
+          <div class="social-proof-stat">
+            <span class="social-proof-number">72hr</span>
+            <span class="social-proof-desc">首筆 lead 平均時間</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="landing-hint">
+        分析過程免費 · 送出第一則 AI Answer 前不會收費
+      </p>
+    </section>
+  </main>
+</body>
+</html>

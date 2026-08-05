@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Prototype — 面試 Walkthrough</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .index-hero {
+      max-width: 960px;
+      margin: 80px auto 40px;
+      padding: 0 32px;
+    }
+    .index-eyebrow {
+      font: 500 12px/1.4 var(--font-mono);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+    .index-title {
+      font: 700 44px/1.15 var(--font-sans);
+      letter-spacing: -.02em;
+      margin: 0 0 16px;
+    }
+    .index-subtitle {
+      font: 400 18px/1.6 var(--font-sans);
+      color: var(--color-neutral-500);
+      max-width: 640px;
+      margin: 0 0 40px;
+    }
+    .scenario-grid {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .scenario-card {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .scenario-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary);
+    }
+    .scenario-badge {
+      font: 600 11px/1 var(--font-mono);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: var(--radius-full);
+      align-self: flex-start;
+    }
+    .scenario-badge.happy { background: var(--color-primary-container); color: var(--color-on-primary-container); }
+    .scenario-badge.uncertain { background: var(--color-secondary-container); color: var(--color-on-secondary-container); }
+    .scenario-badge.human { background: var(--color-warning-container); color: var(--color-on-warning-container); }
+    .scenario-badge.waiting { background: var(--color-success-container); color: var(--color-on-success-container); }
+    .scenario-title {
+      font: 600 20px/1.35 var(--font-sans);
+      margin: 0;
+    }
+    .scenario-desc {
+      font: 400 14px/1.55 var(--font-sans);
+      color: var(--color-neutral-500);
+      margin: 0;
+    }
+    .scenario-screens {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-neutral-200);
+    }
+    .scenario-screen-link {
+      font: 500 13px/1 var(--font-sans);
+      color: var(--color-primary);
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      background: var(--color-neutral-100);
+      transition: background .15s;
+    }
+    .scenario-screen-link:hover {
+      background: var(--color-primary-container);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="index-hero">
+      <div class="index-eyebrow">Cortex · Prototype for Sr PM Take-home</div>
+      <h1 class="index-title">面試 Walkthrough 目錄</h1>
+      <p class="index-subtitle">
+        依作業要求覆蓋四種情境。點選任一情境下方的 screen 進入畫面；每頁上方有導覽列可切換。
+      </p>
+    </section>
+
+    <section class="scenario-grid">
+      <a href="screens/01-landing.html" class="scenario-card" style="text-decoration: none; color: inherit;">
+        <span class="scenario-badge happy">情境 A</span>
+        <h2 class="scenario-title">正常流程</h2>
+        <p class="scenario-desc">
+          品牌方從輸入網址 → Media Fit Preview → ChatBot 訪談 → 建帳號 → 生成 AI Answer → 送審。
+        </p>
+        <div class="scenario-screens">
+          <span class="scenario-screen-link">1. Landing + URL input</span>
+        </div>
+      </a>
+
+      <div class="scenario-card">
+        <span class="scenario-badge uncertain">情境 B</span>
+        <h2 class="scenario-title">AI 判斷不確定</h2>
+        <p class="scenario-desc">
+          Sorted Confidence List + Hover 顯示來源，讓不確定性可見、可修正。
+        </p>
+        <div class="scenario-screens">
+          <span class="scenario-screen-link" style="opacity:.4">建置中</span>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <span class="scenario-badge human">情境 C</span>
+        <h2 class="scenario-title">人工介入</h2>
+        <p class="scenario-desc">
+          Timeline Now/Waiting/Next 三段式顯示狀態，等待期不阻塞其他操作。
+        </p>
+        <div class="scenario-screens">
+          <span class="scenario-screen-link" style="opacity:.4">建置中</span>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <span class="scenario-badge waiting">情境 D</span>
+        <h2 class="scenario-title">等待結果</h2>
+        <p class="scenario-desc">
+          Simulated forecast + First-mover 品牌權益，把「產品新」翻轉成「稀缺獨家」。
+        </p>
+        <div class="scenario-screens">
+          <span class="scenario-screen-link" style="opacity:.4">建置中</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

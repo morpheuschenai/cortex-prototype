@@ -3,111 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cortex — Landing (URL input)</title>
+  <title>Cortex — 輸入品牌網址</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
+    /* ============================================================
+     * Page 01 — Editorial Split (Landing)
+     * Macrostructure: 55/45 asymmetric statement + form
+     * No card containers. Hairlines only.
+     * ============================================================ */
+
     .landing {
-      max-width: 720px;
-      margin: 80px auto 40px;
-      padding: 0 32px;
-      text-align: center;
-    }
-    .landing-eyebrow {
-      font: 500 12px/1.4 var(--font-mono);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--color-primary);
-      margin-bottom: 16px;
-    }
-    .landing-title {
-      font: 700 44px/1.15 var(--font-sans);
-      letter-spacing: -.02em;
-      margin: 0 0 16px;
-    }
-    .landing-subtitle {
-      font: 400 18px/1.6 var(--font-sans);
-      color: var(--color-neutral-500);
-      max-width: 560px;
-      margin: 0 auto 40px;
-    }
-    .url-form {
-      display: flex;
-      gap: 12px;
-      max-width: 560px;
-      margin: 0 auto 32px;
-    }
-    .url-input {
-      flex: 1;
-      font: 400 15px/1.5 var(--font-sans);
-      padding: 14px 18px;
-      border: 1px solid var(--color-neutral-300);
-      border-radius: var(--radius-md);
-      background: var(--color-neutral-0);
-      transition: border-color .15s, box-shadow .15s;
-    }
-    .url-input:focus {
-      outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px var(--color-primary-container);
-    }
-    .url-submit {
-      font: 600 15px/1 var(--font-sans);
-      color: var(--color-on-primary);
-      background: var(--color-primary);
-      border: 1px solid var(--color-primary);
-      border-radius: var(--radius-md);
-      padding: 14px 24px;
-      box-shadow: var(--shadow-sm);
-      transition: background .15s;
-    }
-    .url-submit:hover {
-      background: var(--color-primary-hover);
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 96px 48px 120px;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 96px;
+      align-items: start;
+      min-height: calc(100vh - 44px);
     }
 
-    /* social proof */
-    .social-proof {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 24px 32px;
+    /* LEFT — statement column */
+    .statement {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      max-width: 640px;
+    }
+    .statement-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .statement-kicker::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--color-primary);
+    }
+    .statement-head {
+      margin: 0;
+      color: var(--color-neutral-900);
+    }
+    .statement-head em {
+      font-style: normal;
+      color: var(--color-primary);
+    }
+    .statement-lede {
+      margin: 0;
+      color: var(--color-neutral-500);
+      max-width: 480px;
+    }
+
+    /* footer strip — media partners in vertical (typography-only, no cards) */
+    .partners {
+      margin-top: 48px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      background: var(--color-neutral-0);
-      border: 1px solid var(--color-neutral-200);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
     }
-    .social-proof-label {
-      font: 500 12px/1.4 var(--font-mono);
-      letter-spacing: .08em;
+    .partners-label {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .partners-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: baseline;
+    }
+    .partner-name {
+      font: 600 15px/1.2 var(--font-sans);
+      color: var(--color-neutral-700);
+      letter-spacing: -.005em;
+    }
+    .partner-dot {
+      width: 3px;
+      height: 3px;
+      background: var(--color-neutral-300);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* RIGHT — form column */
+    .form-col {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-top: 48px;
+    }
+    .form-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-neutral-900);
+    }
+    .form-kicker-num {
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--color-neutral-900);
+      letter-spacing: -.02em;
+    }
+    .form-kicker-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
     }
-    .social-proof-stats {
-      display: flex;
-      gap: 32px;
+
+    .form-prompt {
+      font: 500 18px/1.5 var(--font-sans);
+      color: var(--color-neutral-900);
+      margin: 0;
     }
-    .social-proof-stat {
+
+    .url-input {
+      width: 100%;
+      font: 400 16px/1.5 var(--font-mono);
+      padding: 16px 0;
+      border: 0;
+      border-bottom: 1px solid var(--color-neutral-300);
+      background: transparent;
+      color: var(--color-neutral-900);
+      transition: border-color .15s;
+    }
+    .url-input:focus {
+      outline: none;
+      border-bottom-color: var(--color-primary);
+    }
+    .url-input::placeholder {
+      color: var(--color-neutral-300);
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 8px;
+    }
+    .form-hint {
+      font: 400 13px/1.5 var(--font-sans);
+      color: var(--color-neutral-500);
+      max-width: 240px;
+    }
+    .form-submit {
+      font: 600 14px/1 var(--font-sans);
+      color: var(--color-on-primary);
+      background: var(--color-neutral-900);
+      border: 0;
+      padding: 14px 24px;
+      transition: background .15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: .01em;
+    }
+    .form-submit:hover { background: var(--color-primary); }
+    .form-submit::after {
+      content: '→';
+      font-family: var(--font-mono);
+      font-size: 16px;
+      transition: transform .15s;
+    }
+    .form-submit:hover::after { transform: translateX(2px); }
+
+    /* footnote strip at bottom of form column */
+    .form-note {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-neutral-200);
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .form-note-item {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
-    .social-proof-number {
-      font: 700 28px/1 var(--font-sans);
-      color: var(--color-primary);
+    .form-note-num {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--color-neutral-900);
+      font-weight: 500;
     }
-    .social-proof-desc {
-      font: 400 13px/1.4 var(--font-sans);
+    .form-note-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
       color: var(--color-neutral-500);
     }
 
-    /* footer hint */
-    .landing-hint {
-      max-width: 720px;
-      margin: 32px auto 0;
-      text-align: center;
-      font: 400 13px/1.5 var(--font-sans);
-      color: var(--color-neutral-500);
+    @media (max-width: 900px) {
+      .landing {
+        grid-template-columns: 1fr;
+        gap: 64px;
+        padding: 56px 24px 80px;
+      }
+      .form-col { padding-top: 0; }
+      .statement-head { font-size: 40px; }
     }
   </style>
 </head>
@@ -124,44 +225,81 @@
 
   <main class="proto-main">
     <section class="landing">
-      <div class="landing-eyebrow">Stage 0 · 首次接觸</div>
-      <h1 class="landing-title">輸入品牌網址,<br />看見合適的媒體機會</h1>
-      <p class="landing-subtitle">
-        Cortex 分析你的品牌,自動媒合合適的媒體平台,<br />
-        以 native 延伸閱讀的形式呈現你的內容。
-      </p>
 
-      <form class="url-form" onsubmit="event.preventDefault(); window.location.href='02-media-fit.html';">
-        <input
-          type="url"
-          class="url-input"
-          placeholder="https://your-brand.com"
-          value="https://health-forward.tw"
-        />
-        <button type="submit" class="url-submit">開始分析</button>
-      </form>
+      <!-- LEFT: statement -->
+      <div class="statement">
+        <div class="statement-kicker">
+          <span class="kicker">Stage 00 · Discovery</span>
+        </div>
 
-      <div class="social-proof">
-        <span class="social-proof-label">健康生活垂直 · 同品類品牌已在使用</span>
-        <div class="social-proof-stats">
-          <div class="social-proof-stat">
-            <span class="social-proof-number">12</span>
-            <span class="social-proof-desc">個平台已媒合</span>
+        <h1 class="t-display statement-head">
+          把品牌內容,<br />放到讀者<em>信任</em>的<br />媒體情境。
+        </h1>
+
+        <p class="t-body statement-lede">
+          Cortex 讀你的網站,學合作媒體的編輯風格,再讓 AI 把你的內容嵌成延伸閱讀。
+          不是廣告貼片,是原生 native。
+        </p>
+
+        <div class="partners">
+          <div class="partners-label">
+            <span class="kicker">合作媒體 · 健康 / 生活 / 財經</span>
           </div>
-          <div class="social-proof-stat">
-            <span class="social-proof-number">38%</span>
-            <span class="social-proof-desc">平均月曝光成長</span>
-          </div>
-          <div class="social-proof-stat">
-            <span class="social-proof-number">72hr</span>
-            <span class="social-proof-desc">首筆 lead 平均時間</span>
+          <div class="partners-list">
+            <span class="partner-name">Bella.tw</span>
+            <span class="partner-dot"></span>
+            <span class="partner-name">CMoney</span>
+            <span class="partner-dot"></span>
+            <span class="partner-name">NOWnews</span>
+            <span class="partner-dot"></span>
+            <span class="partner-name">Business Today</span>
+            <span class="partner-dot"></span>
+            <span class="partner-name kicker" style="text-transform:none;letter-spacing:.02em">+ 11 家</span>
           </div>
         </div>
       </div>
 
-      <p class="landing-hint">
-        分析過程免費 · 送出第一則 AI Answer 前不會收費
-      </p>
+      <!-- RIGHT: form -->
+      <div class="form-col">
+        <div class="form-kicker">
+          <span class="form-kicker-num">01</span>
+          <span class="form-kicker-label">從你的網址開始</span>
+        </div>
+
+        <p class="form-prompt">告訴 Cortex 你想曝光的品牌是什麼。</p>
+
+        <form onsubmit="event.preventDefault(); window.location.href='02-media-fit.html';">
+          <input
+            type="url"
+            class="url-input"
+            placeholder="https://your-brand.com"
+            value="https://health-forward.tw"
+            aria-label="品牌網址"
+          />
+          <div class="form-actions">
+            <span class="form-hint">
+              分析過程免費,不會動用 AI token 成本。
+            </span>
+            <button type="submit" class="form-submit">開始分析</button>
+          </div>
+        </form>
+
+        <div class="form-note">
+          <div class="form-note-item">
+            <span class="form-note-num">$0</span>
+            <span class="form-note-label">此階段成本</span>
+          </div>
+          <div class="form-note-item">
+            <span class="form-note-num">~15s</span>
+            <span class="form-note-label">首次分析時間</span>
+          </div>
+          <div class="form-note-item">
+            <span class="form-note-num">0/5</span>
+            <span class="form-note-label">訪談問題</span>
+          </div>
+        </div>
+      </div>
+
     </section>
   </main>
 </body>

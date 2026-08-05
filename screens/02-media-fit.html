@@ -3,238 +3,300 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cortex — Media Fit Preview (12 選 4)</title>
+  <title>Cortex — Media Fit (12 選 4)</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    .stage-hero {
-      max-width: 1180px;
-      margin: 40px auto 24px;
-      padding: 0 32px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .stage-eyebrow {
-      font: 500 12px/1.4 var(--font-mono);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--color-primary);
-      margin-bottom: 8px;
-    }
-    .stage-title {
-      font: 700 32px/1.2 var(--font-sans);
-      letter-spacing: -.01em;
-      margin: 0 0 8px;
-    }
-    .stage-subtitle {
-      font: 400 15px/1.55 var(--font-sans);
-      color: var(--color-neutral-500);
-      max-width: 640px;
-      margin: 0;
-    }
-    .stage-badge {
-      background: var(--color-warning-container);
-      color: var(--color-on-warning-container);
-      font: 600 12px/1 var(--font-sans);
-      padding: 8px 14px;
-      border-radius: var(--radius-full);
-      align-self: center;
+    /* ============================================================
+     * Page 02 — Workbench List (Media Fit)
+     * Macrostructure: vertical stack, Hero Number as right-column anchor
+     * No card containers. Hairline row separators. No shadows.
+     * ============================================================ */
+
+    .wb {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 56px 48px 96px;
     }
 
-    /* card grid */
-    .cards-container {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 0 32px 40px;
+    /* header block */
+    .wb-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--color-neutral-900);
     }
-    .cards-section-label {
-      font: 600 12px/1.4 var(--font-mono);
+    .wb-head-title {
+      margin: 0;
+      max-width: 720px;
+    }
+    .wb-head-title-em {
+      color: var(--color-primary);
+      font-style: normal;
+    }
+    .wb-head-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .wb-head-meta-primary {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--color-neutral-900);
+      letter-spacing: -.02em;
+      text-transform: none;
+    }
+
+    /* utility strip */
+    .wb-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-neutral-200);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-neutral-500);
+    }
+    .wb-strip-left { display: flex; gap: 20px; align-items: center; }
+    .wb-strip-active {
+      color: var(--color-neutral-900);
+      border-bottom: 1px solid var(--color-neutral-900);
+      padding-bottom: 2px;
+    }
+    .wb-strip-sort {
+      color: var(--color-neutral-700);
+    }
+
+    /* row list */
+    .wb-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .wb-row {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 48px;
+      align-items: flex-start;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--color-neutral-200);
+      transition: background .15s;
+    }
+    .wb-row:hover {
+      background: var(--color-neutral-50);
+      margin: 0 -24px;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .wb-row-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+    .wb-row-media {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .wb-row-media-swatch {
+      width: 16px;
+      height: 16px;
+      background: var(--color-neutral-900);
+    }
+    .wb-row-media-name {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .wb-row-title {
+      margin: 0;
+      font: 600 22px/1.3 var(--font-sans);
+      letter-spacing: -.01em;
+    }
+    .wb-row-desc {
+      margin: 0;
+      font: 400 14px/1.55 var(--font-sans);
+      color: var(--color-neutral-500);
+      max-width: 640px;
+    }
+    .wb-row-drivers {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .wb-driver {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font: 400 13px/1.4 var(--font-sans);
+      color: var(--color-neutral-700);
+    }
+    .wb-driver-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .wb-driver-dot--pos { background: var(--color-success); }
+    .wb-driver-dot--mid { background: var(--color-warning); }
+    .wb-driver-dot--neu { background: var(--color-neutral-300); }
+    .wb-driver-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
       letter-spacing: .08em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
-      margin-bottom: 12px;
     }
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    .fit-card {
-      background: var(--color-neutral-0);
-      border: 1px solid var(--color-neutral-200);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-md);
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .fit-card-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .fit-card-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 0;
-    }
-    .fit-card-media {
+
+    .wb-row-foot {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 24px;
+      margin-top: 8px;
     }
-    .fit-card-media-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: var(--radius-sm);
-      background: var(--color-primary-container);
+    .wb-cpl {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--color-neutral-700);
     }
-    .fit-card-media-name {
-      font: 500 12px/1.4 var(--font-mono);
-      letter-spacing: .06em;
-      text-transform: uppercase;
+    .wb-cpl-value {
+      color: var(--color-neutral-900);
+      font-weight: 500;
+    }
+    .wb-action {
+      font: 500 13px/1 var(--font-sans);
+      color: var(--color-neutral-900);
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-bottom: 1px solid var(--color-neutral-900);
+      padding-bottom: 3px;
+      transition: color .15s, border-color .15s;
+    }
+    .wb-action:hover {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+    .wb-action--muted {
       color: var(--color-neutral-500);
+      border-bottom-color: var(--color-neutral-300);
     }
-    .fit-card-h2 {
-      margin: 0;
-      font: 600 20px/1.35 var(--font-sans);
+    .wb-action--muted:hover {
+      color: var(--color-neutral-900);
+      border-bottom-color: var(--color-neutral-900);
     }
-    .fit-card-desc {
-      margin: 0;
-      font: 400 14px/1.5 var(--font-sans);
-      color: var(--color-neutral-500);
-    }
-    .fit-card-score {
-      flex: none;
+
+    /* RIGHT column — Hero Number (signature) */
+    .wb-row-score {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 2px;
+      gap: 6px;
+      padding-top: 8px;
     }
-    .fit-score-num {
+    .wb-score-num {
+      font: 700 68px/1 var(--font-sans);
+      letter-spacing: -.045em;
+      color: var(--color-neutral-900);
       display: flex;
       align-items: baseline;
       gap: 2px;
     }
-    .fit-score-num-value {
-      font: 700 44px/1 var(--font-sans);
-      letter-spacing: -.03em;
-      color: var(--color-primary);
+    .wb-score-pct {
+      font: 500 22px/1 var(--font-sans);
+      color: var(--color-neutral-500);
     }
-    .fit-score-num-percent {
-      font: 700 22px/1 var(--font-sans);
-      color: var(--color-primary);
-    }
-    .fit-score-label {
-      font: 600 11px/1 var(--font-mono);
-      letter-spacing: .1em;
+    .wb-score-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .16em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
     }
-    .fit-progress {
-      height: 6px;
-      border-radius: var(--radius-full);
+    .wb-score-bar {
+      width: 100%;
+      max-width: 160px;
+      height: 2px;
       background: var(--color-neutral-200);
       overflow: hidden;
-    }
-    .fit-progress-fill {
-      height: 100%;
-      background: var(--color-primary);
-      border-radius: var(--radius-full);
-    }
-    .fit-drivers {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .fit-drivers-label {
-      font: 500 12px/1.4 var(--font-mono);
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--color-neutral-500);
-    }
-    .fit-drivers-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .fit-tag {
-      font: 500 12px/1 var(--font-sans);
-      padding: 7px 11px;
-      border-radius: var(--radius-full);
-    }
-    .fit-tag.audience { background: var(--color-primary-container); color: var(--color-on-primary-container); }
-    .fit-tag.tone { background: var(--color-secondary-container); color: var(--color-on-secondary-container); }
-    .fit-tag.ctr { background: var(--color-success-container); color: var(--color-on-success-container); }
-    .fit-tag.neutral { background: var(--color-neutral-100); color: var(--color-neutral-700); border: 1px solid var(--color-neutral-200); }
-    .fit-card-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-top: 14px;
-      border-top: 1px solid var(--color-neutral-200);
-    }
-    .fit-cpl {
-      font: 400 13px/1.4 var(--font-sans);
-      color: var(--color-neutral-500);
-    }
-    .fit-cpl-value {
-      font: 600 15px/1 var(--font-sans);
-      color: var(--color-neutral-900);
-    }
-    .btn-primary {
-      font: 600 13px/1 var(--font-sans);
-      color: var(--color-on-primary);
-      background: var(--color-primary);
-      border: 1px solid var(--color-primary);
-      border-radius: var(--radius-md);
-      padding: 10px 16px;
-    }
-    .btn-primary:hover { background: var(--color-primary-hover); }
-
-    /* locked cards teaser */
-    .locked-teaser {
-      margin-top: 32px;
-      background: var(--color-neutral-0);
-      border: 1px dashed var(--color-neutral-300);
-      border-radius: var(--radius-lg);
-      padding: 32px 24px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-    .locked-teaser-count {
-      font: 700 32px/1 var(--font-sans);
-      color: var(--color-primary);
-    }
-    .locked-teaser-msg {
-      font: 500 15px/1.5 var(--font-sans);
-      color: var(--color-neutral-700);
-    }
-    .locked-teaser-hint {
-      font: 400 13px/1.5 var(--font-sans);
-      color: var(--color-neutral-500);
-      max-width: 480px;
-    }
-    .btn-secondary {
-      font: 600 14px/1 var(--font-sans);
-      color: var(--color-primary);
-      background: var(--color-neutral-0);
-      border: 1px solid var(--color-primary);
-      border-radius: var(--radius-md);
-      padding: 12px 20px;
-      transition: background .15s;
       margin-top: 8px;
     }
-    .btn-secondary:hover { background: var(--color-primary-container); }
+    .wb-score-bar-fill {
+      height: 100%;
+      background: var(--color-primary);
+    }
+    /* row variant — muted score (mid-fit) */
+    .wb-row--muted .wb-score-num { color: var(--color-neutral-500); }
+    .wb-row--muted .wb-score-bar-fill { background: var(--color-neutral-500); }
+
+    /* unlock band — inline, not dashed box */
+    .wb-unlock {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 32px;
+      padding: 32px 0;
+      margin-top: 8px;
+      border-top: 1px solid var(--color-neutral-900);
+      border-bottom: 1px solid var(--color-neutral-900);
+    }
+    .wb-unlock-count {
+      font: 700 56px/1 var(--font-sans);
+      letter-spacing: -.03em;
+      color: var(--color-neutral-900);
+    }
+    .wb-unlock-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .wb-unlock-copy-line1 {
+      font: 600 18px/1.4 var(--font-sans);
+    }
+    .wb-unlock-copy-line2 {
+      font: 400 14px/1.5 var(--font-sans);
+      color: var(--color-neutral-500);
+    }
+    .wb-unlock-cta {
+      font: 600 14px/1 var(--font-sans);
+      color: var(--color-on-primary);
+      background: var(--color-neutral-900);
+      border: 0;
+      padding: 16px 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      transition: background .15s;
+      letter-spacing: .01em;
+    }
+    .wb-unlock-cta:hover { background: var(--color-primary); color: var(--color-on-primary); }
+    .wb-unlock-cta::after {
+      content: '→';
+      font-family: var(--font-mono);
+    }
+
+    @media (max-width: 900px) {
+      .wb { padding: 40px 24px 64px; }
+      .wb-head { grid-template-columns: 1fr; }
+      .wb-head-meta { align-items: flex-start; }
+      .wb-row { grid-template-columns: 1fr; gap: 20px; }
+      .wb-row-score { align-items: flex-start; }
+      .wb-unlock { grid-template-columns: 1fr; gap: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -249,171 +311,202 @@
   </nav>
 
   <main class="proto-main">
-    <header class="stage-hero">
-      <div>
-        <div class="stage-eyebrow">Stage 0 · Media Fit Preview</div>
-        <h1 class="stage-title">12 個平台正在等待你的內容</h1>
-        <p class="stage-subtitle">
-          Cortex 已為 health-forward.tw 找到 12 個匹配平台。以下是前 4 個高相關度媒體;
-          解鎖其餘 8 個,只需要 5 題訪談讓我們更了解你的品牌。
-        </p>
-      </div>
-      <span class="stage-badge">Free · $0 · 尚未動用 AI Token</span>
-    </header>
+    <section class="wb">
 
-    <section class="cards-container">
-      <div class="cards-section-label">Top 4 · 依 fit score 排序</div>
-      <div class="cards-grid">
+      <!-- header -->
+      <header class="wb-head">
+        <div>
+          <div class="kicker" style="margin-bottom:14px">Stage 01 · Media Fit</div>
+          <h1 class="t-h1 wb-head-title">
+            <em class="wb-head-title-em">12</em> 個平台正在等待<br />你的內容。
+          </h1>
+        </div>
+        <div class="wb-head-meta">
+          <span>目前顯示</span>
+          <span class="wb-head-meta-primary">4 / 12</span>
+          <span>· 依 Fit 排序</span>
+        </div>
+      </header>
 
-        <!-- Card 1: High fit -->
-        <article class="fit-card">
-          <div class="fit-card-head">
-            <div class="fit-card-meta">
-              <div class="fit-card-media">
-                <div class="fit-card-media-icon"></div>
-                <span class="fit-card-media-name">Bella.tw · 美容生活</span>
-              </div>
-              <h2 class="fit-card-h2">30+ 女性最該補的三種營養素</h2>
-              <p class="fit-card-desc">
-                你的品牌內容將以延伸閱讀形式,出現在該站健康專欄文末。
-              </p>
-            </div>
-            <div class="fit-card-score">
-              <div class="fit-score-num">
-                <span class="fit-score-num-value">92</span><span class="fit-score-num-percent">%</span>
-              </div>
-              <span class="fit-score-label">Fit</span>
-            </div>
-          </div>
-          <div class="fit-progress"><div class="fit-progress-fill" style="width:92%"></div></div>
-          <div class="fit-drivers">
-            <span class="fit-drivers-label">Fit drivers</span>
-            <div class="fit-drivers-tags">
-              <span class="fit-tag audience">受眾重疊 89%</span>
-              <span class="fit-tag tone">語氣相符</span>
-              <span class="fit-tag ctr">CTR 高於均值 34%</span>
-            </div>
-          </div>
-          <div class="fit-card-foot">
-            <span class="fit-cpl">預估 CPL <span class="fit-cpl-value">$14–20</span></span>
-            <button class="btn-primary">加入方案</button>
-          </div>
-        </article>
-
-        <!-- Card 2: High fit -->
-        <article class="fit-card">
-          <div class="fit-card-head">
-            <div class="fit-card-meta">
-              <div class="fit-card-media">
-                <div class="fit-card-media-icon"></div>
-                <span class="fit-card-media-name">CMoney · 理財生活</span>
-              </div>
-              <h2 class="fit-card-h2">健康投資:被低估的長期複利</h2>
-              <p class="fit-card-desc">
-                以延伸閱讀連結你的品牌內容,適合中高齡讀者健康預算話題。
-              </p>
-            </div>
-            <div class="fit-card-score">
-              <div class="fit-score-num">
-                <span class="fit-score-num-value">87</span><span class="fit-score-num-percent">%</span>
-              </div>
-              <span class="fit-score-label">Fit</span>
-            </div>
-          </div>
-          <div class="fit-progress"><div class="fit-progress-fill" style="width:87%"></div></div>
-          <div class="fit-drivers">
-            <span class="fit-drivers-label">Fit drivers</span>
-            <div class="fit-drivers-tags">
-              <span class="fit-tag audience">受眾重疊 76%</span>
-              <span class="fit-tag tone">語氣相符</span>
-              <span class="fit-tag ctr">CTR 高於均值 22%</span>
-            </div>
-          </div>
-          <div class="fit-card-foot">
-            <span class="fit-cpl">預估 CPL <span class="fit-cpl-value">$16–24</span></span>
-            <button class="btn-primary">加入方案</button>
-          </div>
-        </article>
-
-        <!-- Card 3: Mid-high fit -->
-        <article class="fit-card">
-          <div class="fit-card-head">
-            <div class="fit-card-meta">
-              <div class="fit-card-media">
-                <div class="fit-card-media-icon"></div>
-                <span class="fit-card-media-name">NOWnews · 生活資訊</span>
-              </div>
-              <h2 class="fit-card-h2">忙碌上班族的晨間習慣</h2>
-              <p class="fit-card-desc">
-                主流生活媒體,涵蓋工作壓力與健康主題;適合品牌初期曝光。
-              </p>
-            </div>
-            <div class="fit-card-score">
-              <div class="fit-score-num">
-                <span class="fit-score-num-value">81</span><span class="fit-score-num-percent">%</span>
-              </div>
-              <span class="fit-score-label">Fit</span>
-            </div>
-          </div>
-          <div class="fit-progress"><div class="fit-progress-fill" style="width:81%"></div></div>
-          <div class="fit-drivers">
-            <span class="fit-drivers-label">Fit drivers</span>
-            <div class="fit-drivers-tags">
-              <span class="fit-tag audience">受眾重疊 72%</span>
-              <span class="fit-tag ctr">CTR 高於均值 18%</span>
-            </div>
-          </div>
-          <div class="fit-card-foot">
-            <span class="fit-cpl">預估 CPL <span class="fit-cpl-value">$18–26</span></span>
-            <button class="btn-primary">加入方案</button>
-          </div>
-        </article>
-
-        <!-- Card 4: Mid fit -->
-        <article class="fit-card">
-          <div class="fit-card-head">
-            <div class="fit-card-meta">
-              <div class="fit-card-media">
-                <div class="fit-card-media-icon"></div>
-                <span class="fit-card-media-name">Business Today · 財經</span>
-              </div>
-              <h2 class="fit-card-h2">高階經理人的健康管理</h2>
-              <p class="fit-card-desc">
-                受眾偏高端商務,適合品牌 premium 定位延伸;需搭配較嚴謹語氣。
-              </p>
-            </div>
-            <div class="fit-card-score">
-              <div class="fit-score-num">
-                <span class="fit-score-num-value">76</span><span class="fit-score-num-percent">%</span>
-              </div>
-              <span class="fit-score-label">Fit</span>
-            </div>
-          </div>
-          <div class="fit-progress"><div class="fit-progress-fill" style="width:76%"></div></div>
-          <div class="fit-drivers">
-            <span class="fit-drivers-label">Fit drivers</span>
-            <div class="fit-drivers-tags">
-              <span class="fit-tag audience">受眾重疊 68%</span>
-              <span class="fit-tag neutral">語氣需調整</span>
-            </div>
-          </div>
-          <div class="fit-card-foot">
-            <span class="fit-cpl">預估 CPL <span class="fit-cpl-value">$22–32</span></span>
-            <button class="btn-primary">加入方案</button>
-          </div>
-        </article>
-
+      <!-- utility strip -->
+      <div class="wb-strip">
+        <div class="wb-strip-left">
+          <span class="wb-strip-active">全部</span>
+          <span>財經</span>
+          <span>健康</span>
+          <span>生活</span>
+        </div>
+        <div class="wb-strip-sort">Sort ↓ Fit score</div>
       </div>
 
-      <div class="locked-teaser">
-        <span class="locked-teaser-count">+8 個平台</span>
-        <span class="locked-teaser-msg">還有 8 個平台正在等待你的內容</span>
-        <p class="locked-teaser-hint">
-          回答 5 題訪談,讓 Cortex 更了解你的品牌需求,<br />
-          解鎖完整媒體名單、AI 讀者模擬、品牌 perception gap 分析
-        </p>
-        <a href="03-chat.html" class="btn-secondary">開始 5 題訪談 →</a>
+      <!-- rows -->
+      <div class="wb-list">
+
+        <!-- Row 1: 92% -->
+        <article class="wb-row">
+          <div class="wb-row-body">
+            <div class="wb-row-media">
+              <span class="wb-row-media-swatch"></span>
+              <span class="wb-row-media-name">Bella.tw · 美容生活</span>
+            </div>
+            <h2 class="wb-row-title">30+ 女性最該補的三種營養素</h2>
+            <p class="wb-row-desc">
+              你的品牌以延伸閱讀出現在該站健康專欄文末,適合美妝保養讀者交叉購買情境。
+            </p>
+            <div class="wb-row-drivers">
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--pos"></span>
+                受眾重疊 <strong>89%</strong>
+              </span>
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--pos"></span>
+                語氣相符
+              </span>
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--pos"></span>
+                CTR 高於均值 <strong>+34%</strong>
+              </span>
+            </div>
+            <div class="wb-row-foot">
+              <span class="wb-cpl">
+                Est. CPL <span class="wb-cpl-value">$14–20</span>
+              </span>
+              <button class="wb-action">加入方案</button>
+              <button class="wb-action wb-action--muted">看範例文</button>
+            </div>
+          </div>
+          <div class="wb-row-score">
+            <div class="wb-score-num">92<span class="wb-score-pct">%</span></div>
+            <div class="wb-score-label">Fit score</div>
+            <div class="wb-score-bar"><div class="wb-score-bar-fill" style="width:92%"></div></div>
+          </div>
+        </article>
+
+        <!-- Row 2: 87% -->
+        <article class="wb-row">
+          <div class="wb-row-body">
+            <div class="wb-row-media">
+              <span class="wb-row-media-swatch" style="background:var(--color-neutral-700)"></span>
+              <span class="wb-row-media-name">CMoney · 理財生活</span>
+            </div>
+            <h2 class="wb-row-title">健康投資:被低估的長期複利</h2>
+            <p class="wb-row-desc">
+              以延伸閱讀連結你的品牌內容,適合中高齡讀者健康預算話題。
+            </p>
+            <div class="wb-row-drivers">
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--pos"></span>
+                受眾重疊 <strong>76%</strong>
+              </span>
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--pos"></span>
+                語氣相符
+              </span>
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--pos"></span>
+                CTR 高於均值 <strong>+22%</strong>
+              </span>
+            </div>
+            <div class="wb-row-foot">
+              <span class="wb-cpl">
+                Est. CPL <span class="wb-cpl-value">$16–24</span>
+              </span>
+              <button class="wb-action">加入方案</button>
+              <button class="wb-action wb-action--muted">看範例文</button>
+            </div>
+          </div>
+          <div class="wb-row-score">
+            <div class="wb-score-num">87<span class="wb-score-pct">%</span></div>
+            <div class="wb-score-label">Fit score</div>
+            <div class="wb-score-bar"><div class="wb-score-bar-fill" style="width:87%"></div></div>
+          </div>
+        </article>
+
+        <!-- Row 3: 81% -->
+        <article class="wb-row">
+          <div class="wb-row-body">
+            <div class="wb-row-media">
+              <span class="wb-row-media-swatch" style="background:var(--color-neutral-500)"></span>
+              <span class="wb-row-media-name">NOWnews · 生活資訊</span>
+            </div>
+            <h2 class="wb-row-title">忙碌上班族的晨間習慣</h2>
+            <p class="wb-row-desc">
+              主流生活媒體,涵蓋工作壓力與健康主題,適合品牌初期廣度曝光。
+            </p>
+            <div class="wb-row-drivers">
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--pos"></span>
+                受眾重疊 <strong>72%</strong>
+              </span>
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--pos"></span>
+                CTR 高於均值 <strong>+18%</strong>
+              </span>
+            </div>
+            <div class="wb-row-foot">
+              <span class="wb-cpl">
+                Est. CPL <span class="wb-cpl-value">$18–26</span>
+              </span>
+              <button class="wb-action">加入方案</button>
+              <button class="wb-action wb-action--muted">看範例文</button>
+            </div>
+          </div>
+          <div class="wb-row-score">
+            <div class="wb-score-num">81<span class="wb-score-pct">%</span></div>
+            <div class="wb-score-label">Fit score</div>
+            <div class="wb-score-bar"><div class="wb-score-bar-fill" style="width:81%"></div></div>
+          </div>
+        </article>
+
+        <!-- Row 4: 76% muted -->
+        <article class="wb-row wb-row--muted">
+          <div class="wb-row-body">
+            <div class="wb-row-media">
+              <span class="wb-row-media-swatch" style="background:var(--color-neutral-300)"></span>
+              <span class="wb-row-media-name">Business Today · 財經</span>
+            </div>
+            <h2 class="wb-row-title">高階經理人的健康管理</h2>
+            <p class="wb-row-desc">
+              受眾偏高端商務,適合品牌 premium 定位延伸;需搭配較嚴謹語氣。
+            </p>
+            <div class="wb-row-drivers">
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--mid"></span>
+                受眾重疊 <strong>68%</strong>
+              </span>
+              <span class="wb-driver">
+                <span class="wb-driver-dot wb-driver-dot--neu"></span>
+                語氣需調整
+              </span>
+            </div>
+            <div class="wb-row-foot">
+              <span class="wb-cpl">
+                Est. CPL <span class="wb-cpl-value">$22–32</span>
+              </span>
+              <button class="wb-action wb-action--muted">看調整建議</button>
+            </div>
+          </div>
+          <div class="wb-row-score">
+            <div class="wb-score-num">76<span class="wb-score-pct">%</span></div>
+            <div class="wb-score-label">Fit score</div>
+            <div class="wb-score-bar"><div class="wb-score-bar-fill" style="width:76%"></div></div>
+          </div>
+        </article>
+
       </div>
+
+      <!-- unlock band — inline flow, not dashed box -->
+      <section class="wb-unlock">
+        <div class="wb-unlock-count">+ 8</div>
+        <div class="wb-unlock-copy">
+          <span class="wb-unlock-copy-line1">另外 8 個平台正在等待你的內容。</span>
+          <span class="wb-unlock-copy-line2">
+            回答 5 題訪談,解鎖完整名單、AI 讀者模擬、品牌 perception gap 分析。
+          </span>
+        </div>
+        <a href="03-chat.html" class="wb-unlock-cta">開始 5 題訪談</a>
+      </section>
+
     </section>
   </main>
 </body>

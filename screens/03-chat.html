@@ -3,250 +3,308 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cortex — ChatBot 訪談 (Stage 1)</title>
+  <title>Cortex — 5 題訪談</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    .chat-layout {
-      max-width: 1180px;
-      margin: 40px auto;
-      padding: 0 32px;
+    /* ============================================================
+     * Page 03 — Full-Canvas Workspace (Chat)
+     * Macrostructure: chat = whole canvas, aside strips card chrome
+     * No card wrapper. No locked-preview redundancy.
+     * ============================================================ */
+
+    .ws {
       display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 24px;
-      min-height: calc(100vh - 128px);
+      grid-template-columns: 1fr 320px;
+      min-height: calc(100vh - 44px);
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
-    /* left: chat window */
-    .chat-window {
-      background: var(--color-neutral-0);
-      border: 1px solid var(--color-neutral-200);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
+    /* left column — chat as canvas */
+    .chat {
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      border-right: 1px solid var(--color-neutral-200);
     }
-    .chat-head {
-      padding: 16px 20px;
+
+    .chat-topbar {
+      padding: 24px 48px 20px;
       border-bottom: 1px solid var(--color-neutral-200);
       display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--color-neutral-50);
+      align-items: baseline;
+      gap: 24px;
     }
-    .chat-head-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--radius-full);
-      background: var(--color-secondary-container);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font: 700 12px var(--font-sans);
-      color: var(--color-on-secondary-container);
-    }
-    .chat-head-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .chat-head-name {
-      font: 600 14px/1.3 var(--font-sans);
-    }
-    .chat-head-status {
-      font: 400 12px/1.3 var(--font-sans);
-      color: var(--color-success);
-    }
-    .chat-progress {
-      margin-left: auto;
-      font: 500 12px/1 var(--font-mono);
+    .chat-topbar-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
       color: var(--color-neutral-500);
-      padding: 6px 10px;
-      background: var(--color-neutral-100);
-      border-radius: var(--radius-full);
+    }
+    .chat-topbar-progress {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-neutral-500);
+    }
+    .chat-topbar-progress-bar {
+      display: inline-flex;
+      gap: 3px;
+    }
+    .chat-topbar-progress-cell {
+      width: 20px;
+      height: 4px;
+      background: var(--color-neutral-200);
+    }
+    .chat-topbar-progress-cell.done {
+      background: var(--color-primary);
+    }
+    .chat-topbar-progress-cell.active {
+      background: var(--color-neutral-900);
     }
 
-    .chat-body {
+    .chat-stream {
       flex: 1;
-      padding: 24px 20px;
+      padding: 40px 48px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 32px;
       overflow-y: auto;
     }
 
-    /* chat bubbles */
     .msg {
       display: flex;
-      gap: 10px;
+      gap: 16px;
       align-items: flex-start;
     }
-    .msg.user {
-      justify-content: flex-end;
-    }
+    .msg.user { justify-content: flex-end; }
     .msg-avatar {
       flex: none;
-      width: 32px;
-      height: 32px;
-      border-radius: var(--radius-full);
-      background: var(--color-secondary-container);
+      width: 28px;
+      height: 28px;
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-0);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
       display: flex;
       align-items: center;
       justify-content: center;
-      font: 700 12px var(--font-sans);
-      color: var(--color-on-secondary-container);
+      letter-spacing: .05em;
     }
     .msg-content {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      max-width: 78%;
+      gap: 6px;
+      max-width: 640px;
     }
     .msg.user .msg-content { align-items: flex-end; }
-    .msg-bubble {
-      padding: 14px 16px;
-      font: 400 14px/1.55 var(--font-sans);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-    }
-    .msg-bubble.ai {
-      background: var(--color-neutral-0);
-      border: 1px solid var(--color-neutral-200);
+
+    .msg-body {
+      font: 400 15px/1.65 var(--font-sans);
       color: var(--color-neutral-900);
-      border-bottom-left-radius: var(--radius-sm);
     }
-    .msg-bubble.user {
-      background: var(--color-primary);
-      color: var(--color-on-primary);
-      border-bottom-right-radius: var(--radius-sm);
-    }
-    .msg-time {
-      font: 400 11px/1.4 var(--font-sans);
-      color: var(--color-neutral-500);
-    }
+    .msg-body strong { color: var(--color-primary); font-weight: 600; }
 
-    /* quick-reply chips */
-    .chat-chips {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      padding: 0 20px 12px;
-    }
-    .chat-chip {
-      font: 500 13px/1 var(--font-sans);
-      color: var(--color-primary);
-      background: var(--color-neutral-0);
-      border: 1px solid var(--color-primary);
-      border-radius: var(--radius-full);
-      padding: 9px 14px;
-      transition: background .15s;
-    }
-    .chat-chip:hover {
-      background: var(--color-primary-container);
-    }
-
-    /* input dock */
-    .chat-input {
+    .msg.user .msg-body {
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-0);
       padding: 12px 16px;
+    }
+
+    .msg-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* inline suggestions — not chip pills */
+    .chat-suggest {
+      padding: 20px 48px;
       border-top: 1px solid var(--color-neutral-200);
       display: flex;
-      gap: 10px;
-      align-items: center;
-      background: var(--color-neutral-50);
+      align-items: baseline;
+      gap: 24px;
+      flex-wrap: wrap;
     }
-    .chat-input-field {
-      flex: 1;
-      font: 400 14px/1.5 var(--font-sans);
-      padding: 10px 14px;
-      border: 1px solid var(--color-neutral-300);
-      border-radius: var(--radius-full);
-      background: var(--color-neutral-0);
-    }
-    .chat-input-field:focus {
-      outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px var(--color-primary-container);
-    }
-    .chat-input-voice {
-      flex: none;
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-full);
-      background: var(--color-primary);
-      color: var(--color-on-primary);
-      border: none;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .chat-input-voice:hover { background: var(--color-primary-hover); }
-    .chat-input-hint {
-      position: absolute;
-      right: 100px;
-      font: 400 11px var(--font-sans);
+    .chat-suggest-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
       color: var(--color-neutral-500);
+      flex: none;
+    }
+    .chat-suggest-item {
+      font: 500 14px/1 var(--font-sans);
+      color: var(--color-neutral-900);
+      border: 0;
+      background: transparent;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--color-neutral-300);
+      transition: border-color .15s, color .15s;
+    }
+    .chat-suggest-item:hover {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
     }
 
-    /* right: side panel */
-    .side-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    /* input dock — no card, integrated bottom */
+    .chat-dock {
+      padding: 20px 48px 32px;
+      border-top: 1px solid var(--color-neutral-200);
     }
-    .side-card {
-      background: var(--color-neutral-0);
-      border: 1px solid var(--color-neutral-200);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
+    .chat-dock-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
       gap: 12px;
+      align-items: center;
+      border-bottom: 1px solid var(--color-neutral-900);
+      padding-bottom: 12px;
     }
-    .side-card-label {
-      font: 500 12px/1.4 var(--font-mono);
-      letter-spacing: .08em;
+    .chat-dock-input {
+      font: 400 15px/1.5 var(--font-sans);
+      padding: 12px 0;
+      border: 0;
+      background: transparent;
+      color: var(--color-neutral-900);
+    }
+    .chat-dock-input:focus { outline: none; }
+    .chat-dock-input::placeholder { color: var(--color-neutral-300); }
+    .chat-dock-voice {
+      font: 500 12px/1 var(--font-mono);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+      background: transparent;
+      border: 1px solid var(--color-neutral-300);
+      padding: 8px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .15s, border-color .15s;
+    }
+    .chat-dock-voice:hover { color: var(--color-neutral-900); border-color: var(--color-neutral-900); }
+    .chat-dock-voice::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-danger);
+      display: inline-block;
+    }
+    .chat-dock-send {
+      font: 600 13px/1 var(--font-sans);
+      color: var(--color-on-primary);
+      background: var(--color-neutral-900);
+      border: 0;
+      padding: 12px 20px;
+      transition: background .15s;
+    }
+    .chat-dock-send:hover { background: var(--color-primary); }
+    .chat-dock-hint {
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
     }
-    .side-card-title {
-      font: 600 16px/1.4 var(--font-sans);
-      margin: 0;
+
+    /* right column — aside, typographic only, no cards */
+    .aside {
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      background: var(--color-neutral-50);
     }
-    .brand-tags {
+    .aside-section-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-neutral-300);
+      margin-bottom: 12px;
+    }
+
+    .aside-h {
+      margin: 0 0 12px;
+      font: 600 20px/1.3 var(--font-sans);
+      letter-spacing: -.01em;
+    }
+
+    .aside-fact {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-neutral-200);
+      font: 400 13px/1.4 var(--font-sans);
+    }
+    .aside-fact-key { color: var(--color-neutral-500); }
+    .aside-fact-val { color: var(--color-neutral-900); font-weight: 500; }
+
+    .aside-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      margin-top: 4px;
     }
-    .brand-tag {
-      font: 500 12px/1 var(--font-sans);
+    .aside-tag {
+      font: 500 12px/1.2 var(--font-sans);
       color: var(--color-neutral-700);
-      background: var(--color-neutral-100);
-      border: 1px solid var(--color-neutral-200);
-      border-radius: var(--radius-full);
-      padding: 5px 10px;
+      border: 1px solid var(--color-neutral-300);
+      padding: 4px 8px;
     }
-    .locked-preview {
-      background: var(--color-neutral-50);
-      border: 1px dashed var(--color-neutral-300);
-      border-radius: var(--radius-md);
-      padding: 16px;
+
+    .aside-progress-block {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      text-align: center;
     }
-    .locked-preview-icon {
-      font: 700 24px var(--font-sans);
-      color: var(--color-neutral-300);
+    .aside-progress-row {
+      display: grid;
+      grid-template-columns: 20px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      font: 400 13px/1.4 var(--font-sans);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-neutral-200);
     }
-    .locked-preview-text {
-      font: 500 13px/1.5 var(--font-sans);
-      color: var(--color-neutral-700);
-    }
-    .locked-preview-sub {
-      font: 400 12px/1.5 var(--font-sans);
+    .aside-progress-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
       color: var(--color-neutral-500);
+    }
+    .aside-progress-row.done .aside-progress-num { color: var(--color-primary); }
+    .aside-progress-row.done .aside-progress-text { color: var(--color-neutral-900); }
+    .aside-progress-row.active { background: var(--color-neutral-100); margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
+    .aside-progress-row.active .aside-progress-num { color: var(--color-neutral-900); font-weight: 500; }
+    .aside-progress-text { color: var(--color-neutral-500); }
+    .aside-progress-mark {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-neutral-500);
+    }
+    .aside-progress-row.done .aside-progress-mark { color: var(--color-primary); }
+
+    @media (max-width: 900px) {
+      .ws { grid-template-columns: 1fr; }
+      .aside { border-top: 1px solid var(--color-neutral-200); }
+      .chat-topbar, .chat-stream, .chat-suggest, .chat-dock {
+        padding-left: 24px; padding-right: 24px;
+      }
     }
   </style>
 </head>
@@ -262,39 +320,50 @@
   </nav>
 
   <main class="proto-main">
-    <div class="chat-layout">
+    <div class="ws">
 
-      <!-- LEFT: chat window -->
-      <div class="chat-window">
-        <header class="chat-head">
-          <div class="chat-head-avatar">AI</div>
-          <div class="chat-head-info">
-            <span class="chat-head-name">Cortex 助理</span>
-            <span class="chat-head-status">● 訪談進行中</span>
+      <!-- LEFT: chat canvas -->
+      <section class="chat">
+
+        <div class="chat-topbar">
+          <span class="chat-topbar-kicker">Stage 02 · 訪談中</span>
+          <span class="t-body" style="color:var(--color-neutral-700)">Cortex 助理</span>
+          <div class="chat-topbar-progress">
+            <span>Question 2 / 5</span>
+            <span class="chat-topbar-progress-bar">
+              <span class="chat-topbar-progress-cell done"></span>
+              <span class="chat-topbar-progress-cell active"></span>
+              <span class="chat-topbar-progress-cell"></span>
+              <span class="chat-topbar-progress-cell"></span>
+              <span class="chat-topbar-progress-cell"></span>
+            </span>
           </div>
-          <span class="chat-progress">2 / 5</span>
-        </header>
+        </div>
 
-        <div class="chat-body">
+        <div class="chat-stream">
           <!-- AI msg 1 -->
           <div class="msg">
             <div class="msg-avatar">AI</div>
             <div class="msg-content">
-              <div class="msg-bubble ai">
-                我看了你的網站 health-forward.tw,大概了解你賣的是保健食品。<br /><br />
-                想再問你 5 個問題,讓媒體匹配更精準。<strong>第 1 題</strong>:你這波曝光,主要想達到什麼目標?
+              <div class="msg-body">
+                我看了你的網站 <strong>health-forward.tw</strong>,大概了解你賣的是保健食品。想再問你 5 個問題,讓媒體匹配更精準。<br /><br />
+                <strong>Question 01.</strong> 你這波曝光,主要想達到什麼目標?
               </div>
-              <span class="msg-time">Cortex 助理 · 10:32</span>
+              <div class="msg-meta">
+                <span>Cortex · 10:32</span>
+              </div>
             </div>
           </div>
 
           <!-- User msg 1 -->
           <div class="msg user">
             <div class="msg-content">
-              <div class="msg-bubble user">
+              <div class="msg-body">
                 提升品牌知名度為主,順便帶一些試用申請的 lead。
               </div>
-              <span class="msg-time">你 · 10:33</span>
+              <div class="msg-meta">
+                <span>你 · 10:33</span>
+              </div>
             </div>
           </div>
 
@@ -302,61 +371,107 @@
           <div class="msg">
             <div class="msg-avatar">AI</div>
             <div class="msg-content">
-              <div class="msg-bubble ai">
-                了解,雙目標。<strong>第 2 題</strong>:你的主要 TA 是哪個年齡層?可以複選,或口述你腦中的樣子。
+              <div class="msg-body">
+                了解,雙目標。<br /><br />
+                <strong>Question 02.</strong> 你的主要 TA 是哪個年齡層?可以複選,或口述你腦中的樣子。
               </div>
-              <span class="msg-time">Cortex 助理 · 10:33</span>
+              <div class="msg-meta">
+                <span>Cortex · 10:33</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- quick-reply chips -->
-        <div class="chat-chips">
-          <button class="chat-chip">25-34 歲女性</button>
-          <button class="chat-chip">35-44 歲女性</button>
-          <button class="chat-chip">45-54 歲女性</button>
-          <button class="chat-chip">高收入白領</button>
+        <!-- inline suggestions -->
+        <div class="chat-suggest">
+          <span class="chat-suggest-label">Quick reply</span>
+          <button class="chat-suggest-item">25–34 歲女性</button>
+          <button class="chat-suggest-item">35–44 歲女性</button>
+          <button class="chat-suggest-item">45–54 歲女性</button>
+          <button class="chat-suggest-item">高收入白領</button>
         </div>
 
-        <!-- input -->
-        <div class="chat-input">
-          <input
-            type="text"
-            class="chat-input-field"
-            placeholder="輸入你的回答,或點右邊麥克風用說的"
-          />
-          <button class="chat-input-voice" title="語音輸入">🎙</button>
-        </div>
-      </div>
-
-      <!-- RIGHT: side panel -->
-      <aside class="side-panel">
-        <div class="side-card">
-          <span class="side-card-label">Brand profile · 已同步</span>
-          <h3 class="side-card-title">Cortex 目前理解</h3>
-          <div class="brand-tags">
-            <span class="brand-tag">健康保健</span>
-            <span class="brand-tag">食品補給</span>
-            <span class="brand-tag">Premium</span>
-            <span class="brand-tag">DTC</span>
+        <!-- input dock -->
+        <div class="chat-dock">
+          <div class="chat-dock-row">
+            <input
+              type="text"
+              class="chat-dock-input"
+              placeholder="輸入你的回答"
+              aria-label="輸入你的回答"
+            />
+            <button class="chat-dock-voice">語音</button>
+            <button class="chat-dock-send">送出</button>
           </div>
-          <div class="brand-tags" style="margin-top:4px">
-            <span class="brand-tag">功能導向</span>
-            <span class="brand-tag">科學背書</span>
+          <div class="chat-dock-hint">
+            Cortex 支援語音輸入 · AI 會自動整理成結構化需求
           </div>
         </div>
 
-        <div class="side-card">
-          <span class="side-card-label">還沒解鎖</span>
-          <div class="locked-preview">
-            <div class="locked-preview-icon">🔒</div>
-            <div class="locked-preview-text">+ 8 個匹配平台</div>
-            <div class="locked-preview-sub">
-              完成 5 題訪談後解鎖<br />
-              包含 AI 讀者模擬與品牌 perception gap
+      </section>
+
+      <!-- RIGHT: aside — brand profile + progress -->
+      <aside class="aside">
+
+        <div>
+          <div class="aside-section-title">Brand profile · 已同步</div>
+          <h3 class="aside-h">Cortex 目前的理解</h3>
+          <div class="aside-fact">
+            <span class="aside-fact-key">品類</span>
+            <span class="aside-fact-val">保健食品</span>
+          </div>
+          <div class="aside-fact">
+            <span class="aside-fact-key">定位</span>
+            <span class="aside-fact-val">Premium · DTC</span>
+          </div>
+          <div class="aside-fact">
+            <span class="aside-fact-key">語氣</span>
+            <span class="aside-fact-val">功能導向 · 科學背書</span>
+          </div>
+          <div class="aside-fact" style="border-bottom:0">
+            <span class="aside-fact-key">TA 假設</span>
+            <span class="aside-fact-val">30+ 女性</span>
+          </div>
+          <div class="aside-tags">
+            <span class="aside-tag">健康保健</span>
+            <span class="aside-tag">食品補給</span>
+            <span class="aside-tag">Premium</span>
+            <span class="aside-tag">DTC</span>
+            <span class="aside-tag">功能導向</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="aside-section-title">訪談進度</div>
+          <div class="aside-progress-block">
+            <div class="aside-progress-row done">
+              <span class="aside-progress-num">01</span>
+              <span class="aside-progress-text">曝光目標</span>
+              <span class="aside-progress-mark">✓</span>
+            </div>
+            <div class="aside-progress-row active">
+              <span class="aside-progress-num">02</span>
+              <span class="aside-progress-text">目標年齡層</span>
+              <span class="aside-progress-mark">•</span>
+            </div>
+            <div class="aside-progress-row">
+              <span class="aside-progress-num">03</span>
+              <span class="aside-progress-text">品牌禁忌</span>
+              <span class="aside-progress-mark"></span>
+            </div>
+            <div class="aside-progress-row">
+              <span class="aside-progress-num">04</span>
+              <span class="aside-progress-text">競品參考</span>
+              <span class="aside-progress-mark"></span>
+            </div>
+            <div class="aside-progress-row" style="border-bottom:0">
+              <span class="aside-progress-num">05</span>
+              <span class="aside-progress-text">期待時程</span>
+              <span class="aside-progress-mark"></span>
             </div>
           </div>
         </div>
+
       </aside>
 
     </div>

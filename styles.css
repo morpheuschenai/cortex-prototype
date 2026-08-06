@@ -345,6 +345,33 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* ============================================================
+ * Logo wrapper (fix white logos on white bg)
+ * ============================================================ */
+.logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  height: 28px;
+}
+.logo-wrap img {
+  height: 100%;
+  max-height: 20px;
+  width: auto;
+  display: block;
+}
+.logo-wrap--bella { background: transparent; }
+.logo-wrap--cmoney { background: #d40017; padding: 5px 10px; }
+.logo-wrap--nownews { background: #ffd800; padding: 5px 8px; }
+.logo-wrap--today { background: transparent; }
+
+.logo-wrap--sm { height: 22px; padding: 3px 6px; }
+.logo-wrap--sm img { max-height: 14px; }
+.logo-wrap--sm.logo-wrap--cmoney { padding: 3px 8px; }
+.logo-wrap--sm.logo-wrap--nownews { padding: 3px 6px; }
+
+/* ============================================================
  * Dashed underline (for tooltip trigger)
  * ============================================================ */
 .hint {

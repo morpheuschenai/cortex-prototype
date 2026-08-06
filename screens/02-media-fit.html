@@ -6,7 +6,6 @@
   <title>Cortex — Media Fit Preview</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* Brand profile accordion (collapsed by default) */
     .brand-profile {
       background: var(--color-neutral-50);
       border: 1px solid var(--color-neutral-200);
@@ -74,7 +73,6 @@
       color: var(--color-neutral-900);
     }
 
-    /* Cards grid */
     .fit-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -99,11 +97,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-    .fit-card-logo {
-      height: 20px;
-      max-width: 100px;
-      object-fit: contain;
     }
     .fit-card-cat {
       font-family: var(--font-mono);
@@ -183,7 +176,6 @@
     .fit-cpl { font: 400 13px var(--font-sans); color: var(--color-neutral-500); }
     .fit-cpl-value { color: var(--color-neutral-900); font-weight: 500; }
 
-    /* Unlock band */
     .unlock-band {
       margin-top: 32px;
       padding: 24px;
@@ -212,15 +204,13 @@
 <body>
   <main class="page">
     <div class="page-header">
-      <div class="page-eyebrow">Stage 01 · Media Fit Preview</div>
       <h1 class="page-title">Cortex 找到 4 個高匹配平台</h1>
       <p class="page-subtitle">
-        先看首批 4 個 · 完整名單需要多一點資訊
+        依 Fit score 排序,顯示合作媒體樣本文章與預估 CPL。
       </p>
     </div>
 
-    <!-- Brand Profile accordion (collapsed by default) -->
-    <details class="brand-profile">
+    <details class="brand-profile" open>
       <summary class="brand-profile-summary">
         <span class="brand-profile-title">Cortex 對你的理解 · 已同步</span>
         <span class="brand-profile-toggle"></span>
@@ -247,11 +237,10 @@
 
     <div class="fit-grid">
 
-      <!-- Card 1 -->
       <article class="fit-card">
         <div class="fit-card-head">
           <div class="fit-card-media">
-            <img src="../assets/logos/Bella.webp" alt="Bella" class="fit-card-logo" />
+            <span class="logo-wrap logo-wrap--bella logo-wrap--sm"><img src="../assets/logos/Bella.webp" alt="Bella" /></span>
             <span class="fit-card-cat">美容生活</span>
           </div>
           <div style="text-align:right">
@@ -267,7 +256,7 @@
           <div class="fit-card-sample-label">
             <span class="hint">
               該媒體近期範例文
-              <span class="hint-tip">這不是為你生成的內容,是該媒體本來就在寫的類似主題文章。證明品牌內容有機會自然嵌入此類 editorial。</span>
+              <span class="hint-tip">這不是為你生成的內容,是該媒體本來就在寫的類似主題,證明品牌內容有機會自然嵌入。</span>
             </span>
           </div>
           <div class="fit-card-sample-title">30+ 女性最該補的三種營養素</div>
@@ -278,21 +267,21 @@
             <span class="fit-card-driver-dot"></span>
             <span class="hint">
               受眾重疊 89%
-              <span class="hint-tip">你網站分析出的 TA 輪廓 vs. 該媒體讀者輪廓,用 Cortex 內部 audience overlap 分析。</span>
+              <span class="hint-tip">你網站分析出的 TA 輪廓 vs. 該媒體讀者輪廓的 Cortex 內部 audience overlap 分析。</span>
             </span>
           </div>
           <div class="fit-card-driver">
             <span class="fit-card-driver-dot"></span>
             <span class="hint">
               語氣相符
-              <span class="hint-tip">AI 分析你網站的用字與該媒體 editorial voice,以 embedding 相似度計算。</span>
+              <span class="hint-tip">AI 分析你網站用字與該媒體 editorial voice 的 embedding 相似度。</span>
             </span>
           </div>
           <div class="fit-card-driver">
             <span class="fit-card-driver-dot"></span>
             <span class="hint">
               CTR 高於均值 +34%
-              <span class="hint-tip">同品類品牌在該媒體歷史 CTR 資料。Cortex v1 尚無自家數據,採用產業 benchmark。</span>
+              <span class="hint-tip">同品類品牌在該媒體歷史 CTR 資料,v1 採用產業 benchmark。</span>
             </span>
           </div>
         </div>
@@ -301,18 +290,17 @@
           <span class="fit-cpl">
             預估 CPL
             <span class="hint fit-cpl-value">$14–20
-              <span class="hint-tip">Base = 該媒體 CPM × 品類轉換率,加入 fit score 加權。實際 CPL 依 tier 與內容表現變動。</span>
+              <span class="hint-tip">Base = 該媒體 CPM × 品類轉換率,加入 fit score 加權。僅在產生 qualified lead 時計費。</span>
             </span>
           </span>
           <button class="btn btn-secondary">查看細節</button>
         </div>
       </article>
 
-      <!-- Card 2 -->
       <article class="fit-card">
         <div class="fit-card-head">
           <div class="fit-card-media">
-            <img src="../assets/logos/cmoney.svg" alt="CMoney" class="fit-card-logo" />
+            <span class="logo-wrap logo-wrap--cmoney logo-wrap--sm"><img src="../assets/logos/cmoney.svg" alt="CMoney" /></span>
             <span class="fit-card-cat">理財生活</span>
           </div>
           <div style="text-align:right">
@@ -325,36 +313,22 @@
         </div>
 
         <div class="fit-card-sample">
-          <div class="fit-card-sample-label">
-            <span class="hint">
-              該媒體近期範例文
-              <span class="hint-tip">該媒體本來就在寫的相關主題,不是為你生成。</span>
-            </span>
-          </div>
+          <div class="fit-card-sample-label">該媒體近期範例文</div>
           <div class="fit-card-sample-title">健康投資:被低估的長期複利</div>
         </div>
 
         <div class="fit-card-drivers">
           <div class="fit-card-driver">
             <span class="fit-card-driver-dot"></span>
-            <span class="hint">
-              受眾重疊 76%
-              <span class="hint-tip">Cortex 內部 audience overlap 分析。</span>
-            </span>
+            <span>受眾重疊 76%</span>
           </div>
           <div class="fit-card-driver">
             <span class="fit-card-driver-dot"></span>
-            <span class="hint">
-              語氣相符
-              <span class="hint-tip">Embedding 相似度計算。</span>
-            </span>
+            <span>語氣相符</span>
           </div>
           <div class="fit-card-driver">
             <span class="fit-card-driver-dot"></span>
-            <span class="hint">
-              CTR 高於均值 +22%
-              <span class="hint-tip">產業 benchmark。</span>
-            </span>
+            <span>CTR 高於均值 +22%</span>
           </div>
         </div>
 
@@ -364,11 +338,10 @@
         </div>
       </article>
 
-      <!-- Card 3 -->
       <article class="fit-card">
         <div class="fit-card-head">
           <div class="fit-card-media">
-            <img src="../assets/logos/now.svg" alt="NOWnews" class="fit-card-logo" />
+            <span class="logo-wrap logo-wrap--nownews logo-wrap--sm"><img src="../assets/logos/now.svg" alt="NOWnews" /></span>
             <span class="fit-card-cat">生活資訊</span>
           </div>
           <div style="text-align:right">
@@ -402,11 +375,10 @@
         </div>
       </article>
 
-      <!-- Card 4 -->
       <article class="fit-card">
         <div class="fit-card-head">
           <div class="fit-card-media">
-            <img src="../assets/logos/today.png" alt="Business Today" class="fit-card-logo" />
+            <span class="logo-wrap logo-wrap--today logo-wrap--sm"><img src="../assets/logos/today.png" alt="Business Today" /></span>
             <span class="fit-card-cat">財經</span>
           </div>
           <div style="text-align:right">
@@ -442,18 +414,16 @@
 
     </div>
 
-    <!-- Unlock band -->
     <div class="unlock-band">
       <div class="unlock-band-copy">
-        <span class="unlock-band-title">解鎖剩下 8 個平台前,Cortex 需要更了解你的品牌</span>
-        <span class="unlock-band-sub">5 題訪談,讓 Cortex 為你的品牌組出最合適的媒體投資組合</span>
+        <span class="unlock-band-title">還有 8 個平台可能匹配你的品牌</span>
+        <span class="unlock-band-sub">Cortex 需要更了解你的品牌需求,才能為你組出最合適的媒體投資組合</span>
       </div>
       <a href="03-chat.html" class="btn btn-primary btn-arrow">開始 5 題訪談</a>
     </div>
 
-    <!-- Continue bar -->
     <div class="continue-bar">
-      <div class="continue-bar-context">Stage 01 → Stage 02 · Interview</div>
+      <div class="continue-bar-context">下一步 · 5 題訪談</div>
       <a href="03-chat.html" class="btn btn-primary btn-arrow">Continue</a>
     </div>
   </main>

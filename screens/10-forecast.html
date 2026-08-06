@@ -3,19 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cortex — Simulated Forecast + Benchmark</title>
+  <title>Cortex — 成效預估</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    .disclosure {
-      background: var(--color-warning-container);
-      color: var(--color-on-warning-container);
-      padding: 16px 20px;
-      border-radius: var(--radius-md);
-      margin-bottom: 32px;
-      font: 400 14px/1.55 var(--font-sans);
-    }
-    .disclosure strong { display: block; margin-bottom: 4px; }
-
     .forecast-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -30,24 +20,15 @@
       padding: 20px;
     }
     .fc-card-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: .08em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
       margin-bottom: 8px;
-    }
-    .fc-card-est {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--color-warning);
-      background: var(--color-warning-container);
-      padding: 3px 6px;
-      border-radius: var(--radius-sm);
-      margin-left: 6px;
     }
     .fc-card-val {
       font: 700 32px/1.1 var(--font-sans);
@@ -62,7 +43,6 @@
       border-top: 1px solid var(--color-neutral-200);
     }
 
-    /* Benchmark comparison */
     .benchmark {
       background: var(--color-neutral-0);
       border: 1px solid var(--color-neutral-200);
@@ -110,7 +90,6 @@
       text-align: right;
     }
 
-    /* Quality trend */
     .quality-block {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -149,49 +128,46 @@
 <body>
   <main class="page">
     <div class="page-header">
-      <div class="page-eyebrow">Stage 05 · Forecast</div>
-      <h1 class="page-title">還在等待?看看 Cortex 給你的預估</h1>
+      <h1 class="page-title">你這批的成效預估</h1>
       <p class="page-subtitle">
-        Cortex 是新產品尚無歷史成效曲線。我們用三種方式給你預估,誠實揭露這是估算而非實測。
+        基於當前 media fit、同品類 benchmark、送審 AI Answer 品質分數,Cortex 給你的預估區間。
       </p>
     </div>
 
-    <div class="disclosure">
-      <strong>⚠ 這些是預估值,不是實測數據</strong>
-      Cortex 產品新,還沒有 30 天歷史成效可以呈現。以下三種預估分別基於: 你當前的 media fit 分數、同品類品牌在類似媒體的公開表現、Cortex 對你這批 AI Answer 的品質評分。
-    </div>
-
-    <!-- Simulated Forecast -->
-    <h2 class="t-h2" style="margin-bottom:16px">A. Simulated Forecast · 基於 fit 分數的 lead 預估</h2>
+    <h2 class="t-h2" style="margin-bottom:16px">
+      平台 lead 預估
+      <span class="hint" style="font-size:12px;color:var(--color-neutral-500);font-weight:400">
+        · 怎麼算的?
+        <span class="hint-tip">Fit score × 該媒體月流量 × 品類轉換率。實際依 qualified lead 實測數量計費。</span>
+      </span>
+    </h2>
     <div class="forecast-grid">
       <div class="fc-card">
-        <div class="fc-card-label">Bella · Fit 92% <span class="fc-card-est">Est.</span></div>
+        <div class="fc-card-label">Bella · Fit 92%</div>
         <div class="fc-card-val">28–35 <small>lead / 月</small></div>
-        <div class="fc-card-basis">Fit 92% × 該媒體月流量 × 品類轉換率</div>
+        <div class="fc-card-basis">預估 CPL $14–20</div>
       </div>
       <div class="fc-card">
-        <div class="fc-card-label">CMoney · Fit 87% <span class="fc-card-est">Est.</span></div>
+        <div class="fc-card-label">CMoney · Fit 87%</div>
         <div class="fc-card-val">20–27 <small>lead / 月</small></div>
-        <div class="fc-card-basis">Fit 87% × 該媒體月流量 × 品類轉換率</div>
+        <div class="fc-card-basis">預估 CPL $16–24</div>
       </div>
       <div class="fc-card">
-        <div class="fc-card-label">NOWnews · Fit 81% <span class="fc-card-est">Est.</span></div>
+        <div class="fc-card-label">NOWnews · Fit 81%</div>
         <div class="fc-card-val">12–18 <small>lead / 月</small></div>
-        <div class="fc-card-basis">Fit 81% × 該媒體月流量 × 品類轉換率</div>
+        <div class="fc-card-basis">預估 CPL $18–26</div>
       </div>
     </div>
 
-    <!-- Category Benchmark -->
-    <h2 class="t-h2" style="margin: 40px 0 16px">B. Category Benchmark · 同品類品牌的公開表現區間</h2>
+    <h2 class="t-h2" style="margin: 40px 0 16px">同品類比較</h2>
     <div class="benchmark">
       <h3 class="bm-title">你的品牌在保健品類的相對位置</h3>
       <p class="bm-sub">
         比對過去 12 個月保健品類品牌在
         <span class="hint">
           Bella / CMoney / NOWnews 的公開表現
-          <span class="hint-tip">產業第三方報告 + 該媒體公開廣告成效數據,不是 Cortex 內部數據。</span>
+          <span class="hint-tip">來自產業第三方報告 + 該媒體公開廣告成效數據。</span>
         </span>
-        數據源: Media Owner 公開 rate card 與產業報告。
       </p>
 
       <div class="bm-row">
@@ -224,23 +200,22 @@
       </div>
     </div>
 
-    <!-- Pre-launch Quality Score -->
-    <h2 class="t-h2" style="margin: 40px 0 16px">C. Pre-launch Quality Score · 送審前後品質變化</h2>
+    <h2 class="t-h2" style="margin: 40px 0 16px">送審品質分數</h2>
     <div class="quality-block">
       <div class="quality-metric">
         <div class="quality-metric-val" style="color:var(--color-warning)">72</div>
-        <div class="quality-metric-key">送審前初稿</div>
+        <div class="quality-metric-key">Cortex 初稿</div>
       </div>
       <div class="quality-arrow">→</div>
       <div class="quality-metric">
         <div class="quality-metric-val">89</div>
-        <div class="quality-metric-key">Mlytics 編輯後 <span class="fc-card-est">預估</span></div>
+        <div class="quality-metric-key">Mlytics 編輯把關後</div>
       </div>
     </div>
 
     <div class="continue-bar">
-      <div class="continue-bar-context">Stage 05 → 看 first-mover 品牌權益</div>
-      <a href="11-first-mover.html" class="btn btn-primary btn-arrow">看 first-mover offer</a>
+      <div class="continue-bar-context">看你的 first-mover 品牌權益</div>
+      <a href="11-first-mover.html" class="btn btn-primary btn-arrow">Continue</a>
     </div>
   </main>
   <script src="../nav.js"></script>

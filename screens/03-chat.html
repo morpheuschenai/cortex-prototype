@@ -237,63 +237,97 @@
       margin-left: 4px;
     }
 
-    /* Input dock */
+    /* Input dock — voice-first */
     .chat-dock {
-      padding: 12px 20px 16px;
+      padding: 20px 24px 24px;
       border-top: 1px solid var(--color-neutral-200);
-      background: var(--color-neutral-0);
+      background: var(--color-neutral-50);
     }
-    .chat-dock-row {
+    .chat-dock-voice-primary {
       display: flex;
-      gap: 8px;
       align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 18px 24px;
+      background: var(--color-primary);
+      color: var(--color-on-primary);
+      border: 0;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font: 600 15px var(--font-sans);
+      transition: background .15s;
+      box-shadow: var(--shadow-md);
+    }
+    .chat-dock-voice-primary:hover {
+      background: var(--color-primary-hover);
+    }
+    .chat-dock-voice-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .chat-dock-voice-icon::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+      animation: mic-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes mic-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(1.4); }
+    }
+    .chat-dock-hint {
+      font: 400 13px/1.5 var(--font-sans);
+      color: var(--color-neutral-700);
+      margin: 12px 0 0;
+      text-align: center;
+    }
+    .chat-dock-alt {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--color-neutral-200);
     }
     .chat-dock-input {
       flex: 1;
-      font: 400 14px var(--font-sans);
-      padding: 10px 12px;
+      font: 400 13px var(--font-sans);
+      padding: 8px 12px;
       border: 1px solid var(--color-neutral-300);
       border-radius: var(--radius-md);
+      background: var(--color-neutral-0);
     }
     .chat-dock-input:focus {
       outline: none;
       border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px var(--color-primary-container);
     }
-    .chat-dock-voice {
-      font: 500 12px var(--font-mono);
+    .chat-dock-input::placeholder {
+      color: var(--color-neutral-500);
+      font-size: 12px;
+    }
+    .chat-dock-alt-label {
+      font: 400 11px var(--font-mono);
+      color: var(--color-neutral-500);
       letter-spacing: .05em;
       text-transform: uppercase;
+    }
+    .chat-dock-send {
+      font: 500 12px var(--font-sans);
       background: var(--color-neutral-0);
       color: var(--color-neutral-700);
       border: 1px solid var(--color-neutral-300);
-      padding: 8px 10px;
-      border-radius: var(--radius-md);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-    }
-    .chat-dock-voice::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--color-danger);
-    }
-    .chat-dock-send {
-      font: 500 13px var(--font-sans);
-      background: var(--color-primary);
-      color: var(--color-on-primary);
-      border: 0;
-      padding: 10px 16px;
+      padding: 8px 12px;
       border-radius: var(--radius-md);
       cursor: pointer;
-    }
-    .chat-dock-hint {
-      font: 400 11px var(--font-mono);
-      color: var(--color-neutral-500);
-      margin-top: 8px;
     }
   </style>
 </head>
@@ -335,22 +369,22 @@
         <div class="aside-card">
           <div class="aside-card-title">媒體匹配 · 4 / 12</div>
           <div class="media-thumb">
-            <img src="../assets/logos/Bella.webp" alt="Bella" class="media-thumb-logo" />
+            <span class="logo-wrap logo-wrap--bella logo-wrap--sm"><img src="../assets/logos/Bella.webp" alt="Bella" /></span>
             <span class="media-thumb-name">Bella</span>
             <span class="media-thumb-score">92%</span>
           </div>
           <div class="media-thumb">
-            <img src="../assets/logos/cmoney.svg" alt="CMoney" class="media-thumb-logo" />
+            <span class="logo-wrap logo-wrap--cmoney logo-wrap--sm"><img src="../assets/logos/cmoney.svg" alt="CMoney" /></span>
             <span class="media-thumb-name">CMoney</span>
             <span class="media-thumb-score">87%</span>
           </div>
           <div class="media-thumb">
-            <img src="../assets/logos/now.svg" alt="NOWnews" class="media-thumb-logo" />
+            <span class="logo-wrap logo-wrap--nownews logo-wrap--sm"><img src="../assets/logos/now.svg" alt="NOWnews" /></span>
             <span class="media-thumb-name">NOWnews</span>
             <span class="media-thumb-score">81%</span>
           </div>
           <div class="media-thumb">
-            <img src="../assets/logos/today.png" alt="Business Today" class="media-thumb-logo" />
+            <span class="logo-wrap logo-wrap--today logo-wrap--sm"><img src="../assets/logos/today.png" alt="Business Today" /></span>
             <span class="media-thumb-name">Business Today</span>
             <span class="media-thumb-score">76%</span>
           </div>
@@ -458,27 +492,24 @@
         </div>
 
         <div class="chat-dock">
-          <div class="chat-dock-row">
-            <input type="text" class="chat-dock-input" placeholder="輸入你的回答" />
-            <button class="chat-dock-voice">語音</button>
+          <button class="chat-dock-voice-primary">
+            <span class="chat-dock-voice-icon"></span>
+            <span>按住說話 · Cortex 幫你整理成結構化需求</span>
+          </button>
+          <p class="chat-dock-hint">
+            用說的最快 · Cortex 會自動抓重點、整理成品牌需求
+          </p>
+          <div class="chat-dock-alt">
+            <span class="chat-dock-alt-label">或打字</span>
+            <input type="text" class="chat-dock-input" placeholder="輸入回答..." />
             <button class="chat-dock-send">送出</button>
-          </div>
-          <div class="chat-dock-hint">
-            支援語音輸入 · Cortex 會自動整理成結構化需求
           </div>
         </div>
       </section>
     </div>
 
-    <!-- Continue bar (for prototype walkthrough, skips remaining questions) -->
     <div class="continue-bar">
-      <div class="continue-bar-context">
-        <span class="hint">
-          Prototype 跳過剩餘訪談
-          <span class="hint-tip">實際 flow: 用戶回答 Q2-Q5,Q5 完成後 chat 內出現 magic link 建帳號輸入框,建帳號後進入 04。</span>
-        </span>
-        · 假設訪談完成 + 帳號建立
-      </div>
+      <div class="continue-bar-context">訪談完成 · 建立帳號後進入完整分析</div>
       <a href="04-full-analysis.html" class="btn btn-primary btn-arrow">Continue</a>
     </div>
   </main>

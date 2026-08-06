@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cortex — Full Analysis · 投資組合 + Tier</title>
+  <title>Cortex — 推薦組合 + 讀者模擬</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* Recommendation portfolio */
     .portfolio-hero {
       background: var(--color-neutral-50);
       border: 1px solid var(--color-neutral-200);
@@ -38,7 +37,6 @@
       color: var(--color-neutral-500);
     }
 
-    /* Portfolio cards */
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -67,18 +65,14 @@
       font: 500 12px var(--font-sans);
     }
     .pf-card-head { margin-bottom: 12px; }
-    .pf-card-logo {
-      height: 20px;
-      max-width: 100px;
-      object-fit: contain;
-      margin-bottom: 6px;
-    }
     .pf-card-cat {
       font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: .08em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
+      margin-top: 6px;
+      display: block;
     }
     .pf-card-score {
       display: flex;
@@ -123,7 +117,32 @@
       color: var(--color-neutral-500);
     }
 
-    /* Persona cards (AI simulated readers) */
+    /* CPL 說明 banner */
+    .cpl-note {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: var(--color-success-container);
+      color: var(--color-on-success-container);
+      border-radius: var(--radius-md);
+      font: 400 13px/1.5 var(--font-sans);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cpl-note-icon {
+      width: 20px;
+      height: 20px;
+      background: var(--color-success);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 12px;
+    }
+
+    /* Persona cards */
     .persona-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -211,78 +230,93 @@
       color: var(--color-neutral-300);
     }
 
-    /* Tier selection */
-    .tier-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    @media (max-width: 900px) { .tier-grid { grid-template-columns: 1fr; } }
-    .tier-card {
-      background: var(--color-neutral-0);
-      border: 1px solid var(--color-neutral-200);
-      border-radius: var(--radius-md);
+    /* Modal */
+    .modal-scrim {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, .5);
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
+    }
+    .modal-scrim.open { display: flex; }
+    .modal {
+      background: var(--color-neutral-0);
+      border-radius: var(--radius-md);
+      max-width: 720px;
+      width: 100%;
+      max-height: 90vh;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      overflow: hidden;
     }
-    .tier-card-head {
+    .modal-head {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--color-neutral-200);
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
     }
-    .tier-name { font: 600 20px var(--font-sans); }
-    .tier-tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 4px 8px;
-      border-radius: var(--radius-full);
+    .modal-title { font: 600 18px var(--font-sans); margin: 0; }
+    .modal-close {
+      background: none; border: 0; cursor: pointer;
+      font-size: 24px; line-height: 1; color: var(--color-neutral-500);
     }
-    .tier-tag--basic { background: var(--color-neutral-100); color: var(--color-neutral-700); }
-    .tier-tag--premium { background: var(--color-secondary-container); color: var(--color-on-secondary-container); }
-    .tier-desc { font: 400 14px/1.55 var(--font-sans); color: var(--color-neutral-500); }
-    .tier-features {
+    .modal-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+    }
+    .modal-foot {
+      padding: 16px 24px;
+      border-top: 1px solid var(--color-neutral-200);
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font: 400 13px var(--font-sans);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--color-neutral-50);
+    }
+    .modal-count {
+      font: 500 13px var(--font-sans);
       color: var(--color-neutral-700);
     }
-    .tier-features-item::before {
-      content: '· ';
-      color: var(--color-neutral-500);
-    }
-    .tier-stats {
+    .modal-count strong { color: var(--color-primary); }
+
+    .modal-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 28px 1fr auto auto;
+      align-items: center;
       gap: 12px;
-      padding: 16px;
-      background: var(--color-neutral-50);
-      border-radius: var(--radius-sm);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-neutral-100);
     }
-    .tier-stat-key {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+    .modal-row:last-child { border-bottom: 0; }
+    .modal-row.disabled { opacity: .4; }
+    .modal-row input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+    .modal-row-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .modal-row-name { font: 500 14px var(--font-sans); }
+    .modal-row-cat { font: 400 12px var(--font-sans); color: var(--color-neutral-500); }
+    .modal-row-score {
+      font: 600 14px var(--font-mono);
+      color: var(--color-primary);
+      width: 48px;
+      text-align: right;
+    }
+    .modal-row-cpl {
+      font: 400 12px var(--font-mono);
       color: var(--color-neutral-500);
-    }
-    .tier-stat-val {
-      font: 600 18px var(--font-sans);
-      color: var(--color-neutral-900);
+      width: 100px;
+      text-align: right;
     }
   </style>
 </head>
 <body>
   <main class="page">
     <div class="page-header">
-      <div class="page-eyebrow">Stage 03 · Full Analysis</div>
       <h1 class="page-title">Cortex 為你組了首發投資組合</h1>
       <p class="page-subtitle">
-        訪談完成,這是 Cortex 分析你的品牌後推薦的媒體組合、AI 讀者模擬,以及品牌感知落差。
+        訪談完成後,這是 Cortex 分析你的品牌與媒體匹配後推薦的組合、AI 讀者模擬與品牌感知落差。
       </p>
     </div>
 
@@ -290,12 +324,12 @@
     <section>
       <div class="row-between" style="margin-bottom:16px">
         <div>
-          <h2 class="t-h2">Cortex 推薦組合 · 3 個平台</h2>
+          <h2 class="t-h2">推薦組合 · 3 個平台</h2>
           <p class="t-sm muted" style="margin:4px 0 0">
-            首次建議 1–3 個平台,累積實際成效後再擴大 ·
+            Cortex 首發建議 1–3 個平台,累積實際成效後再擴大 ·
             <span class="hint">
-              為什麼不能全選?
-              <span class="hint-tip">CPL 模式下,每加一個平台都會生成獨立 AI Answer 與成本。首次限制在 3 個內,確保 lead 品質而非數量,累積數據後 sales 會協助擴大。</span>
+              為什麼不是全選?
+              <span class="hint-tip">首次限制在 3 個內,確保每個平台的 lead 品質可以被驗證,而非分散注意力。累積數據後 sales 會協助擴大。</span>
             </span>
           </p>
         </div>
@@ -313,7 +347,7 @@
           </div>
           <div class="portfolio-stat">
             <span class="portfolio-stat-val">$960–1,600</span>
-            <span class="portfolio-stat-key">預估月花費</span>
+            <span class="portfolio-stat-key">預估月成本上限</span>
           </div>
           <div class="portfolio-stat">
             <span class="portfolio-stat-val">86%</span>
@@ -322,11 +356,19 @@
         </div>
       </div>
 
-      <div class="portfolio-grid">
+      <div class="cpl-note">
+        <span class="cpl-note-icon">$</span>
+        <div>
+          <strong>CPL 計費 · 僅在產生 qualified lead 時計費</strong>
+          &nbsp;上限預估以「達成預估 lead 數」為前提,實際費用依 qualified lead 實測數量計算,未達成不收費。
+        </div>
+      </div>
+
+      <div style="margin-top:16px" class="portfolio-grid">
         <div class="pf-card">
           <div class="pf-card-check">✓</div>
           <div class="pf-card-head">
-            <img src="../assets/logos/Bella.webp" alt="Bella" class="pf-card-logo" />
+            <span class="logo-wrap logo-wrap--bella"><img src="../assets/logos/Bella.webp" alt="Bella" /></span>
             <span class="pf-card-cat">美容生活</span>
           </div>
           <div class="pf-card-score">
@@ -335,14 +377,14 @@
           </div>
           <div class="pf-card-stats">
             <div class="pf-card-stat-row"><span>預估月 lead</span><span class="strong">28–35</span></div>
-            <div class="pf-card-stat-row"><span>預估月花費</span><span class="strong">$392–700</span></div>
+            <div class="pf-card-stat-row"><span>成本上限</span><span class="strong">$392–700</span></div>
           </div>
         </div>
 
         <div class="pf-card">
           <div class="pf-card-check">✓</div>
           <div class="pf-card-head">
-            <img src="../assets/logos/cmoney.svg" alt="CMoney" class="pf-card-logo" />
+            <span class="logo-wrap logo-wrap--cmoney"><img src="../assets/logos/cmoney.svg" alt="CMoney" /></span>
             <span class="pf-card-cat">理財生活</span>
           </div>
           <div class="pf-card-score">
@@ -351,14 +393,14 @@
           </div>
           <div class="pf-card-stats">
             <div class="pf-card-stat-row"><span>預估月 lead</span><span class="strong">20–27</span></div>
-            <div class="pf-card-stat-row"><span>預估月花費</span><span class="strong">$320–540</span></div>
+            <div class="pf-card-stat-row"><span>成本上限</span><span class="strong">$320–540</span></div>
           </div>
         </div>
 
         <div class="pf-card">
           <div class="pf-card-check">✓</div>
           <div class="pf-card-head">
-            <img src="../assets/logos/now.svg" alt="NOWnews" class="pf-card-logo" />
+            <span class="logo-wrap logo-wrap--nownews"><img src="../assets/logos/now.svg" alt="NOWnews" /></span>
             <span class="pf-card-cat">生活資訊</span>
           </div>
           <div class="pf-card-score">
@@ -367,24 +409,24 @@
           </div>
           <div class="pf-card-stats">
             <div class="pf-card-stat-row"><span>預估月 lead</span><span class="strong">12–18</span></div>
-            <div class="pf-card-stat-row"><span>預估月花費</span><span class="strong">$248–360</span></div>
+            <div class="pf-card-stat-row"><span>成本上限</span><span class="strong">$248–360</span></div>
           </div>
         </div>
       </div>
 
       <div class="adjust-portfolio-row">
         <span class="adjust-hint">
-          想調整組合?加入或移除平台會即時看到成本 / lead 變化(上限 3 個)
+          想調整組合?最多選 3 個平台 · 隨時能看到成本與 lead 預估變化
         </span>
-        <button class="btn btn-secondary">調整組合</button>
+        <button class="btn btn-secondary" id="openAdjustModal">調整組合</button>
       </div>
     </section>
 
     <!-- Section B: AI simulated readers -->
     <section class="section">
-      <h2 class="section-title">AI 讀者模擬 · 3 種 persona 讀完你網站的反應</h2>
+      <h2 class="section-title">AI 讀者模擬</h2>
       <p class="section-subtitle">
-        Cortex 用這 3 個 persona 模擬讀者接觸你的內容時的第一反應,幫你發現盲點。
+        Cortex 模擬 3 種讀者看到你網站的第一反應,幫你發現盲點。
       </p>
 
       <div class="persona-grid">
@@ -431,9 +473,9 @@
 
     <!-- Section C: Perception gap -->
     <section class="section">
-      <h2 class="section-title">品牌感知落差 · 你以為 vs AI 讀出來</h2>
+      <h2 class="section-title">品牌感知落差</h2>
       <p class="section-subtitle">
-        Cortex 分析你網站與 3 個 persona 反應,找出你的品牌定位跟讀者實際感受的差距。
+        你的品牌定位跟讀者實際感受的差距,Cortex 分析你網站與讀者模擬後的比對。
       </p>
 
       <div class="gap-grid">
@@ -473,72 +515,138 @@
       </div>
     </section>
 
-    <!-- Section D: Tier selection -->
-    <section class="section">
-      <h2 class="section-title">選擇內容 tier</h2>
-      <p class="section-subtitle">
-        Cortex 提供兩種內容 tier,讓你依品牌敏感度與預算選擇。
-      </p>
-
-      <div class="tier-grid">
-        <div class="tier-card">
-          <div class="tier-card-head">
-            <span class="tier-name">Basic</span>
-            <span class="tier-tag tier-tag--basic">Sponsored label</span>
-          </div>
-          <p class="tier-desc">明顯置入,有 Sponsored 標示。適合 volume-driven 品牌快速測試需求。</p>
-          <div class="tier-features">
-            <div class="tier-features-item">標準 sponsored 內容模板</div>
-            <div class="tier-features-item">明確廣告揭露</div>
-            <div class="tier-features-item">CPL 單價較低</div>
-            <div class="tier-features-item">生成速度最快</div>
-          </div>
-          <div class="tier-stats">
-            <div>
-              <div class="tier-stat-key">預估月 lead</div>
-              <div class="tier-stat-val">60–80</div>
-            </div>
-            <div>
-              <div class="tier-stat-key">預估月花費</div>
-              <div class="tier-stat-val">$960–1,600</div>
-            </div>
-          </div>
-          <button class="btn btn-secondary btn-block btn-arrow">選擇 Basic · 生成第一批 AI Answer</button>
-        </div>
-
-        <div class="tier-card" style="border-color:var(--color-secondary)">
-          <div class="tier-card-head">
-            <span class="tier-name">Premium</span>
-            <span class="tier-tag tier-tag--premium">Native 融入</span>
-          </div>
-          <p class="tier-desc">AI 轉譯為該媒體原生風格,讀者不易察覺是廣告。適合 quality-driven 品牌追求可信度。</p>
-          <div class="tier-features">
-            <div class="tier-features-item">AI 學習該媒體 editorial voice</div>
-            <div class="tier-features-item">自然嵌入品牌 mention</div>
-            <div class="tier-features-item">CPL 單價較高,lead 品質高</div>
-            <div class="tier-features-item">需 Mlytics 編輯把關</div>
-          </div>
-          <div class="tier-stats">
-            <div>
-              <div class="tier-stat-key">預估月 lead</div>
-              <div class="tier-stat-val">40–55</div>
-            </div>
-            <div>
-              <div class="tier-stat-key">預估月花費</div>
-              <div class="tier-stat-val">$1,200–2,200</div>
-            </div>
-          </div>
-          <button class="btn btn-primary btn-block btn-arrow" style="background:var(--color-secondary);border-color:var(--color-secondary)">選擇 Premium · 生成第一批 AI Answer</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Continue bar -->
     <div class="continue-bar">
-      <div class="continue-bar-context">Stage 03 → Stage 04 · Review</div>
-      <a href="08-timeline.html" class="btn btn-primary btn-arrow">送審(Continue)</a>
+      <div class="continue-bar-context">確認組合後 · 由 Cortex 生成 AI Answer 供你審核</div>
+      <a href="05-brand-review.html" class="btn btn-primary btn-arrow">生成並審核</a>
     </div>
   </main>
+
+  <!-- Adjust portfolio modal -->
+  <div class="modal-scrim" id="adjustModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 class="modal-title">調整媒體組合</h3>
+        <button class="modal-close" id="closeAdjustModal">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="t-sm muted" style="margin:0 0 16px">
+          最多選 3 個平台 · Cortex 已預選 fit 最高的 3 個。取消勾選後,可以加入其他平台。
+        </p>
+
+        <div class="modal-row">
+          <input type="checkbox" checked disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">Bella</span>
+            <span class="modal-row-cat">美容生活 · Cortex 推薦</span>
+          </div>
+          <span class="modal-row-score">92%</span>
+          <span class="modal-row-cpl">$14–20</span>
+        </div>
+
+        <div class="modal-row">
+          <input type="checkbox" checked disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">CMoney</span>
+            <span class="modal-row-cat">理財生活 · Cortex 推薦</span>
+          </div>
+          <span class="modal-row-score">87%</span>
+          <span class="modal-row-cpl">$16–24</span>
+        </div>
+
+        <div class="modal-row">
+          <input type="checkbox" checked disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">NOWnews</span>
+            <span class="modal-row-cat">生活資訊 · Cortex 推薦</span>
+          </div>
+          <span class="modal-row-score">81%</span>
+          <span class="modal-row-cpl">$18–26</span>
+        </div>
+
+        <div class="modal-row disabled">
+          <input type="checkbox" disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">Business Today</span>
+            <span class="modal-row-cat">財經 · 語氣需調整</span>
+          </div>
+          <span class="modal-row-score">76%</span>
+          <span class="modal-row-cpl">$22–32</span>
+        </div>
+
+        <div class="modal-row disabled">
+          <input type="checkbox" disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">Vogue TW</span>
+            <span class="modal-row-cat">時尚美容</span>
+          </div>
+          <span class="modal-row-score">72%</span>
+          <span class="modal-row-cpl">$24–36</span>
+        </div>
+
+        <div class="modal-row disabled">
+          <input type="checkbox" disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">MedPartner</span>
+            <span class="modal-row-cat">醫療專業</span>
+          </div>
+          <span class="modal-row-score">68%</span>
+          <span class="modal-row-cpl">$28–42</span>
+        </div>
+
+        <div class="modal-row disabled">
+          <input type="checkbox" disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">Marie Claire</span>
+            <span class="modal-row-cat">時尚生活</span>
+          </div>
+          <span class="modal-row-score">65%</span>
+          <span class="modal-row-cpl">$30–48</span>
+        </div>
+
+        <div class="modal-row disabled">
+          <input type="checkbox" disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">Beauty321</span>
+            <span class="modal-row-cat">美容評測</span>
+          </div>
+          <span class="modal-row-score">61%</span>
+          <span class="modal-row-cpl">$32–52</span>
+        </div>
+
+        <div class="modal-row disabled">
+          <input type="checkbox" disabled />
+          <div class="modal-row-body">
+            <span class="modal-row-name">Money 錢雜誌</span>
+            <span class="modal-row-cat">理財專業</span>
+          </div>
+          <span class="modal-row-score">58%</span>
+          <span class="modal-row-cpl">$34–56</span>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <span class="modal-count">已選 <strong>3</strong> / 3 · 需先取消勾選才能新增</span>
+        <div class="row">
+          <button class="btn btn-secondary" id="cancelAdjust">取消</button>
+          <button class="btn btn-primary" id="confirmAdjust">套用組合</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="../nav.js"></script>
+  <script>
+    const openBtn = document.getElementById('openAdjustModal');
+    const closeBtn = document.getElementById('closeAdjustModal');
+    const cancelBtn = document.getElementById('cancelAdjust');
+    const confirmBtn = document.getElementById('confirmAdjust');
+    const modal = document.getElementById('adjustModal');
+    const open = () => modal.classList.add('open');
+    const close = () => modal.classList.remove('open');
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    cancelBtn.addEventListener('click', close);
+    confirmBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  </script>
 </body>
 </html>

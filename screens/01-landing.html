@@ -6,7 +6,7 @@
   <title>Cortex — 輸入品牌網址</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    .landing-form { max-width: 620px; margin: 40px 0; }
+    .landing-form { max-width: 620px; margin: 32px 0; }
     .landing-form-row { display: flex; gap: 12px; }
     .landing-form-row .input { flex: 1; }
     .landing-mode-hint {
@@ -15,48 +15,39 @@
       color: var(--color-neutral-500);
     }
     .partners {
-      margin-top: 64px;
+      margin-top: 72px;
       padding-top: 24px;
       border-top: 1px solid var(--color-neutral-200);
     }
     .partners-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
+      font: 500 13px/1.4 var(--font-sans);
       color: var(--color-neutral-500);
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
     .partners-logos {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 40px;
+      gap: 16px;
     }
-    .partner-logo {
-      height: 24px;
-      opacity: .7;
-      filter: grayscale(100%);
-    }
-    .partner-logo:hover { opacity: 1; filter: none; }
     .partners-more {
       font: 500 13px var(--font-sans);
       color: var(--color-neutral-500);
+      margin-left: 4px;
     }
   </style>
 </head>
 <body>
   <main class="page">
     <div class="page-header">
-      <div class="page-eyebrow">Stage 00 · Discovery</div>
-      <h1 class="page-title">輸入品牌網址,讓 Cortex 用媒體的語言介紹你的品牌。</h1>
+      <h1 class="page-title">讓你的品牌,<br />成為讀者的答案,不是廣告。</h1>
       <p class="page-subtitle">
-        不是插入的廣告,是讀者會想讀完的延伸閱讀。
+        Cortex 讀你的品牌網站,讓 AI 在讀者主動搜尋時,把你的產品作為答案自然呈現在合作媒體。
       </p>
     </div>
 
     <form class="landing-form" onsubmit="event.preventDefault(); window.location.href='02-media-fit.html';">
-      <label class="label" for="brandUrl">品牌網址</label>
+      <label class="label" for="brandUrl">你的品牌網址</label>
       <div class="landing-form-row">
         <input
           type="url"
@@ -69,22 +60,21 @@
         <button type="submit" class="btn btn-primary btn-arrow">開始分析</button>
       </div>
       <div class="landing-mode-hint">
-        目前為
         <span class="hint">
-          <strong>快速掃描</strong>
-          <span class="hint-tip">從網站標題、meta、內容結構抓取品牌 signal,不動用 AI 深度分析,秒級完成。深度分析在後續 stage 才會啟動。</span>
+          <strong>快速掃描模式</strong>
+          <span class="hint-tip">從網站標題、meta、內容結構抓取品牌 signal,秒級完成,尚未觸發 AI 深度分析。</span>
         </span>
-        · 秒級完成、不動用 AI token 成本
+        · 秒級完成
       </div>
     </form>
 
     <section class="partners">
       <div class="partners-label">合作媒體 · 健康 / 生活 / 財經</div>
       <div class="partners-logos">
-        <img src="../assets/logos/Bella.webp" alt="Bella" class="partner-logo" style="height:20px" />
-        <img src="../assets/logos/cmoney.svg" alt="CMoney" class="partner-logo" />
-        <img src="../assets/logos/now.svg" alt="NOWnews" class="partner-logo" />
-        <img src="../assets/logos/today.png" alt="Business Today" class="partner-logo" />
+        <span class="logo-wrap logo-wrap--bella"><img src="../assets/logos/Bella.webp" alt="Bella" /></span>
+        <span class="logo-wrap logo-wrap--cmoney"><img src="../assets/logos/cmoney.svg" alt="CMoney" /></span>
+        <span class="logo-wrap logo-wrap--nownews"><img src="../assets/logos/now.svg" alt="NOWnews" /></span>
+        <span class="logo-wrap logo-wrap--today"><img src="../assets/logos/today.png" alt="Business Today" /></span>
         <span class="partners-more">+ 11 家</span>
       </div>
     </section>

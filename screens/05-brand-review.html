@@ -242,8 +242,11 @@
             </span>
           </div>
           <div class="draft-actions">
-            <div class="draft-approved-indicator">
-              ✓ 已 approve · 等其他 2 則審核完成一起送 Mlytics
+            <div class="draft-actions-left">
+              <button class="btn btn-secondary preview-trigger" data-media="Bella">預覽平台呈現</button>
+              <div class="draft-approved-indicator" style="margin-left:12px">
+                ✓ 已 approve
+              </div>
             </div>
             <button class="btn btn-ghost">取消 approve</button>
           </div>
@@ -284,14 +287,14 @@
           </div>
           <div class="draft-actions">
             <div class="draft-actions-left">
+              <button class="btn btn-secondary preview-trigger" data-media="CMoney">預覽平台呈現</button>
               <button class="btn btn-primary">Approve</button>
               <button class="btn btn-secondary">編輯</button>
               <button class="btn btn-ghost" style="color:var(--color-danger)">退回重生</button>
             </div>
             <span class="draft-hint">
-              <span class="hint">
-                退回重生會發生什麼?
-                <span class="hint-tip">Cortex 會用不同角度重新生成一則,你可以繼續審核。不會扣費、不影響其他兩則。</span>
+              <span class="hint">退回重生 3 / 3 剩餘
+                <span class="hint-tip">每則 AI Answer 有 3 次退回重生機會。用完後如需再改,需人工協助或編輯後 approve。</span>
               </span>
             </span>
           </div>
@@ -338,22 +341,80 @@
           </div>
           <div class="draft-actions">
             <div class="draft-actions-left">
+              <button class="btn btn-secondary preview-trigger" data-media="NOWnews">預覽平台呈現</button>
               <button class="btn btn-primary">Approve</button>
               <button class="btn btn-secondary">編輯</button>
               <button class="btn btn-ghost" style="color:var(--color-danger)">退回重生</button>
             </div>
-            <span class="draft-hint">品牌 mention 已依你設定的規則顯示</span>
+            <span class="draft-hint">
+              <span class="hint">退回重生 3 / 3 剩餘
+                <span class="hint-tip">每則 AI Answer 有 3 次退回重生機會。用完後如需再改,需人工協助或編輯後 approve。</span>
+              </span>
+            </span>
           </div>
         </div>
       </article>
 
     </div>
 
-    <div class="continue-bar">
-      <div class="continue-bar-context">3 則都 approve 後 · 送 Mlytics 合規審核</div>
-      <a href="08-timeline.html" class="btn btn-primary btn-arrow">送 Mlytics 審核</a>
-    </div>
   </main>
+
+  <!-- Preview 平台呈現 modal -->
+  <div class="modal-scrim" id="previewModal" style="position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:400;display:none;align-items:center;justify-content:center;padding:24px">
+    <div class="modal" style="background:var(--color-neutral-0);border-radius:var(--radius-md);max-width:760px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden">
+      <div class="modal-head" style="padding:20px 24px;border-bottom:1px solid var(--color-neutral-200);display:flex;align-items:center;justify-content:space-between">
+        <h3 style="font:600 18px var(--font-sans);margin:0">
+          預覽在 <span id="previewMedia">Bella</span> 平台的呈現
+        </h3>
+        <button class="modal-close" data-close-modal="previewModal" style="background:none;border:0;cursor:pointer;font-size:24px;line-height:1;color:var(--color-neutral-500)">×</button>
+      </div>
+      <div class="modal-body" style="padding:24px;overflow-y:auto;background:var(--color-neutral-50)">
+        <p style="font:400 13px/1.5 var(--font-sans);color:var(--color-neutral-500);margin:0 0 16px;padding:12px 16px;background:var(--color-neutral-100);border-radius:var(--radius-sm)">
+          你的 AI Answer 會以「延伸閱讀」形式,出現在該平台文章下方的推薦區塊 (Mlytics 現行做法:5-6 則延伸閱讀)。
+        </p>
+        <!-- Fake article body -->
+        <div style="background:var(--color-neutral-0);border:1px solid var(--color-neutral-200);border-radius:var(--radius-sm);padding:24px">
+          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:8px" id="previewMediaTop">Bella</div>
+          <h4 style="font:600 22px/1.3 var(--font-sans);margin:0 0 12px">30 歲後,你該重新盤點的三種營養素</h4>
+          <p style="font:400 14px/1.7 var(--font-sans);color:var(--color-neutral-700);margin:0 0 16px">
+            年過 30,女性的營養需求開始變化。膠原蛋白、維他命 D、鐵質是最常被提到的三項。本文整理專家建議與市場常見選擇... (文章主體約 800 字)
+          </p>
+          <div style="padding-top:20px;border-top:1px solid var(--color-neutral-200)">
+            <div style="font:600 13px var(--font-sans);color:var(--color-neutral-700);margin-bottom:12px">延伸閱讀</div>
+            <ul style="list-style:none;padding:0;margin:0;font:400 14px/1.6 var(--font-sans);color:var(--color-neutral-700)">
+              <li style="padding:8px 0;border-bottom:1px solid var(--color-neutral-100)">→ 30+ 女性最容易忽略的營養缺口</li>
+              <li style="padding:8px 0;border-bottom:1px solid var(--color-neutral-100)">→ 保健食品該怎麼搭配才不衝突?</li>
+              <li style="padding:10px 12px;background:var(--color-primary-container);color:var(--color-on-primary-container);border-radius:var(--radius-sm);border:1px dashed var(--color-primary);margin:6px 0">
+                <strong>→ 你的 AI Answer 出現在這裡</strong>
+                <div style="font:400 12px var(--font-sans);margin-top:4px;opacity:.8">「30 歲後代謝變慢,晨間補充什麼比較有效?」— Cortex 生成</div>
+              </li>
+              <li style="padding:8px 0;border-bottom:1px solid var(--color-neutral-100)">→ 更年期前的日常飲食調整</li>
+              <li style="padding:8px 0">→ 家庭主婦的保健預算怎麼分配</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="../nav.js"></script>
+  <script>
+    document.querySelectorAll('.preview-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const media = btn.dataset.media;
+        document.getElementById('previewMedia').textContent = media;
+        document.getElementById('previewMediaTop').textContent = media;
+        document.getElementById('previewModal').style.display = 'flex';
+      });
+    });
+    document.querySelectorAll('[data-close-modal]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById(btn.dataset.closeModal).style.display = 'none';
+      });
+    });
+    document.getElementById('previewModal').addEventListener('click', (e) => {
+      if (e.target.id === 'previewModal') e.target.style.display = 'none';
+    });
+  </script>
 </body>
 </html>

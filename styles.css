@@ -181,6 +181,44 @@ button { font-family: inherit; cursor: pointer; }
   margin-right: 8px;
 }
 
+/* Exception sub-links */
+.nav-drawer-exc-group {
+  border-left: 2px solid var(--color-warning);
+  margin-left: 8px;
+  margin-bottom: 4px;
+}
+.nav-drawer-link--exception {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 8px;
+  color: var(--color-neutral-500);
+  font-size: 13px;
+}
+.nav-drawer-link--exception:hover { color: var(--color-warning); }
+.nav-drawer-link--exception.active { color: var(--color-warning); font-weight: 500; }
+.nav-drawer-exc-icon {
+  font-family: var(--font-mono);
+  color: var(--color-warning);
+  font-size: 11px;
+  width: 12px;
+}
+.nav-drawer-legend {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-neutral-200);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-neutral-500);
+}
+.nav-drawer-legend-icon { color: var(--color-warning); }
+
+/* Continue bar → hide by default; hamburger takes over navigation */
+.continue-bar { display: none; }
+
 /* ============================================================
  * Page shell
  * ============================================================ */

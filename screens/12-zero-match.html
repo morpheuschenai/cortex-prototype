@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex — Zero-match Waitlist</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .zm-hero {
+      padding: 40px 32px;
+      background: var(--color-neutral-50);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .zm-hero-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      background: var(--color-primary-container);
+      color: var(--color-on-primary-container);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 600 24px var(--font-sans);
+    }
+    .zm-hero-title {
+      font: 600 28px/1.3 var(--font-sans);
+      margin: 0 0 12px;
+    }
+    .zm-hero-sub {
+      font: 400 15px/1.6 var(--font-sans);
+      color: var(--color-neutral-500);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .zm-status {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 900px) { .zm-status { grid-template-columns: 1fr; } }
+    .zm-status-card {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .zm-status-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .zm-status-val {
+      font: 700 24px var(--font-sans);
+      color: var(--color-neutral-900);
+    }
+    .zm-status-desc {
+      font: 400 13px var(--font-sans);
+      color: var(--color-neutral-500);
+    }
+
+    /* Gap analysis */
+    .gap-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .gap-item {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      align-items: center;
+    }
+    .gap-num {
+      width: 32px;
+      height: 32px;
+      background: var(--color-neutral-100);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 600 13px var(--font-sans);
+      color: var(--color-neutral-700);
+    }
+    .gap-body { display: flex; flex-direction: column; gap: 4px; }
+    .gap-title { font: 600 15px var(--font-sans); }
+    .gap-desc { font: 400 13px var(--font-sans); color: var(--color-neutral-500); }
+    .gap-improve {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-success);
+    }
+
+    /* Educational path */
+    .edu-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px) { .edu-list { grid-template-columns: 1fr; } }
+    .edu-item {
+      padding: 16px;
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .edu-item-title { font: 600 14px var(--font-sans); }
+    .edu-item-desc { font: 400 13px var(--font-sans); color: var(--color-neutral-500); }
+    .edu-item-eta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-neutral-500);
+      margin-top: 4px;
+    }
+
+    /* Waitlist form */
+    .waitlist-form {
+      background: var(--color-primary-container);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+    @media (max-width: 900px) { .waitlist-form { grid-template-columns: 1fr; } }
+    .waitlist-form-info { display: flex; flex-direction: column; gap: 4px; }
+    .waitlist-form-title { font: 600 16px var(--font-sans); color: var(--color-on-primary-container); }
+    .waitlist-form-sub { font: 400 13px var(--font-sans); color: var(--color-on-primary-container); opacity: .8; }
+    .waitlist-form-fields { display: flex; gap: 8px; }
+    .waitlist-form-input {
+      padding: 10px 14px;
+      border: 1px solid var(--color-neutral-300);
+      border-radius: var(--radius-md);
+      font: 400 14px var(--font-sans);
+      background: white;
+      min-width: 240px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Exception · Zero Match</div>
+    </div>
+
+    <div class="zm-hero">
+      <div class="zm-hero-icon">⌕</div>
+      <h1 class="zm-hero-title">你的品牌類型稀有 · Cortex 正在為你尋找合適平台</h1>
+      <p class="zm-hero-sub">
+        目前 15 個合作媒體都不是你的最佳匹配。這不是拒絕,而是我們正在為你的垂直開拓新的媒體夥伴。
+      </p>
+    </div>
+
+    <!-- Waitlist status -->
+    <div class="zm-status">
+      <div class="zm-status-card">
+        <span class="zm-status-label">預計等待時間</span>
+        <span class="zm-status-val">3–6 週</span>
+        <span class="zm-status-desc">Cortex BD 團隊正在接洽 2 個新媒體夥伴</span>
+      </div>
+      <div class="zm-status-card">
+        <span class="zm-status-label">你在 waitlist 的位置</span>
+        <span class="zm-status-val">#7</span>
+        <span class="zm-status-desc">同垂直目前有 6 家品牌也在等待</span>
+      </div>
+    </div>
+
+    <!-- Gap analysis -->
+    <section class="section">
+      <h2 class="section-title">同時可以自助改善的三件事</h2>
+      <p class="section-subtitle">
+        調整這些之後,品牌與現有媒體的匹配度可能提升,不用等 waitlist。
+      </p>
+
+      <div class="gap-list">
+        <div class="gap-item">
+          <div class="gap-num">1</div>
+          <div class="gap-body">
+            <span class="gap-title">網站沒有明確的產品定位</span>
+            <span class="gap-desc">About 頁與首頁 hero 用相似的通用敘述,無法讓 Cortex 判斷你的差異化。</span>
+          </div>
+          <span class="gap-improve">預估 fit +8–15%</span>
+        </div>
+
+        <div class="gap-item">
+          <div class="gap-num">2</div>
+          <div class="gap-body">
+            <span class="gap-title">產品頁缺少 use case 情境</span>
+            <span class="gap-desc">產品描述只有規格,沒有使用情境。媒體匹配需要看到「這產品在什麼場合被用」。</span>
+          </div>
+          <span class="gap-improve">預估 fit +12–20%</span>
+        </div>
+
+        <div class="gap-item">
+          <div class="gap-num">3</div>
+          <div class="gap-body">
+            <span class="gap-title">部落格空白</span>
+            <span class="gap-desc">沒有 blog 或 editorial 內容,Cortex 無法分析你的品牌語氣。</span>
+          </div>
+          <span class="gap-improve">預估 fit +18–25%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Educational path -->
+    <section class="section">
+      <h2 class="section-title">同類型品牌通常適合這些媒體</h2>
+      <p class="section-subtitle">
+        雖然還沒合作,但這是 Cortex 拓展方向的參考。
+      </p>
+
+      <div class="edu-list">
+        <div class="edu-item">
+          <span class="edu-item-title">垂直專業媒體</span>
+          <span class="edu-item-desc">你這類品牌適合小眾深度媒體、不是大眾流量平台。</span>
+          <span class="edu-item-eta">預計 Q4 上線 2 家</span>
+        </div>
+        <div class="edu-item">
+          <span class="edu-item-title">專業社群平台</span>
+          <span class="edu-item-desc">同好社群、線上研討會平台,是這類品牌高轉換管道。</span>
+          <span class="edu-item-eta">預計 Q1 2027 上線</span>
+        </div>
+        <div class="edu-item">
+          <span class="edu-item-title">Podcast 平台</span>
+          <span class="edu-item-desc">Cortex 正在測試 audio-native AI Answer 格式。</span>
+          <span class="edu-item-eta">實驗中 · 無時程</span>
+        </div>
+        <div class="edu-item">
+          <span class="edu-item-title">Newsletter 平台</span>
+          <span class="edu-item-desc">深度讀者、高信任度、高轉換,適合你的品牌敘事。</span>
+          <span class="edu-item-eta">預計 Q4 上線 1 家</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Waitlist form -->
+    <form class="waitlist-form" style="margin-top:32px" onsubmit="event.preventDefault(); alert('已加入 waitlist(prototype 模擬)')">
+      <div class="waitlist-form-info">
+        <span class="waitlist-form-title">加入 waitlist</span>
+        <span class="waitlist-form-sub">當有匹配平台上線,第一時間通知你</span>
+      </div>
+      <div class="waitlist-form-fields">
+        <input type="email" class="waitlist-form-input" placeholder="you@brand.com" required />
+        <button class="btn btn-primary btn-arrow" type="submit">加入</button>
+      </div>
+    </form>
+
+    <div class="continue-bar">
+      <div class="continue-bar-context">Exception 支線結束</div>
+      <a href="../index.html" class="btn btn-secondary">回目錄</a>
+    </div>
+  </main>
+  <script src="../nav.js"></script>
+</body>
+</html>

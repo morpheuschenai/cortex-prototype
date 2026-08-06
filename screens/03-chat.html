@@ -6,475 +6,482 @@
   <title>Cortex — 5 題訪談</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* ============================================================
-     * Page 03 — Full-Canvas Workspace (Chat)
-     * Macrostructure: chat = whole canvas, aside strips card chrome
-     * No card wrapper. No locked-preview redundancy.
-     * ============================================================ */
-
-    .ws {
+    .chat-layout {
       display: grid;
-      grid-template-columns: 1fr 320px;
-      min-height: calc(100vh - 44px);
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    /* left column — chat as canvas */
-    .chat {
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid var(--color-neutral-200);
-    }
-
-    .chat-topbar {
-      padding: 24px 48px 20px;
-      border-bottom: 1px solid var(--color-neutral-200);
-      display: flex;
-      align-items: baseline;
+      grid-template-columns: 320px 1fr;
       gap: 24px;
+      min-height: calc(100vh - 200px);
     }
-    .chat-topbar-kicker {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--color-neutral-500);
-    }
-    .chat-topbar-progress {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--color-neutral-500);
-    }
-    .chat-topbar-progress-bar {
-      display: inline-flex;
-      gap: 3px;
-    }
-    .chat-topbar-progress-cell {
-      width: 20px;
-      height: 4px;
-      background: var(--color-neutral-200);
-    }
-    .chat-topbar-progress-cell.done {
-      background: var(--color-primary);
-    }
-    .chat-topbar-progress-cell.active {
-      background: var(--color-neutral-900);
+    @media (max-width: 900px) {
+      .chat-layout { grid-template-columns: 1fr; }
     }
 
-    .chat-stream {
-      flex: 1;
-      padding: 40px 48px;
+    /* Left: aside */
+    .chat-aside {
       display: flex;
       flex-direction: column;
-      gap: 32px;
-      overflow-y: auto;
+      gap: 20px;
     }
-
-    .msg {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
+    .aside-card {
+      background: var(--color-neutral-50);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 16px;
     }
-    .msg.user { justify-content: flex-end; }
-    .msg-avatar {
-      flex: none;
-      width: 28px;
-      height: 28px;
-      background: var(--color-neutral-900);
-      color: var(--color-neutral-0);
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      letter-spacing: .05em;
-    }
-    .msg-content {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      max-width: 640px;
-    }
-    .msg.user .msg-content { align-items: flex-end; }
-
-    .msg-body {
-      font: 400 15px/1.65 var(--font-sans);
-      color: var(--color-neutral-900);
-    }
-    .msg-body strong { color: var(--color-primary); font-weight: 600; }
-
-    .msg.user .msg-body {
-      background: var(--color-neutral-900);
-      color: var(--color-neutral-0);
-      padding: 12px 16px;
-    }
-
-    .msg-meta {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--color-neutral-500);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* inline suggestions — not chip pills */
-    .chat-suggest {
-      padding: 20px 48px;
-      border-top: 1px solid var(--color-neutral-200);
-      display: flex;
-      align-items: baseline;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .chat-suggest-label {
+    .aside-card-title {
       font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
-      flex: none;
-    }
-    .chat-suggest-item {
-      font: 500 14px/1 var(--font-sans);
-      color: var(--color-neutral-900);
-      border: 0;
-      background: transparent;
-      padding: 4px 0;
-      border-bottom: 1px solid var(--color-neutral-300);
-      transition: border-color .15s, color .15s;
-    }
-    .chat-suggest-item:hover {
-      border-bottom-color: var(--color-primary);
-      color: var(--color-primary);
+      margin-bottom: 12px;
     }
 
-    /* input dock — no card, integrated bottom */
-    .chat-dock {
-      padding: 20px 48px 32px;
-      border-top: 1px solid var(--color-neutral-200);
+    /* Brand profile mini */
+    .brand-mini-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font: 400 13px/1.4 var(--font-sans);
+      border-bottom: 1px solid var(--color-neutral-200);
     }
-    .chat-dock-row {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 12px;
+    .brand-mini-row:last-child { border-bottom: 0; }
+    .brand-mini-key { color: var(--color-neutral-500); }
+    .brand-mini-val { color: var(--color-neutral-900); font-weight: 500; }
+
+    /* Media fit thumbs */
+    .media-thumb {
+      display: flex;
       align-items: center;
-      border-bottom: 1px solid var(--color-neutral-900);
-      padding-bottom: 12px;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-neutral-200);
+      font: 400 13px var(--font-sans);
     }
-    .chat-dock-input {
-      font: 400 15px/1.5 var(--font-sans);
-      padding: 12px 0;
-      border: 0;
-      background: transparent;
+    .media-thumb:last-child { border-bottom: 0; }
+    .media-thumb-logo {
+      height: 14px;
+      max-width: 60px;
+      object-fit: contain;
+    }
+    .media-thumb-name {
+      flex: 1;
+      font-weight: 500;
+    }
+    .media-thumb-score {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+    .media-thumb--locked {
+      opacity: .4;
+      filter: blur(2px);
+    }
+    .media-thumb--locked .media-thumb-score {
+      color: var(--color-neutral-500);
+    }
+
+    /* Progress list */
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font: 400 13px var(--font-sans);
+      border-bottom: 1px solid var(--color-neutral-200);
+    }
+    .progress-item:last-child { border-bottom: 0; }
+    .progress-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-neutral-500);
+      width: 20px;
+    }
+    .progress-text { flex: 1; color: var(--color-neutral-700); }
+    .progress-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .progress-item.done .progress-num { color: var(--color-success); }
+    .progress-item.done .progress-status { color: var(--color-success); }
+    .progress-item.active { background: var(--color-primary-container); margin: 0 -8px; padding: 8px; border-radius: var(--radius-sm); border-bottom: 0; }
+    .progress-item.active .progress-status { color: var(--color-primary); font-weight: 500; }
+
+    /* Right: chat window */
+    .chat-window {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-window-head {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--color-neutral-200);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--color-neutral-50);
+    }
+    .chat-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-secondary-container);
+      color: var(--color-on-secondary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 700 12px var(--font-sans);
+      flex-shrink: 0;
+    }
+    .chat-head-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .chat-head-name {
+      font: 600 14px var(--font-sans);
+    }
+    .chat-head-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-success);
+    }
+    .chat-progress {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-neutral-500);
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+    }
+
+    .msg {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .msg.user { justify-content: flex-end; }
+    .msg-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-width: 80%;
+    }
+    .msg.user .msg-content { align-items: flex-end; }
+    .msg-bubble {
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font: 400 14px/1.55 var(--font-sans);
+    }
+    .msg-bubble.ai {
+      background: var(--color-neutral-50);
       color: var(--color-neutral-900);
+      border-bottom-left-radius: var(--radius-sm);
     }
-    .chat-dock-input:focus { outline: none; }
-    .chat-dock-input::placeholder { color: var(--color-neutral-300); }
-    .chat-dock-voice {
-      font: 500 12px/1 var(--font-mono);
-      letter-spacing: .06em;
+    .msg-bubble.user {
+      background: var(--color-primary);
+      color: var(--color-on-primary);
+      border-bottom-right-radius: var(--radius-sm);
+    }
+    .msg-bubble strong { color: var(--color-primary); font-weight: 600; }
+    .msg.user .msg-bubble strong { color: white; }
+    .msg-time {
+      font: 400 11px var(--font-sans);
+      color: var(--color-neutral-500);
+    }
+
+    /* Quick reply chips */
+    .chat-chips {
+      padding: 12px 24px;
+      border-top: 1px solid var(--color-neutral-200);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .chat-chips-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
-      background: transparent;
+      margin-right: 4px;
+    }
+    .chat-chip {
+      font: 500 13px var(--font-sans);
+      color: var(--color-primary);
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-primary);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .chat-chip:hover {
+      background: var(--color-primary-container);
+    }
+    .chat-chip-hint {
+      font: 400 11px var(--font-mono);
+      color: var(--color-neutral-500);
+      margin-left: 4px;
+    }
+
+    /* Input dock */
+    .chat-dock {
+      padding: 12px 20px 16px;
+      border-top: 1px solid var(--color-neutral-200);
+      background: var(--color-neutral-0);
+    }
+    .chat-dock-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .chat-dock-input {
+      flex: 1;
+      font: 400 14px var(--font-sans);
+      padding: 10px 12px;
       border: 1px solid var(--color-neutral-300);
-      padding: 8px 12px;
+      border-radius: var(--radius-md);
+    }
+    .chat-dock-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-primary-container);
+    }
+    .chat-dock-voice {
+      font: 500 12px var(--font-mono);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      background: var(--color-neutral-0);
+      color: var(--color-neutral-700);
+      border: 1px solid var(--color-neutral-300);
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: color .15s, border-color .15s;
+      cursor: pointer;
     }
-    .chat-dock-voice:hover { color: var(--color-neutral-900); border-color: var(--color-neutral-900); }
     .chat-dock-voice::before {
       content: '';
       width: 6px;
       height: 6px;
       border-radius: 50%;
       background: var(--color-danger);
-      display: inline-block;
     }
     .chat-dock-send {
-      font: 600 13px/1 var(--font-sans);
+      font: 500 13px var(--font-sans);
+      background: var(--color-primary);
       color: var(--color-on-primary);
-      background: var(--color-neutral-900);
       border: 0;
-      padding: 12px 20px;
-      transition: background .15s;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
     }
-    .chat-dock-send:hover { background: var(--color-primary); }
     .chat-dock-hint {
-      margin-top: 10px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
+      font: 400 11px var(--font-mono);
       color: var(--color-neutral-500);
-    }
-
-    /* right column — aside, typographic only, no cards */
-    .aside {
-      padding: 24px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      background: var(--color-neutral-50);
-    }
-    .aside-section-title {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--color-neutral-500);
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--color-neutral-300);
-      margin-bottom: 12px;
-    }
-
-    .aside-h {
-      margin: 0 0 12px;
-      font: 600 20px/1.3 var(--font-sans);
-      letter-spacing: -.01em;
-    }
-
-    .aside-fact {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--color-neutral-200);
-      font: 400 13px/1.4 var(--font-sans);
-    }
-    .aside-fact-key { color: var(--color-neutral-500); }
-    .aside-fact-val { color: var(--color-neutral-900); font-weight: 500; }
-
-    .aside-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 4px;
-    }
-    .aside-tag {
-      font: 500 12px/1.2 var(--font-sans);
-      color: var(--color-neutral-700);
-      border: 1px solid var(--color-neutral-300);
-      padding: 4px 8px;
-    }
-
-    .aside-progress-block {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .aside-progress-row {
-      display: grid;
-      grid-template-columns: 20px 1fr auto;
-      align-items: center;
-      gap: 12px;
-      font: 400 13px/1.4 var(--font-sans);
-      padding: 8px 0;
-      border-bottom: 1px solid var(--color-neutral-200);
-    }
-    .aside-progress-num {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--color-neutral-500);
-    }
-    .aside-progress-row.done .aside-progress-num { color: var(--color-primary); }
-    .aside-progress-row.done .aside-progress-text { color: var(--color-neutral-900); }
-    .aside-progress-row.active { background: var(--color-neutral-100); margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
-    .aside-progress-row.active .aside-progress-num { color: var(--color-neutral-900); font-weight: 500; }
-    .aside-progress-text { color: var(--color-neutral-500); }
-    .aside-progress-mark {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--color-neutral-500);
-    }
-    .aside-progress-row.done .aside-progress-mark { color: var(--color-primary); }
-
-    @media (max-width: 900px) {
-      .ws { grid-template-columns: 1fr; }
-      .aside { border-top: 1px solid var(--color-neutral-200); }
-      .chat-topbar, .chat-stream, .chat-suggest, .chat-dock {
-        padding-left: 24px; padding-right: 24px;
-      }
+      margin-top: 8px;
     }
   </style>
 </head>
 <body>
-  <nav class="proto-nav">
-    <span class="proto-nav-label">Cortex Proto</span>
-    <a href="../index.html" class="proto-nav-link">目錄</a>
-    <a href="01-landing.html" class="proto-nav-link">1. Landing</a>
-    <a href="02-media-fit.html" class="proto-nav-link">2. Media Fit</a>
-    <a href="03-chat.html" class="proto-nav-link active">3. Chat 訪談</a>
-    <span class="proto-nav-spacer"></span>
-    <a href="../index.html" class="proto-nav-back">← 回目錄</a>
-  </nav>
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Stage 02 · Interview</div>
+      <h1 class="page-title">5 題訪談,解鎖完整媒體組合</h1>
+      <p class="page-subtitle">
+        Cortex 需要多一點資訊,才能為你組出最合適的投資組合。
+      </p>
+    </div>
 
-  <main class="proto-main">
-    <div class="ws">
+    <div class="chat-layout">
 
-      <!-- LEFT: chat canvas -->
-      <section class="chat">
+      <!-- LEFT: aside -->
+      <aside class="chat-aside">
 
-        <div class="chat-topbar">
-          <span class="chat-topbar-kicker">Stage 02 · 訪談中</span>
-          <span class="t-body" style="color:var(--color-neutral-700)">Cortex 助理</span>
-          <div class="chat-topbar-progress">
-            <span>Question 2 / 5</span>
-            <span class="chat-topbar-progress-bar">
-              <span class="chat-topbar-progress-cell done"></span>
-              <span class="chat-topbar-progress-cell active"></span>
-              <span class="chat-topbar-progress-cell"></span>
-              <span class="chat-topbar-progress-cell"></span>
-              <span class="chat-topbar-progress-cell"></span>
-            </span>
+        <div class="aside-card">
+          <div class="aside-card-title">Cortex 對你的理解</div>
+          <div class="brand-mini-row">
+            <span class="brand-mini-key">品類</span>
+            <span class="brand-mini-val">保健食品</span>
+          </div>
+          <div class="brand-mini-row">
+            <span class="brand-mini-key">定位</span>
+            <span class="brand-mini-val">Premium · DTC</span>
+          </div>
+          <div class="brand-mini-row">
+            <span class="brand-mini-key">主要 TA</span>
+            <span class="brand-mini-val">30+ 女性</span>
+          </div>
+          <div class="brand-mini-row">
+            <span class="brand-mini-key">語氣</span>
+            <span class="brand-mini-val">功能導向</span>
           </div>
         </div>
 
-        <div class="chat-stream">
-          <!-- AI msg 1 -->
-          <div class="msg">
-            <div class="msg-avatar">AI</div>
-            <div class="msg-content">
-              <div class="msg-body">
-                我看了你的網站 <strong>health-forward.tw</strong>,大概了解你賣的是保健食品。想再問你 5 個問題,讓媒體匹配更精準。<br /><br />
-                <strong>Question 01.</strong> 你這波曝光,主要想達到什麼目標?
-              </div>
-              <div class="msg-meta">
-                <span>Cortex · 10:32</span>
-              </div>
-            </div>
+        <div class="aside-card">
+          <div class="aside-card-title">媒體匹配 · 4 / 12</div>
+          <div class="media-thumb">
+            <img src="../assets/logos/Bella.webp" alt="Bella" class="media-thumb-logo" />
+            <span class="media-thumb-name">Bella</span>
+            <span class="media-thumb-score">92%</span>
           </div>
-
-          <!-- User msg 1 -->
-          <div class="msg user">
-            <div class="msg-content">
-              <div class="msg-body">
-                提升品牌知名度為主,順便帶一些試用申請的 lead。
-              </div>
-              <div class="msg-meta">
-                <span>你 · 10:33</span>
-              </div>
-            </div>
+          <div class="media-thumb">
+            <img src="../assets/logos/cmoney.svg" alt="CMoney" class="media-thumb-logo" />
+            <span class="media-thumb-name">CMoney</span>
+            <span class="media-thumb-score">87%</span>
           </div>
-
-          <!-- AI msg 2 -->
-          <div class="msg">
-            <div class="msg-avatar">AI</div>
-            <div class="msg-content">
-              <div class="msg-body">
-                了解,雙目標。<br /><br />
-                <strong>Question 02.</strong> 你的主要 TA 是哪個年齡層?可以複選,或口述你腦中的樣子。
-              </div>
-              <div class="msg-meta">
-                <span>Cortex · 10:33</span>
-              </div>
-            </div>
+          <div class="media-thumb">
+            <img src="../assets/logos/now.svg" alt="NOWnews" class="media-thumb-logo" />
+            <span class="media-thumb-name">NOWnews</span>
+            <span class="media-thumb-score">81%</span>
+          </div>
+          <div class="media-thumb">
+            <img src="../assets/logos/today.png" alt="Business Today" class="media-thumb-logo" />
+            <span class="media-thumb-name">Business Today</span>
+            <span class="media-thumb-score">76%</span>
+          </div>
+          <div class="media-thumb media-thumb--locked">
+            <span style="width:60px">?????</span>
+            <span class="media-thumb-name">??????</span>
+            <span class="media-thumb-score">??%</span>
+          </div>
+          <div class="media-thumb media-thumb--locked">
+            <span style="width:60px">?????</span>
+            <span class="media-thumb-name">??????</span>
+            <span class="media-thumb-score">??%</span>
+          </div>
+          <div style="text-align:center;padding:8px 0;font:400 12px var(--font-mono);color:var(--color-neutral-500)">
+            + 6 個 · 訪談完成解鎖
           </div>
         </div>
 
-        <!-- inline suggestions -->
-        <div class="chat-suggest">
-          <span class="chat-suggest-label">Quick reply</span>
-          <button class="chat-suggest-item">25–34 歲女性</button>
-          <button class="chat-suggest-item">35–44 歲女性</button>
-          <button class="chat-suggest-item">45–54 歲女性</button>
-          <button class="chat-suggest-item">高收入白領</button>
-        </div>
-
-        <!-- input dock -->
-        <div class="chat-dock">
-          <div class="chat-dock-row">
-            <input
-              type="text"
-              class="chat-dock-input"
-              placeholder="輸入你的回答"
-              aria-label="輸入你的回答"
-            />
-            <button class="chat-dock-voice">語音</button>
-            <button class="chat-dock-send">送出</button>
+        <div class="aside-card">
+          <div class="aside-card-title">訪談進度</div>
+          <div class="progress-item done">
+            <span class="progress-num">01</span>
+            <span class="progress-text">曝光目標</span>
+            <span class="progress-status">✓</span>
           </div>
-          <div class="chat-dock-hint">
-            Cortex 支援語音輸入 · AI 會自動整理成結構化需求
+          <div class="progress-item active">
+            <span class="progress-num">02</span>
+            <span class="progress-text">目標年齡層</span>
+            <span class="progress-status">·</span>
           </div>
-        </div>
-
-      </section>
-
-      <!-- RIGHT: aside — brand profile + progress -->
-      <aside class="aside">
-
-        <div>
-          <div class="aside-section-title">Brand profile · 已同步</div>
-          <h3 class="aside-h">Cortex 目前的理解</h3>
-          <div class="aside-fact">
-            <span class="aside-fact-key">品類</span>
-            <span class="aside-fact-val">保健食品</span>
+          <div class="progress-item">
+            <span class="progress-num">03</span>
+            <span class="progress-text">品牌禁忌</span>
+            <span class="progress-status"></span>
           </div>
-          <div class="aside-fact">
-            <span class="aside-fact-key">定位</span>
-            <span class="aside-fact-val">Premium · DTC</span>
+          <div class="progress-item">
+            <span class="progress-num">04</span>
+            <span class="progress-text">競品參考</span>
+            <span class="progress-status"></span>
           </div>
-          <div class="aside-fact">
-            <span class="aside-fact-key">語氣</span>
-            <span class="aside-fact-val">功能導向 · 科學背書</span>
-          </div>
-          <div class="aside-fact" style="border-bottom:0">
-            <span class="aside-fact-key">TA 假設</span>
-            <span class="aside-fact-val">30+ 女性</span>
-          </div>
-          <div class="aside-tags">
-            <span class="aside-tag">健康保健</span>
-            <span class="aside-tag">食品補給</span>
-            <span class="aside-tag">Premium</span>
-            <span class="aside-tag">DTC</span>
-            <span class="aside-tag">功能導向</span>
-          </div>
-        </div>
-
-        <div>
-          <div class="aside-section-title">訪談進度</div>
-          <div class="aside-progress-block">
-            <div class="aside-progress-row done">
-              <span class="aside-progress-num">01</span>
-              <span class="aside-progress-text">曝光目標</span>
-              <span class="aside-progress-mark">✓</span>
-            </div>
-            <div class="aside-progress-row active">
-              <span class="aside-progress-num">02</span>
-              <span class="aside-progress-text">目標年齡層</span>
-              <span class="aside-progress-mark">•</span>
-            </div>
-            <div class="aside-progress-row">
-              <span class="aside-progress-num">03</span>
-              <span class="aside-progress-text">品牌禁忌</span>
-              <span class="aside-progress-mark"></span>
-            </div>
-            <div class="aside-progress-row">
-              <span class="aside-progress-num">04</span>
-              <span class="aside-progress-text">競品參考</span>
-              <span class="aside-progress-mark"></span>
-            </div>
-            <div class="aside-progress-row" style="border-bottom:0">
-              <span class="aside-progress-num">05</span>
-              <span class="aside-progress-text">期待時程</span>
-              <span class="aside-progress-mark"></span>
-            </div>
+          <div class="progress-item">
+            <span class="progress-num">05</span>
+            <span class="progress-text">期待時程 + 建帳號</span>
+            <span class="progress-status"></span>
           </div>
         </div>
 
       </aside>
 
+      <!-- RIGHT: chat window -->
+      <section class="chat-window">
+        <header class="chat-window-head">
+          <div class="chat-avatar">AI</div>
+          <div class="chat-head-info">
+            <div class="chat-head-name">Cortex 助理</div>
+            <div class="chat-head-status">● 訪談進行中</div>
+          </div>
+          <span class="chat-progress">Q 2 / 5</span>
+        </header>
+
+        <div class="chat-body">
+          <div class="msg">
+            <div class="msg-content">
+              <div class="msg-bubble ai">
+                我看了你的網站 <strong>health-forward.tw</strong>,大概了解你賣的是保健食品。<br /><br />
+                想再問你 5 個問題,讓媒體匹配更精準。<br /><br />
+                <strong>Q1.</strong> 你這波曝光,主要想達到什麼目標?
+              </div>
+              <span class="msg-time">Cortex · 10:32</span>
+            </div>
+          </div>
+
+          <div class="msg user">
+            <div class="msg-content">
+              <div class="msg-bubble user">
+                提升品牌知名度為主,順便帶一些試用申請的 lead。
+              </div>
+              <span class="msg-time">你 · 10:33</span>
+            </div>
+          </div>
+
+          <div class="msg">
+            <div class="msg-content">
+              <div class="msg-bubble ai">
+                了解,雙目標。<br /><br />
+                <strong>Q2.</strong> 你的主要 TA 是哪個年齡層?可以複選,或口述你腦中的樣子。
+              </div>
+              <span class="msg-time">Cortex · 10:33</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-chips">
+          <span class="chat-chips-label">Quick reply</span>
+          <button class="chat-chip">25–34 女性</button>
+          <button class="chat-chip">35–44 女性</button>
+          <button class="chat-chip">45–54 女性</button>
+          <button class="chat-chip">高收入白領</button>
+          <span class="chat-chip-hint">
+            <span class="hint">
+              chips 會依上題答案動態變化
+              <span class="hint-tip">上一題你答「品牌知名度 + lead」,系統改推薦 TA 相關 chips。你答 TA 後,下一題會依 TA 特徵推 chips(禁忌 / 競品方向)。</span>
+            </span>
+          </span>
+        </div>
+
+        <div class="chat-dock">
+          <div class="chat-dock-row">
+            <input type="text" class="chat-dock-input" placeholder="輸入你的回答" />
+            <button class="chat-dock-voice">語音</button>
+            <button class="chat-dock-send">送出</button>
+          </div>
+          <div class="chat-dock-hint">
+            支援語音輸入 · Cortex 會自動整理成結構化需求
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Continue bar (for prototype walkthrough, skips remaining questions) -->
+    <div class="continue-bar">
+      <div class="continue-bar-context">
+        <span class="hint">
+          Prototype 跳過剩餘訪談
+          <span class="hint-tip">實際 flow: 用戶回答 Q2-Q5,Q5 完成後 chat 內出現 magic link 建帳號輸入框,建帳號後進入 04。</span>
+        </span>
+        · 假設訪談完成 + 帳號建立
+      </div>
+      <a href="04-full-analysis.html" class="btn btn-primary btn-arrow">Continue</a>
     </div>
   </main>
+  <script src="../nav.js"></script>
 </body>
 </html>

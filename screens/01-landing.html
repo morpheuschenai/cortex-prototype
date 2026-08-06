@@ -6,301 +6,89 @@
   <title>Cortex — 輸入品牌網址</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* ============================================================
-     * Page 01 — Editorial Split (Landing)
-     * Macrostructure: 55/45 asymmetric statement + form
-     * No card containers. Hairlines only.
-     * ============================================================ */
-
-    .landing {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 96px 48px 120px;
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: 96px;
-      align-items: start;
-      min-height: calc(100vh - 44px);
-    }
-
-    /* LEFT — statement column */
-    .statement {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      max-width: 640px;
-    }
-    .statement-kicker {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .statement-kicker::before {
-      content: '';
-      display: block;
-      width: 24px;
-      height: 1px;
-      background: var(--color-primary);
-    }
-    .statement-head {
-      margin: 0;
-      color: var(--color-neutral-900);
-    }
-    .statement-head em {
-      font-style: normal;
-      color: var(--color-primary);
-    }
-    .statement-lede {
-      margin: 0;
-      color: var(--color-neutral-500);
-      max-width: 480px;
-    }
-
-    /* footer strip — media partners in vertical (typography-only, no cards) */
-    .partners {
-      margin-top: 48px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .partners-label {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-    }
-    .partners-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      align-items: baseline;
-    }
-    .partner-name {
-      font: 600 15px/1.2 var(--font-sans);
-      color: var(--color-neutral-700);
-      letter-spacing: -.005em;
-    }
-    .partner-dot {
-      width: 3px;
-      height: 3px;
-      background: var(--color-neutral-300);
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    /* RIGHT — form column */
-    .form-col {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      padding-top: 48px;
-    }
-    .form-kicker {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--color-neutral-900);
-    }
-    .form-kicker-num {
-      font-family: var(--font-mono);
-      font-size: 32px;
-      font-weight: 400;
-      color: var(--color-neutral-900);
-      letter-spacing: -.02em;
-    }
-    .form-kicker-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--color-neutral-500);
-    }
-
-    .form-prompt {
-      font: 500 18px/1.5 var(--font-sans);
-      color: var(--color-neutral-900);
-      margin: 0;
-    }
-
-    .url-input {
-      width: 100%;
-      font: 400 16px/1.5 var(--font-mono);
-      padding: 16px 0;
-      border: 0;
-      border-bottom: 1px solid var(--color-neutral-300);
-      background: transparent;
-      color: var(--color-neutral-900);
-      transition: border-color .15s;
-    }
-    .url-input:focus {
-      outline: none;
-      border-bottom-color: var(--color-primary);
-    }
-    .url-input::placeholder {
-      color: var(--color-neutral-300);
-    }
-
-    .form-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding-top: 8px;
-    }
-    .form-hint {
+    .landing-form { max-width: 620px; margin: 40px 0; }
+    .landing-form-row { display: flex; gap: 12px; }
+    .landing-form-row .input { flex: 1; }
+    .landing-mode-hint {
+      margin-top: 12px;
       font: 400 13px/1.5 var(--font-sans);
       color: var(--color-neutral-500);
-      max-width: 240px;
     }
-    .form-submit {
-      font: 600 14px/1 var(--font-sans);
-      color: var(--color-on-primary);
-      background: var(--color-neutral-900);
-      border: 0;
-      padding: 14px 24px;
-      transition: background .15s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      letter-spacing: .01em;
-    }
-    .form-submit:hover { background: var(--color-primary); }
-    .form-submit::after {
-      content: '→';
-      font-family: var(--font-mono);
-      font-size: 16px;
-      transition: transform .15s;
-    }
-    .form-submit:hover::after { transform: translateX(2px); }
-
-    /* footnote strip at bottom of form column */
-    .form-note {
-      margin-top: 32px;
+    .partners {
+      margin-top: 64px;
       padding-top: 24px;
       border-top: 1px solid var(--color-neutral-200);
-      display: flex;
-      gap: 40px;
-      align-items: flex-start;
     }
-    .form-note-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .form-note-num {
+    .partners-label {
       font-family: var(--font-mono);
-      font-size: 14px;
-      color: var(--color-neutral-900);
-      font-weight: 500;
-    }
-    .form-note-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--color-neutral-500);
+      margin-bottom: 16px;
     }
-
-    @media (max-width: 900px) {
-      .landing {
-        grid-template-columns: 1fr;
-        gap: 64px;
-        padding: 56px 24px 80px;
-      }
-      .form-col { padding-top: 0; }
-      .statement-head { font-size: 40px; }
+    .partners-logos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 40px;
+    }
+    .partner-logo {
+      height: 24px;
+      opacity: .7;
+      filter: grayscale(100%);
+    }
+    .partner-logo:hover { opacity: 1; filter: none; }
+    .partners-more {
+      font: 500 13px var(--font-sans);
+      color: var(--color-neutral-500);
     }
   </style>
 </head>
 <body>
-  <nav class="proto-nav">
-    <span class="proto-nav-label">Cortex Proto</span>
-    <a href="../index.html" class="proto-nav-link">目錄</a>
-    <a href="01-landing.html" class="proto-nav-link active">1. Landing</a>
-    <a href="02-media-fit.html" class="proto-nav-link">2. Media Fit</a>
-    <a href="03-chat.html" class="proto-nav-link">3. Chat 訪談</a>
-    <span class="proto-nav-spacer"></span>
-    <a href="../index.html" class="proto-nav-back">← 回目錄</a>
-  </nav>
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Stage 00 · Discovery</div>
+      <h1 class="page-title">輸入品牌網址,讓 Cortex 用媒體的語言介紹你的品牌。</h1>
+      <p class="page-subtitle">
+        不是插入的廣告,是讀者會想讀完的延伸閱讀。
+      </p>
+    </div>
 
-  <main class="proto-main">
-    <section class="landing">
-
-      <!-- LEFT: statement -->
-      <div class="statement">
-        <div class="statement-kicker">
-          <span class="kicker">Stage 00 · Discovery</span>
-        </div>
-
-        <h1 class="t-display statement-head">
-          把品牌內容,<br />放到讀者<em>信任</em>的<br />媒體情境。
-        </h1>
-
-        <p class="t-body statement-lede">
-          Cortex 讀你的網站,學合作媒體的編輯風格,再讓 AI 把你的內容嵌成延伸閱讀。
-          不是廣告貼片,是原生 native。
-        </p>
-
-        <div class="partners">
-          <div class="partners-label">
-            <span class="kicker">合作媒體 · 健康 / 生活 / 財經</span>
-          </div>
-          <div class="partners-list">
-            <span class="partner-name">Bella.tw</span>
-            <span class="partner-dot"></span>
-            <span class="partner-name">CMoney</span>
-            <span class="partner-dot"></span>
-            <span class="partner-name">NOWnews</span>
-            <span class="partner-dot"></span>
-            <span class="partner-name">Business Today</span>
-            <span class="partner-dot"></span>
-            <span class="partner-name kicker" style="text-transform:none;letter-spacing:.02em">+ 11 家</span>
-          </div>
-        </div>
+    <form class="landing-form" onsubmit="event.preventDefault(); window.location.href='02-media-fit.html';">
+      <label class="label" for="brandUrl">品牌網址</label>
+      <div class="landing-form-row">
+        <input
+          type="url"
+          id="brandUrl"
+          class="input"
+          placeholder="https://your-brand.com"
+          value="https://health-forward.tw"
+          required
+        />
+        <button type="submit" class="btn btn-primary btn-arrow">開始分析</button>
       </div>
-
-      <!-- RIGHT: form -->
-      <div class="form-col">
-        <div class="form-kicker">
-          <span class="form-kicker-num">01</span>
-          <span class="form-kicker-label">從你的網址開始</span>
-        </div>
-
-        <p class="form-prompt">告訴 Cortex 你想曝光的品牌是什麼。</p>
-
-        <form onsubmit="event.preventDefault(); window.location.href='02-media-fit.html';">
-          <input
-            type="url"
-            class="url-input"
-            placeholder="https://your-brand.com"
-            value="https://health-forward.tw"
-            aria-label="品牌網址"
-          />
-          <div class="form-actions">
-            <span class="form-hint">
-              分析過程免費,不會動用 AI token 成本。
-            </span>
-            <button type="submit" class="form-submit">開始分析</button>
-          </div>
-        </form>
-
-        <div class="form-note">
-          <div class="form-note-item">
-            <span class="form-note-num">$0</span>
-            <span class="form-note-label">此階段成本</span>
-          </div>
-          <div class="form-note-item">
-            <span class="form-note-num">~15s</span>
-            <span class="form-note-label">首次分析時間</span>
-          </div>
-          <div class="form-note-item">
-            <span class="form-note-num">0/5</span>
-            <span class="form-note-label">訪談問題</span>
-          </div>
-        </div>
+      <div class="landing-mode-hint">
+        目前為
+        <span class="hint">
+          <strong>快速掃描</strong>
+          <span class="hint-tip">從網站標題、meta、內容結構抓取品牌 signal,不動用 AI 深度分析,秒級完成。深度分析在後續 stage 才會啟動。</span>
+        </span>
+        · 秒級完成、不動用 AI token 成本
       </div>
+    </form>
 
+    <section class="partners">
+      <div class="partners-label">合作媒體 · 健康 / 生活 / 財經</div>
+      <div class="partners-logos">
+        <img src="../assets/logos/Bella.webp" alt="Bella" class="partner-logo" style="height:20px" />
+        <img src="../assets/logos/cmoney.svg" alt="CMoney" class="partner-logo" />
+        <img src="../assets/logos/now.svg" alt="NOWnews" class="partner-logo" />
+        <img src="../assets/logos/today.png" alt="Business Today" class="partner-logo" />
+        <span class="partners-more">+ 11 家</span>
+      </div>
     </section>
   </main>
+  <script src="../nav.js"></script>
 </body>
 </html>

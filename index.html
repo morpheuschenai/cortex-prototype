@@ -3,262 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cortex Prototype — 面試 Walkthrough</title>
+  <title>Cortex Prototype — Walkthrough</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* ============================================================
-     * Index — Editorial Checklist
-     * No card grid. Numbered row list, one accent row.
-     * ============================================================ */
-
-    .idx {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 96px 48px 120px;
-    }
-
-    .idx-head {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: 96px;
-      align-items: end;
-      padding-bottom: 56px;
-      border-bottom: 1px solid var(--color-neutral-900);
-    }
-    .idx-head-title {
-      margin: 0;
-      max-width: 640px;
-    }
-    .idx-head-title em {
-      font-style: normal;
-      color: var(--color-primary);
-    }
-    .idx-head-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: flex-start;
-      padding-bottom: 8px;
-    }
-    .idx-head-meta-row {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 24px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-    }
-    .idx-head-meta-key {
-      color: var(--color-neutral-500);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      font-size: 11px;
-    }
-    .idx-head-meta-val {
-      color: var(--color-neutral-900);
-    }
-
-    /* scenario list — numbered rows */
-    .idx-list {
-      display: flex;
-      flex-direction: column;
-      margin-top: 8px;
-    }
-    .idx-row {
-      display: grid;
-      grid-template-columns: 60px 1fr auto;
-      gap: 32px;
-      align-items: center;
-      padding: 32px 0;
-      border-bottom: 1px solid var(--color-neutral-200);
-      color: inherit;
-      transition: background .15s, padding .15s;
-    }
-    .idx-row:hover {
-      background: var(--color-neutral-50);
-      margin: 0 -24px;
-      padding-left: 24px;
-      padding-right: 24px;
-    }
-    .idx-row-num {
-      font-family: var(--font-mono);
-      font-size: 24px;
-      font-weight: 400;
-      color: var(--color-neutral-500);
-      letter-spacing: -.02em;
-    }
-    .idx-row-body {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 0;
-    }
-    .idx-row-meta {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-    }
-    .idx-row-scenario {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--color-neutral-500);
-    }
-    .idx-row-title {
-      margin: 0;
-      font: 600 26px/1.3 var(--font-sans);
-      letter-spacing: -.01em;
-      color: var(--color-neutral-900);
-    }
-    .idx-row-desc {
-      margin: 0;
-      font: 400 15px/1.55 var(--font-sans);
-      color: var(--color-neutral-500);
-      max-width: 640px;
-    }
-    .idx-row-arrow {
-      font-family: var(--font-mono);
-      font-size: 20px;
-      color: var(--color-neutral-300);
-      transition: color .15s, transform .15s;
-    }
-    .idx-row:hover .idx-row-arrow {
-      color: var(--color-primary);
-      transform: translateX(4px);
-    }
-
-    /* live row treatment (only page 1 currently) */
-    .idx-row--live .idx-row-num { color: var(--color-primary); font-weight: 500; }
-    .idx-row--live .idx-row-title { color: var(--color-neutral-900); }
-
-    /* placeholder rows (WIP) — muted */
-    .idx-row--wip { pointer-events: none; }
-    .idx-row--wip .idx-row-num,
-    .idx-row--wip .idx-row-title,
-    .idx-row--wip .idx-row-desc,
-    .idx-row--wip .idx-row-arrow { color: var(--color-neutral-300); }
-    .idx-row--wip .idx-row-scenario::after {
-      content: ' · WIP';
-      color: var(--color-warning);
-    }
-
-    /* footer */
-    .idx-foot {
-      margin-top: 64px;
-      padding-top: 24px;
-      border-top: 1px solid var(--color-neutral-200);
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--color-neutral-500);
-      letter-spacing: .06em;
-    }
-
-    @media (max-width: 900px) {
-      .idx { padding: 56px 24px 80px; }
-      .idx-head { grid-template-columns: 1fr; gap: 32px; }
-      .idx-row { grid-template-columns: 40px 1fr; gap: 20px; }
-      .idx-row-arrow { display: none; }
-    }
-  </style>
 </head>
 <body>
-  <main>
-    <section class="idx">
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Cortex Prototype · Wireframes v0.4</div>
+      <h1 class="page-title">Sr PM Take-home · Walkthrough 目錄</h1>
+      <p class="page-subtitle">
+        中性 wireframe 版本,先確認文案與 UI 編排是否合理,視覺風格後續調整。
+      </p>
+    </div>
 
-      <header class="idx-head">
-        <div>
-          <div class="kicker" style="margin-bottom:20px">Cortex · Prototype for Sr PM Take-home</div>
-          <h1 class="t-display idx-head-title">
-            面試 <em>walkthrough</em>,<br />依情境四段展開。
-          </h1>
-        </div>
-        <div class="idx-head-meta">
-          <div class="idx-head-meta-row">
-            <span class="idx-head-meta-key">Author</span>
-            <span class="idx-head-meta-val">Morpheus Chen</span>
-          </div>
-          <div class="idx-head-meta-row">
-            <span class="idx-head-meta-key">For</span>
-            <span class="idx-head-meta-val">Mlytics · Cortex</span>
-          </div>
-          <div class="idx-head-meta-row">
-            <span class="idx-head-meta-key">Coverage</span>
-            <span class="idx-head-meta-val">4 情境 · 12+ screens</span>
-          </div>
-        </div>
-      </header>
-
-      <div class="idx-list">
-
-        <a href="screens/01-landing.html" class="idx-row idx-row--live">
-          <span class="idx-row-num">01</span>
-          <div class="idx-row-body">
-            <div class="idx-row-meta">
-              <span class="idx-row-scenario">情境 A · 正常流程</span>
-            </div>
-            <h2 class="idx-row-title">從輸入網址到送出第一則 AI Answer</h2>
-            <p class="idx-row-desc">
-              品牌方在 Stage 0 輸入品牌網址,看見 Media Fit Preview,完成 ChatBot 訪談,
-              建帳號,選 tier,送第一則 AI Answer 審核。
-            </p>
-          </div>
-          <span class="idx-row-arrow">→</span>
+    <section>
+      <h2 class="t-h2" style="margin-bottom:8px">主線流程</h2>
+      <p class="t-sm muted" style="margin:0 0 20px">從輸入網址到送審、審核、等待期產出價值——按 Continue → 一路走完</p>
+      <div class="card card--flush">
+        <a href="screens/01-landing.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">01</span>Landing · 輸入品牌網址
         </a>
-
-        <div class="idx-row idx-row--wip">
-          <span class="idx-row-num">02</span>
-          <div class="idx-row-body">
-            <div class="idx-row-meta">
-              <span class="idx-row-scenario">情境 B · AI 不確定</span>
-            </div>
-            <h2 class="idx-row-title">Sorted Confidence List · Hover 顯示來源</h2>
-            <p class="idx-row-desc">
-              系統理解錯誤或資料不足時,不隱藏不確定性——讓每個判斷 hover 顯示來源網頁片段。
-            </p>
-          </div>
-          <span class="idx-row-arrow">→</span>
-        </div>
-
-        <div class="idx-row idx-row--wip">
-          <span class="idx-row-num">03</span>
-          <div class="idx-row-body">
-            <div class="idx-row-meta">
-              <span class="idx-row-scenario">情境 C · 人工介入</span>
-            </div>
-            <h2 class="idx-row-title">Timeline · Now / Waiting / Next</h2>
-            <p class="idx-row-desc">
-              Mlytics 審核期間三段式狀態顯示,不阻塞其他功能,誠實的等待比假的進度條更能建立信任。
-            </p>
-          </div>
-          <span class="idx-row-arrow">→</span>
-        </div>
-
-        <div class="idx-row idx-row--wip">
-          <span class="idx-row-num">04</span>
-          <div class="idx-row-body">
-            <div class="idx-row-meta">
-              <span class="idx-row-scenario">情境 D · 等待結果</span>
-            </div>
-            <h2 class="idx-row-title">等待期是價值窗口 · First-mover 品牌權益</h2>
-            <p class="idx-row-desc">
-              Simulated forecast + Category benchmark。因為新產品沒有歷史數據——
-              翻轉成 first-mover 優勢:優先版位、CPL 折扣、案例研究掛名合作。
-            </p>
-          </div>
-          <span class="idx-row-arrow">→</span>
-        </div>
-
+        <a href="screens/02-media-fit.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">02</span>Media Fit Preview · 12 選 4
+        </a>
+        <a href="screens/03-chat.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">03</span>ChatBot 5 題訪談 + 建帳號
+        </a>
+        <a href="screens/04-full-analysis.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">04</span>Full Analysis · Cortex 推薦組合 + Tier + 送審
+        </a>
+        <a href="screens/08-timeline.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">08</span>Timeline Review Status
+        </a>
+        <a href="screens/09-parallel-actions.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">09</span>Parallel Actions · 等待期不阻塞
+        </a>
+        <a href="screens/10-forecast.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">10</span>Simulated Forecast + Benchmark
+        </a>
+        <a href="screens/11-first-mover.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:0">
+          <span class="num">11</span>First-mover 品牌權益
+        </a>
       </div>
+    </section>
 
-      <div class="idx-foot">
-        <span>v0.3 · Hallmark redesign pass</span>
-        <span>Design tokens · Claude Design (preserved)</span>
+    <section class="section">
+      <h2 class="t-h2" style="margin-bottom:8px">Exception 支線</h2>
+      <p class="t-sm muted" style="margin:0 0 20px">從主線觸發的例外情境——面試 walkthrough 展示 exception 設計</p>
+      <div class="card card--flush">
+        <a href="screens/06-confidence.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">06</span>Sorted Confidence List · AI 不確定時
+        </a>
+        <a href="screens/07-correction.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:1px solid var(--color-neutral-200)">
+          <span class="num">07</span>Correction Feedback · 修正後反饋
+        </a>
+        <a href="screens/12-zero-match.html" class="nav-drawer-link" style="padding:16px 24px;border-bottom:0">
+          <span class="num">12</span>Zero-match Waitlist · 0 個匹配時
+        </a>
       </div>
-
     </section>
   </main>
+  <script src="nav.js"></script>
 </body>
 </html>

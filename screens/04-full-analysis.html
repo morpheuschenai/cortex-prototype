@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex — Full Analysis · 投資組合 + Tier</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* Recommendation portfolio */
+    .portfolio-hero {
+      background: var(--color-neutral-50);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .portfolio-title-block { display: flex; flex-direction: column; gap: 6px; }
+    .portfolio-hero-stats {
+      display: flex;
+      gap: 32px;
+      padding-left: 32px;
+      border-left: 1px solid var(--color-neutral-200);
+    }
+    .portfolio-stat { display: flex; flex-direction: column; gap: 2px; }
+    .portfolio-stat-val {
+      font: 600 20px/1 var(--font-sans);
+      color: var(--color-neutral-900);
+    }
+    .portfolio-stat-key {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+
+    /* Portfolio cards */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px) { .portfolio-grid { grid-template-columns: 1fr; } }
+    .pf-card {
+      background: var(--color-neutral-0);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      position: relative;
+    }
+    .pf-card-check {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 20px;
+      height: 20px;
+      background: var(--color-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 500 12px var(--font-sans);
+    }
+    .pf-card-head { margin-bottom: 12px; }
+    .pf-card-logo {
+      height: 20px;
+      max-width: 100px;
+      object-fit: contain;
+      margin-bottom: 6px;
+    }
+    .pf-card-cat {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .pf-card-score {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      margin: 8px 0 12px;
+    }
+    .pf-card-score-num {
+      font: 700 28px/1 var(--font-sans);
+      color: var(--color-primary);
+    }
+    .pf-card-score-pct {
+      font: 700 14px/1 var(--font-sans);
+      color: var(--color-primary);
+    }
+    .pf-card-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font: 400 12px var(--font-sans);
+      color: var(--color-neutral-700);
+      padding-top: 12px;
+      border-top: 1px solid var(--color-neutral-200);
+    }
+    .pf-card-stat-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .adjust-portfolio-row {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      background: var(--color-neutral-50);
+      border-radius: var(--radius-md);
+    }
+    .adjust-hint {
+      font: 400 12px var(--font-sans);
+      color: var(--color-neutral-500);
+    }
+
+    /* Persona cards (AI simulated readers) */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .persona-grid { grid-template-columns: 1fr; } }
+    .persona-card {
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      background: var(--color-neutral-0);
+    }
+    .persona-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-secondary-container);
+      color: var(--color-on-secondary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 700 14px var(--font-sans);
+      margin-bottom: 10px;
+    }
+    .persona-name { font: 600 15px var(--font-sans); margin-bottom: 4px; }
+    .persona-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+      margin-bottom: 12px;
+    }
+    .persona-quote {
+      font: 400 13px/1.55 var(--font-sans);
+      color: var(--color-neutral-700);
+      padding: 12px;
+      background: var(--color-neutral-50);
+      border-left: 3px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+    }
+    .persona-fit {
+      display: flex;
+      justify-content: space-between;
+      font: 500 12px var(--font-sans);
+      color: var(--color-neutral-500);
+    }
+    .persona-fit strong { color: var(--color-primary); }
+
+    /* Perception gap */
+    .gap-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .gap-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 16px;
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+    }
+    .gap-side {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .gap-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .gap-val {
+      font: 500 15px var(--font-sans);
+    }
+    .gap-arrow {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      color: var(--color-neutral-300);
+    }
+
+    /* Tier selection */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .tier-grid { grid-template-columns: 1fr; } }
+    .tier-card {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .tier-card-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .tier-name { font: 600 20px var(--font-sans); }
+    .tier-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+    }
+    .tier-tag--basic { background: var(--color-neutral-100); color: var(--color-neutral-700); }
+    .tier-tag--premium { background: var(--color-secondary-container); color: var(--color-on-secondary-container); }
+    .tier-desc { font: 400 14px/1.55 var(--font-sans); color: var(--color-neutral-500); }
+    .tier-features {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font: 400 13px var(--font-sans);
+      color: var(--color-neutral-700);
+    }
+    .tier-features-item::before {
+      content: '· ';
+      color: var(--color-neutral-500);
+    }
+    .tier-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 16px;
+      background: var(--color-neutral-50);
+      border-radius: var(--radius-sm);
+    }
+    .tier-stat-key {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .tier-stat-val {
+      font: 600 18px var(--font-sans);
+      color: var(--color-neutral-900);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Stage 03 · Full Analysis</div>
+      <h1 class="page-title">Cortex 為你組了首發投資組合</h1>
+      <p class="page-subtitle">
+        訪談完成,這是 Cortex 分析你的品牌後推薦的媒體組合、AI 讀者模擬,以及品牌感知落差。
+      </p>
+    </div>
+
+    <!-- Section A: Recommended portfolio -->
+    <section>
+      <div class="row-between" style="margin-bottom:16px">
+        <div>
+          <h2 class="t-h2">Cortex 推薦組合 · 3 個平台</h2>
+          <p class="t-sm muted" style="margin:4px 0 0">
+            首次建議 1–3 個平台,累積實際成效後再擴大 ·
+            <span class="hint">
+              為什麼不能全選?
+              <span class="hint-tip">CPL 模式下,每加一個平台都會生成獨立 AI Answer 與成本。首次限制在 3 個內,確保 lead 品質而非數量,累積數據後 sales 會協助擴大。</span>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="portfolio-hero">
+        <div class="portfolio-title-block">
+          <span class="t-mono muted">投資組合預估</span>
+          <span class="t-h3">Bella + CMoney + NOWnews</span>
+        </div>
+        <div class="portfolio-hero-stats">
+          <div class="portfolio-stat">
+            <span class="portfolio-stat-val">60–80</span>
+            <span class="portfolio-stat-key">預估月 lead</span>
+          </div>
+          <div class="portfolio-stat">
+            <span class="portfolio-stat-val">$960–1,600</span>
+            <span class="portfolio-stat-key">預估月花費</span>
+          </div>
+          <div class="portfolio-stat">
+            <span class="portfolio-stat-val">86%</span>
+            <span class="portfolio-stat-key">平均 fit</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-grid">
+        <div class="pf-card">
+          <div class="pf-card-check">✓</div>
+          <div class="pf-card-head">
+            <img src="../assets/logos/Bella.webp" alt="Bella" class="pf-card-logo" />
+            <span class="pf-card-cat">美容生活</span>
+          </div>
+          <div class="pf-card-score">
+            <span class="pf-card-score-num">92</span>
+            <span class="pf-card-score-pct">%</span>
+          </div>
+          <div class="pf-card-stats">
+            <div class="pf-card-stat-row"><span>預估月 lead</span><span class="strong">28–35</span></div>
+            <div class="pf-card-stat-row"><span>預估月花費</span><span class="strong">$392–700</span></div>
+          </div>
+        </div>
+
+        <div class="pf-card">
+          <div class="pf-card-check">✓</div>
+          <div class="pf-card-head">
+            <img src="../assets/logos/cmoney.svg" alt="CMoney" class="pf-card-logo" />
+            <span class="pf-card-cat">理財生活</span>
+          </div>
+          <div class="pf-card-score">
+            <span class="pf-card-score-num">87</span>
+            <span class="pf-card-score-pct">%</span>
+          </div>
+          <div class="pf-card-stats">
+            <div class="pf-card-stat-row"><span>預估月 lead</span><span class="strong">20–27</span></div>
+            <div class="pf-card-stat-row"><span>預估月花費</span><span class="strong">$320–540</span></div>
+          </div>
+        </div>
+
+        <div class="pf-card">
+          <div class="pf-card-check">✓</div>
+          <div class="pf-card-head">
+            <img src="../assets/logos/now.svg" alt="NOWnews" class="pf-card-logo" />
+            <span class="pf-card-cat">生活資訊</span>
+          </div>
+          <div class="pf-card-score">
+            <span class="pf-card-score-num">81</span>
+            <span class="pf-card-score-pct">%</span>
+          </div>
+          <div class="pf-card-stats">
+            <div class="pf-card-stat-row"><span>預估月 lead</span><span class="strong">12–18</span></div>
+            <div class="pf-card-stat-row"><span>預估月花費</span><span class="strong">$248–360</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="adjust-portfolio-row">
+        <span class="adjust-hint">
+          想調整組合?加入或移除平台會即時看到成本 / lead 變化(上限 3 個)
+        </span>
+        <button class="btn btn-secondary">調整組合</button>
+      </div>
+    </section>
+
+    <!-- Section B: AI simulated readers -->
+    <section class="section">
+      <h2 class="section-title">AI 讀者模擬 · 3 種 persona 讀完你網站的反應</h2>
+      <p class="section-subtitle">
+        Cortex 用這 3 個 persona 模擬讀者接觸你的內容時的第一反應,幫你發現盲點。
+      </p>
+
+      <div class="persona-grid">
+        <div class="persona-card">
+          <div class="persona-avatar">A</div>
+          <div class="persona-name">30 歲 · 上班族</div>
+          <div class="persona-tag">Cost-conscious</div>
+          <div class="persona-quote">
+            「看起來很專業,但價格好像比藥局貴。有沒有試用組?」
+          </div>
+          <div class="persona-fit">
+            <span>對這品牌的興趣</span>
+            <strong>Medium</strong>
+          </div>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-avatar">B</div>
+          <div class="persona-name">42 歲 · 家庭主婦</div>
+          <div class="persona-tag">Family decision-maker</div>
+          <div class="persona-quote">
+            「成分表寫得清楚,像是可以放心給家人吃的。想看有沒有小孩也可以用。」
+          </div>
+          <div class="persona-fit">
+            <span>對這品牌的興趣</span>
+            <strong>High</strong>
+          </div>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-avatar">C</div>
+          <div class="persona-name">55 歲 · 專業人士</div>
+          <div class="persona-tag">Quality-driven</div>
+          <div class="persona-quote">
+            「Premium 定位到位,但缺乏臨床實驗數據佐證,說服力不夠。」
+          </div>
+          <div class="persona-fit">
+            <span>對這品牌的興趣</span>
+            <strong>Medium-High</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section C: Perception gap -->
+    <section class="section">
+      <h2 class="section-title">品牌感知落差 · 你以為 vs AI 讀出來</h2>
+      <p class="section-subtitle">
+        Cortex 分析你網站與 3 個 persona 反應,找出你的品牌定位跟讀者實際感受的差距。
+      </p>
+
+      <div class="gap-grid">
+        <div class="gap-row">
+          <div class="gap-side">
+            <span class="gap-label">你以為</span>
+            <span class="gap-val">Premium 高端保健</span>
+          </div>
+          <div class="gap-arrow">→</div>
+          <div class="gap-side">
+            <span class="gap-label">讀者感受</span>
+            <span class="gap-val">功能導向 · 需要更多情境</span>
+          </div>
+        </div>
+        <div class="gap-row">
+          <div class="gap-side">
+            <span class="gap-label">你以為</span>
+            <span class="gap-val">科學背書</span>
+          </div>
+          <div class="gap-arrow">→</div>
+          <div class="gap-side">
+            <span class="gap-label">讀者感受</span>
+            <span class="gap-val">缺臨床數據佐證</span>
+          </div>
+        </div>
+        <div class="gap-row">
+          <div class="gap-side">
+            <span class="gap-label">你以為</span>
+            <span class="gap-val">30+ 女性 TA</span>
+          </div>
+          <div class="gap-arrow">→</div>
+          <div class="gap-side">
+            <span class="gap-label">讀者感受</span>
+            <span class="gap-val">家庭決策者反應最強</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section D: Tier selection -->
+    <section class="section">
+      <h2 class="section-title">選擇內容 tier</h2>
+      <p class="section-subtitle">
+        Cortex 提供兩種內容 tier,讓你依品牌敏感度與預算選擇。
+      </p>
+
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-card-head">
+            <span class="tier-name">Basic</span>
+            <span class="tier-tag tier-tag--basic">Sponsored label</span>
+          </div>
+          <p class="tier-desc">明顯置入,有 Sponsored 標示。適合 volume-driven 品牌快速測試需求。</p>
+          <div class="tier-features">
+            <div class="tier-features-item">標準 sponsored 內容模板</div>
+            <div class="tier-features-item">明確廣告揭露</div>
+            <div class="tier-features-item">CPL 單價較低</div>
+            <div class="tier-features-item">生成速度最快</div>
+          </div>
+          <div class="tier-stats">
+            <div>
+              <div class="tier-stat-key">預估月 lead</div>
+              <div class="tier-stat-val">60–80</div>
+            </div>
+            <div>
+              <div class="tier-stat-key">預估月花費</div>
+              <div class="tier-stat-val">$960–1,600</div>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-block btn-arrow">選擇 Basic · 生成第一批 AI Answer</button>
+        </div>
+
+        <div class="tier-card" style="border-color:var(--color-secondary)">
+          <div class="tier-card-head">
+            <span class="tier-name">Premium</span>
+            <span class="tier-tag tier-tag--premium">Native 融入</span>
+          </div>
+          <p class="tier-desc">AI 轉譯為該媒體原生風格,讀者不易察覺是廣告。適合 quality-driven 品牌追求可信度。</p>
+          <div class="tier-features">
+            <div class="tier-features-item">AI 學習該媒體 editorial voice</div>
+            <div class="tier-features-item">自然嵌入品牌 mention</div>
+            <div class="tier-features-item">CPL 單價較高,lead 品質高</div>
+            <div class="tier-features-item">需 Mlytics 編輯把關</div>
+          </div>
+          <div class="tier-stats">
+            <div>
+              <div class="tier-stat-key">預估月 lead</div>
+              <div class="tier-stat-val">40–55</div>
+            </div>
+            <div>
+              <div class="tier-stat-key">預估月花費</div>
+              <div class="tier-stat-val">$1,200–2,200</div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block btn-arrow" style="background:var(--color-secondary);border-color:var(--color-secondary)">選擇 Premium · 生成第一批 AI Answer</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Continue bar -->
+    <div class="continue-bar">
+      <div class="continue-bar-context">Stage 03 → Stage 04 · Review</div>
+      <a href="08-timeline.html" class="btn btn-primary btn-arrow">送審(Continue)</a>
+    </div>
+  </main>
+  <script src="../nav.js"></script>
+</body>
+</html>

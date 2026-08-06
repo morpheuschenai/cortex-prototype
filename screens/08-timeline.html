@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex — Timeline Review Status</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .timeline-wrap {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 900px) { .timeline-wrap { grid-template-columns: 1fr; } }
+
+    .timeline {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+    .tl-step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 20px;
+      padding-bottom: 24px;
+      position: relative;
+    }
+    .tl-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 32px;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-neutral-200);
+    }
+    .tl-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 600 12px var(--font-sans);
+      z-index: 1;
+      position: relative;
+    }
+    .tl-dot--done { background: var(--color-success); color: white; }
+    .tl-dot--now { background: var(--color-primary); color: white; }
+    .tl-dot--wait { background: var(--color-warning); color: white; }
+    .tl-dot--next { background: var(--color-neutral-100); color: var(--color-neutral-500); border: 2px solid var(--color-neutral-300); }
+    .tl-body { padding-top: 8px; }
+    .tl-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .tl-badge--done { background: var(--color-success-container); color: var(--color-on-success-container); }
+    .tl-badge--now { background: var(--color-primary-container); color: var(--color-on-primary-container); }
+    .tl-badge--wait { background: var(--color-warning-container); color: var(--color-on-warning-container); }
+    .tl-badge--next { background: var(--color-neutral-100); color: var(--color-neutral-500); }
+    .tl-title { font: 600 16px var(--font-sans); margin: 0 0 6px; }
+    .tl-desc { font: 400 14px/1.55 var(--font-sans); color: var(--color-neutral-500); margin: 0; }
+    .tl-meta { font-family: var(--font-mono); font-size: 12px; color: var(--color-neutral-500); margin-top: 6px; }
+
+    /* Submitted summary */
+    .summary-card {
+      display: flex;
+      flex-direction: column;
+    }
+    .summary-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-neutral-200);
+    }
+    .summary-item:last-child { border-bottom: 0; }
+    .summary-logo {
+      height: 16px;
+      max-width: 60px;
+      object-fit: contain;
+    }
+    .summary-text {
+      flex: 1;
+      font: 400 13px var(--font-sans);
+    }
+    .summary-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-warning);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Stage 04 · Review Status</div>
+      <h1 class="page-title">你的 3 則 AI Answer 正在審核</h1>
+      <p class="page-subtitle">
+        送審後 24 小時內會收到結果。Mlytics 編輯團隊逐則檢查 claim 準確性與媒體適配。
+      </p>
+    </div>
+
+    <div class="timeline-wrap">
+
+      <!-- LEFT: Timeline -->
+      <div class="timeline">
+        <div class="tl-step">
+          <div class="tl-dot tl-dot--done">✓</div>
+          <div class="tl-body">
+            <span class="tl-badge tl-badge--done">Done</span>
+            <h3 class="tl-title">送出審核</h3>
+            <p class="tl-desc">3 則 AI Answer 已送出,對應 Bella / CMoney / NOWnews。</p>
+            <div class="tl-meta">2026-08-06 · 10:52</div>
+          </div>
+        </div>
+
+        <div class="tl-step">
+          <div class="tl-dot tl-dot--now">●</div>
+          <div class="tl-body">
+            <span class="tl-badge tl-badge--now">Now</span>
+            <h3 class="tl-title">Mlytics 編輯審核中</h3>
+            <p class="tl-desc">
+              團隊正在檢查
+              <span class="hint">
+                claim accuracy
+                <span class="hint-tip">內容中提到的品牌效果、成分、資料是否有依據,避免誤導或違反平台守則。</span>
+              </span>
+              與
+              <span class="hint">
+                media fit
+                <span class="hint-tip">內容語氣是否符合該媒體 editorial voice,不會讓讀者感到違和。</span>
+              </span>。
+            </p>
+            <div class="tl-meta">預計 1–2 個工作天</div>
+          </div>
+        </div>
+
+        <div class="tl-step">
+          <div class="tl-dot tl-dot--wait">…</div>
+          <div class="tl-body">
+            <span class="tl-badge tl-badge--wait">Waiting</span>
+            <h3 class="tl-title">收到審核結果</h3>
+            <p class="tl-desc">
+              你會收到通知,結果會是三種之一:通過發布 / 建議微調 / 準備上線設定。
+            </p>
+          </div>
+        </div>
+
+        <div class="tl-step">
+          <div class="tl-dot tl-dot--next">4</div>
+          <div class="tl-body">
+            <span class="tl-badge tl-badge--next">Next</span>
+            <h3 class="tl-title">正式發布</h3>
+            <p class="tl-desc">
+              審核通過後,AI Answer 會嵌入合作媒體對應版位,開始累積曝光與 lead。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: submitted summary -->
+      <aside>
+        <div class="aside-card-title" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:12px">
+          送審清單
+        </div>
+        <div class="card card--flush summary-card">
+          <div class="summary-item">
+            <img src="../assets/logos/Bella.webp" class="summary-logo" alt="Bella" />
+            <div class="summary-text">
+              <div class="strong">Bella</div>
+              <div class="muted t-sm">30+ 女性最該補的三種營養素</div>
+            </div>
+            <span class="summary-status">審核中</span>
+          </div>
+          <div class="summary-item">
+            <img src="../assets/logos/cmoney.svg" class="summary-logo" alt="CMoney" />
+            <div class="summary-text">
+              <div class="strong">CMoney</div>
+              <div class="muted t-sm">健康投資:被低估的長期複利</div>
+            </div>
+            <span class="summary-status">審核中</span>
+          </div>
+          <div class="summary-item">
+            <img src="../assets/logos/now.svg" class="summary-logo" alt="NOWnews" />
+            <div class="summary-text">
+              <div class="strong">NOWnews</div>
+              <div class="muted t-sm">忙碌上班族的晨間習慣</div>
+            </div>
+            <span class="summary-status">審核中</span>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;padding:16px;background:var(--color-neutral-50);border-radius:var(--radius-md);font:400 13px/1.5 var(--font-sans);color:var(--color-neutral-700)">
+          <strong>需要追進度?</strong><br />
+          <span class="muted">審核期間你可以繼續完善其他設定,不用停在這頁。</span>
+          <div style="margin-top:8px"><a href="mailto:support@mlytics.com">聯絡 Mlytics →</a></div>
+        </div>
+      </aside>
+
+    </div>
+
+    <div class="continue-bar">
+      <div class="continue-bar-context">Stage 04 → Stage 05 · 等待期</div>
+      <a href="09-parallel-actions.html" class="btn btn-primary btn-arrow">看等待期能做什麼</a>
+    </div>
+  </main>
+  <script src="../nav.js"></script>
+</body>
+</html>

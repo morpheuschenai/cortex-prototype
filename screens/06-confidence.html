@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex — Sorted Confidence List</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .cf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cf-item {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+    .cf-conf {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .cf-conf-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .cf-conf-val {
+      font: 600 20px var(--font-sans);
+    }
+    .cf-conf-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      align-self: flex-start;
+    }
+    .cf-conf-badge--high { background: var(--color-success-container); color: var(--color-on-success-container); }
+    .cf-conf-badge--mid { background: var(--color-warning-container); color: var(--color-on-warning-container); }
+    .cf-conf-badge--low { background: var(--color-danger-container); color: var(--color-on-danger-container); }
+
+    .cf-content {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .cf-key {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .cf-val {
+      font: 500 16px var(--font-sans);
+    }
+    .cf-source {
+      font: 400 12px/1.4 var(--font-sans);
+      color: var(--color-neutral-500);
+      margin-top: 4px;
+    }
+    .cf-choice {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .cf-choice-btn {
+      font: 500 13px var(--font-sans);
+      padding: 6px 12px;
+      border: 1px solid var(--color-neutral-300);
+      border-radius: var(--radius-full);
+      background: var(--color-neutral-0);
+      color: var(--color-neutral-700);
+      cursor: pointer;
+    }
+    .cf-choice-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .cf-choice-input {
+      flex: 1;
+      font: 400 13px var(--font-sans);
+      padding: 6px 10px;
+      border: 1px solid var(--color-neutral-300);
+      border-radius: var(--radius-sm);
+    }
+
+    .cf-action {
+      align-self: flex-start;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Exception · AI 不確定時</div>
+      <h1 class="page-title">Cortex 對這 3 項判斷不太確定</h1>
+      <p class="page-subtitle">
+        每項標示把握度、hover 可看來源、低把握項目可以直接修正,讓 Cortex 學習你的品牌。
+      </p>
+    </div>
+
+    <div class="cf-list">
+
+      <!-- High confidence -->
+      <div class="cf-item">
+        <div class="cf-conf">
+          <span class="cf-conf-label">Confidence</span>
+          <span class="cf-conf-val">98%</span>
+          <span class="cf-conf-badge cf-conf-badge--high">High</span>
+        </div>
+        <div class="cf-content">
+          <span class="cf-key">品類</span>
+          <span class="cf-val">保健食品</span>
+          <span class="cf-source">
+            <span class="hint">
+              擷取自 header + product 頁
+              <span class="hint-tip">來源: health-forward.tw/products · 抓到「膠原蛋白」「維他命 D」等 8 個 SKU 名稱 · 2 小時前擷取</span>
+            </span>
+          </span>
+        </div>
+        <div class="cf-action">
+          <span class="badge badge--success">✓ 已確認</span>
+        </div>
+      </div>
+
+      <div class="cf-item">
+        <div class="cf-conf">
+          <span class="cf-conf-label">Confidence</span>
+          <span class="cf-conf-val">92%</span>
+          <span class="cf-conf-badge cf-conf-badge--high">High</span>
+        </div>
+        <div class="cf-content">
+          <span class="cf-key">目標 TA 年齡</span>
+          <span class="cf-val">30–55 歲女性</span>
+          <span class="cf-source">
+            <span class="hint">
+              擷取自 About + 產品文案
+              <span class="hint-tip">來源: health-forward.tw/about · About 頁 3 次提到「30+ 女性」;產品文案 12 次使用「更年期」「懷孕」等關鍵字 · 2 小時前擷取</span>
+            </span>
+          </span>
+        </div>
+        <div class="cf-action">
+          <span class="badge badge--success">✓ 已確認</span>
+        </div>
+      </div>
+
+      <!-- Medium confidence -->
+      <div class="cf-item">
+        <div class="cf-conf">
+          <span class="cf-conf-label">Confidence</span>
+          <span class="cf-conf-val">64%</span>
+          <span class="cf-conf-badge cf-conf-badge--mid">Medium</span>
+        </div>
+        <div class="cf-content">
+          <span class="cf-key">品牌語氣</span>
+          <span class="cf-val">科學嚴謹 · 功能導向</span>
+          <span class="cf-source">
+            <span class="hint">
+              擷取自 blog 首篇文章
+              <span class="hint-tip">來源: health-forward.tw/blog · 只有 3 篇 blog,樣本偏少 · 語氣可能不夠代表你的品牌</span>
+            </span>
+            · 需你確認
+          </span>
+          <div class="cf-choice">
+            <button class="cf-choice-btn">✓ 對,就是這樣</button>
+            <button class="cf-choice-btn">應該更親切</button>
+            <button class="cf-choice-btn">應該更專業</button>
+          </div>
+        </div>
+        <div class="cf-action">
+          <span class="badge badge--warning">Needs review</span>
+        </div>
+      </div>
+
+      <!-- Low confidence -->
+      <div class="cf-item">
+        <div class="cf-conf">
+          <span class="cf-conf-label">Confidence</span>
+          <span class="cf-conf-val">42%</span>
+          <span class="cf-conf-badge cf-conf-badge--low">Low</span>
+        </div>
+        <div class="cf-content">
+          <span class="cf-key">品牌禁忌</span>
+          <span class="cf-val">— 未偵測到明確資訊</span>
+          <span class="cf-source">請補充</span>
+          <div class="cf-choice">
+            <input type="text" class="cf-choice-input" placeholder="例如: 不提競品名、不談療效、不談懷孕族群" />
+            <button class="cf-choice-btn">儲存</button>
+          </div>
+        </div>
+        <div class="cf-action">
+          <span class="badge badge--danger">Missing</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="continue-bar">
+      <div class="continue-bar-context">修正後 → 看 Cortex 學習反饋</div>
+      <a href="07-correction.html" class="btn btn-primary btn-arrow">看修正反饋</a>
+    </div>
+  </main>
+  <script src="../nav.js"></script>
+</body>
+</html>

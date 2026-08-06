@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex — Correction Feedback</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .success-banner {
+      background: var(--color-success-container);
+      color: var(--color-on-success-container);
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .success-banner-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-success);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .success-banner-text {
+      font: 500 15px/1.4 var(--font-sans);
+    }
+
+    .change-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .change-item {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+    .change-item-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .change-check {
+      width: 22px;
+      height: 22px;
+      background: var(--color-success);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 500 12px var(--font-sans);
+    }
+    .change-key {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .change-key strong { color: var(--color-neutral-900); font-family: var(--font-sans); font-size: 15px; letter-spacing: 0; text-transform: none; margin-left: 4px; }
+
+    .change-compare {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+    .change-side {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+    }
+    .change-side--before { background: var(--color-neutral-100); }
+    .change-side--after { background: var(--color-success-container); }
+    .change-side-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+    .change-side-val { font: 500 14px var(--font-sans); }
+    .change-arrow { font-family: var(--font-mono); font-size: 18px; color: var(--color-neutral-300); }
+
+    .change-impact {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-neutral-200);
+      font: 400 13px var(--font-sans);
+      color: var(--color-neutral-500);
+    }
+    .change-impact strong { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Exception · Correction Feedback</div>
+      <h1 class="page-title">已學習你的偏好</h1>
+      <p class="page-subtitle">
+        每次修正都會讓 Cortex 更懂你的品牌。這次修正影響到 3 個後續判斷。
+      </p>
+    </div>
+
+    <div class="success-banner">
+      <div class="success-banner-icon">✓</div>
+      <div class="success-banner-text">
+        2 項規則已更新 · 下一批 AI Answer 會套用這些規則
+      </div>
+    </div>
+
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-item-head">
+          <div class="change-check">✓</div>
+          <span class="change-key">已修正 · <strong>品牌語氣</strong></span>
+        </div>
+        <div class="change-compare">
+          <div class="change-side change-side--before">
+            <span class="change-side-label">修正前</span>
+            <span class="change-side-val">科學嚴謹 · 功能導向</span>
+          </div>
+          <div class="change-arrow">→</div>
+          <div class="change-side change-side--after">
+            <span class="change-side-label">修正後</span>
+            <span class="change-side-val">親切易懂 · 情境敘事</span>
+          </div>
+        </div>
+        <div class="change-impact">
+          <strong>影響 →</strong> 下批 AI Answer 用字會偏日常口語,減少專業術語,增加使用者故事
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-item-head">
+          <div class="change-check">✓</div>
+          <span class="change-key">已新增 · <strong>品牌禁忌</strong></span>
+        </div>
+        <div class="change-compare">
+          <div class="change-side change-side--before">
+            <span class="change-side-label">修正前</span>
+            <span class="change-side-val">— 未設定</span>
+          </div>
+          <div class="change-arrow">→</div>
+          <div class="change-side change-side--after">
+            <span class="change-side-label">修正後</span>
+            <span class="change-side-val">不提競品 · 不談療效 · 不談懷孕族群</span>
+          </div>
+        </div>
+        <div class="change-impact">
+          <strong>影響 →</strong> AI Answer 生成會避開這 3 個主題,送 Mlytics 審核前先自動 filter
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Impact summary -->
+    <section class="section">
+      <h2 class="section-title">這次修正的影響範圍</h2>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="t-mono muted" style="margin-bottom:6px">未來 AI Answer</div>
+          <div style="font:700 32px/1 var(--font-sans);color:var(--color-primary);margin-bottom:4px">+3</div>
+          <div class="t-sm muted">下批 3 則 AI Answer 會套用新規則</div>
+        </div>
+        <div class="card">
+          <div class="t-mono muted" style="margin-bottom:6px">Media Fit 重新計算</div>
+          <div style="font:700 32px/1 var(--font-sans);color:var(--color-primary);margin-bottom:4px">+7</div>
+          <div class="t-sm muted">7 個平台 fit score 會重新計算</div>
+        </div>
+        <div class="card">
+          <div class="t-mono muted" style="margin-bottom:6px">Persona 模擬</div>
+          <div style="font:700 32px/1 var(--font-sans);color:var(--color-primary);margin-bottom:4px">3</div>
+          <div class="t-sm muted">AI 讀者模擬會用新語氣重跑</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="continue-bar">
+      <div class="continue-bar-context">回到主流程,查看更新後的分析</div>
+      <a href="04-full-analysis.html" class="btn btn-primary btn-arrow">重新分析</a>
+    </div>
+  </main>
+  <script src="../nav.js"></script>
+</body>
+</html>

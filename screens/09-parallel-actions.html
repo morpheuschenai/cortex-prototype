@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex — 等待期可做的事</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .status-banner {
+      background: var(--color-primary-container);
+      color: var(--color-on-primary-container);
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .status-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-banner-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .4; }
+    }
+
+    .action-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .action-item {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+    .action-status {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 600 12px var(--font-sans);
+    }
+    .action-status--done { background: var(--color-success); color: white; }
+    .action-status--todo { background: var(--color-neutral-100); color: var(--color-neutral-500); border: 2px solid var(--color-neutral-300); }
+    .action-info { display: flex; flex-direction: column; gap: 4px; }
+    .action-title { font: 600 16px var(--font-sans); }
+    .action-desc { font: 400 14px/1.5 var(--font-sans); color: var(--color-neutral-500); }
+    .action-benefit {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <div class="status-banner">
+      <div class="status-banner-left">
+        <span class="status-banner-dot"></span>
+        <span>你的 3 則 AI Answer 正在審核中 · 預計 1–2 個工作天完成</span>
+      </div>
+      <a href="08-timeline.html" style="color:var(--color-on-primary-container);text-decoration:underline">看審核進度</a>
+    </div>
+
+    <div class="page-header">
+      <div class="page-eyebrow">Stage 05 · Wait Time Utility</div>
+      <h1 class="page-title">等待期,幫下一批 AI Answer 準備好基礎</h1>
+      <p class="page-subtitle">
+        審核期間可以完成這些設定,提升未來每一批的產出效率與 lead 品質。
+      </p>
+    </div>
+
+    <div class="action-list">
+
+      <div class="action-item">
+        <div class="action-status action-status--todo">1</div>
+        <div class="action-info">
+          <div class="action-title">設定 billing contact</div>
+          <div class="action-desc">首次 CPL 出帳前需要收發票對象與付款方式。</div>
+          <div class="action-benefit">審核通過後即時計費 · 不再中斷</div>
+        </div>
+        <button class="btn btn-secondary">設定</button>
+      </div>
+
+      <div class="action-item">
+        <div class="action-status action-status--todo">2</div>
+        <div class="action-info">
+          <div class="action-title">
+            定義
+            <span class="hint">
+              qualified lead 條件
+              <span class="hint-tip">Cortex 用你定義的條件判斷哪些互動算 qualified lead,例如「留下 email + 停留超過 30 秒」。條件越明確,CPL 計算越準。</span>
+            </span>
+          </div>
+          <div class="action-desc">哪些用戶行為算 qualified lead? 你可以自訂條件。</div>
+          <div class="action-benefit">CPL 只在真 qualified 才計費</div>
+        </div>
+        <button class="btn btn-secondary">定義</button>
+      </div>
+
+      <div class="action-item">
+        <div class="action-status action-status--todo">3</div>
+        <div class="action-info">
+          <div class="action-title">指定 review owner</div>
+          <div class="action-desc">未來 AI Answer 生成後由誰審核? 可以指定 email 或部門。</div>
+          <div class="action-benefit">下次不用等人找不到</div>
+        </div>
+        <button class="btn btn-secondary">指定</button>
+      </div>
+
+      <div class="action-item">
+        <div class="action-status action-status--done">✓</div>
+        <div class="action-info">
+          <div class="action-title" style="text-decoration:line-through;opacity:.5">補充品牌資料</div>
+          <div class="action-desc">你已在 Stage 03 訪談中補充。</div>
+          <div class="action-benefit">已完成 · 下批 AI Answer 品質 +12%</div>
+        </div>
+        <button class="btn btn-ghost">查看</button>
+      </div>
+
+      <div class="action-item">
+        <div class="action-status action-status--todo">5</div>
+        <div class="action-info">
+          <div class="action-title">上傳品牌素材(logo / 產品圖 / brand guideline)</div>
+          <div class="action-desc">未來 Premium tier AI Answer 可以嵌入品牌視覺元素。</div>
+          <div class="action-benefit">Premium tier lead 品質 +18%</div>
+        </div>
+        <button class="btn btn-secondary">上傳</button>
+      </div>
+
+    </div>
+
+    <div class="continue-bar">
+      <div class="continue-bar-context">Stage 05 → 看 Cortex 給你的預估效果</div>
+      <a href="10-forecast.html" class="btn btn-primary btn-arrow">看預估效果</a>
+    </div>
+  </main>
+  <script src="../nav.js"></script>
+</body>
+</html>

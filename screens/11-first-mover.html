@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex — First-mover 品牌權益</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .fm-hero {
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-0);
+      padding: 40px;
+      border-radius: var(--radius-md);
+      margin-bottom: 32px;
+    }
+    .fm-hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--color-primary-container);
+      margin-bottom: 12px;
+    }
+    .fm-hero-title {
+      font: 600 32px/1.3 var(--font-sans);
+      margin: 0 0 12px;
+      letter-spacing: -.01em;
+    }
+    .fm-hero-sub {
+      font: 400 16px/1.6 var(--font-sans);
+      color: var(--color-neutral-300);
+      max-width: 640px;
+      margin: 0;
+    }
+    .fm-hero-rank {
+      display: inline-block;
+      margin-top: 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-primary-container);
+      padding: 8px 12px;
+      border: 1px solid var(--color-primary);
+      border-radius: var(--radius-full);
+    }
+
+    .fm-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .fm-grid { grid-template-columns: 1fr; } }
+    .fm-card {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .fm-card-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--color-primary-container);
+      color: var(--color-on-primary-container);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 600 16px var(--font-sans);
+    }
+    .fm-card-title { font: 600 18px var(--font-sans); margin: 0; }
+    .fm-card-desc { font: 400 14px/1.55 var(--font-sans); color: var(--color-neutral-500); margin: 0; }
+    .fm-card-detail {
+      font: 400 13px/1.55 var(--font-sans);
+      color: var(--color-neutral-700);
+      padding-top: 12px;
+      border-top: 1px solid var(--color-neutral-200);
+    }
+    .fm-card-detail strong { color: var(--color-primary); }
+
+    .fm-cta-block {
+      margin-top: 40px;
+      padding: 32px;
+      background: var(--color-primary-container);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    @media (max-width: 900px) { .fm-cta-block { flex-direction: column; align-items: flex-start; } }
+    .fm-cta-copy { display: flex; flex-direction: column; gap: 4px; }
+    .fm-cta-title { font: 600 18px var(--font-sans); color: var(--color-on-primary-container); }
+    .fm-cta-sub { font: 400 14px var(--font-sans); color: var(--color-on-primary-container); opacity: .8; }
+    .fm-cta-actions { display: flex; gap: 12px; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Stage 06 · First-mover Offer</div>
+    </div>
+
+    <div class="fm-hero">
+      <div class="fm-hero-eyebrow">First-mover 品牌權益</div>
+      <h1 class="fm-hero-title">因為你是前 20 家啟用 Cortex 的品牌<br />這些權益幫你放大 first-mover 優勢</h1>
+      <p class="fm-hero-sub">
+        我們產品新,你承擔了嘗試新工具的風險 —— 我們用具體權益回報你。
+        這不是折扣,是我們共同建立首批成功案例的長期投資。
+      </p>
+      <span class="fm-hero-rank">你是第 12 家啟用的品牌</span>
+    </div>
+
+    <div class="fm-grid">
+      <div class="fm-card">
+        <div class="fm-card-icon">01</div>
+        <h3 class="fm-card-title">優先版位分配</h3>
+        <p class="fm-card-desc">
+          合作媒體的
+          <span class="hint">
+            首發版位
+            <span class="hint-tip">每個合作媒體每月保留 3–5 個 first-mover 版位,優先分配給前 20 家品牌。這些版位曝光量高於一般版位 40–60%。</span>
+          </span>
+          優先分配給 first-mover 品牌。
+        </p>
+        <div class="fm-card-detail">
+          <strong>你的獲益 →</strong> 每月保證 3 個 premium 版位,曝光量 +40–60%
+        </div>
+      </div>
+
+      <div class="fm-card">
+        <div class="fm-card-icon">02</div>
+        <h3 class="fm-card-title">CPL 前 3 個月折扣</h3>
+        <p class="fm-card-desc">
+          前 3 個月所有 CPL 費用 <strong>50% off</strong>,幫你在成本較低的階段驗證 lead 品質。
+        </p>
+        <div class="fm-card-detail">
+          <strong>你的獲益 →</strong> 前 3 個月預估省下 $1,440–2,400 · 用來測試更多平台組合
+        </div>
+      </div>
+
+      <div class="fm-card">
+        <div class="fm-card-icon">03</div>
+        <h3 class="fm-card-title">案例研究掛名合作</h3>
+        <p class="fm-card-desc">
+          你的品牌會出現在 Cortex 官方案例研究、產品頁、社群內容,獲得跨平台品牌曝光。
+        </p>
+        <div class="fm-card-detail">
+          <strong>你的獲益 →</strong> Cortex 官方社群 30k+ 觸及 · 品牌背書
+        </div>
+      </div>
+    </div>
+
+    <div class="fm-cta-block">
+      <div class="fm-cta-copy">
+        <span class="fm-cta-title">接受 first-mover 權益,鎖定優惠</span>
+        <span class="fm-cta-sub">名額有限 · 前 20 家啟用品牌適用 · 你是第 12 家</span>
+      </div>
+      <div class="fm-cta-actions">
+        <button class="btn btn-secondary">再想想</button>
+        <button class="btn btn-primary btn-arrow">接受權益</button>
+      </div>
+    </div>
+
+    <div class="continue-bar">
+      <div class="continue-bar-context">主線流程結束 · 回目錄查看 exception 支線</div>
+      <a href="../index.html" class="btn btn-secondary">回目錄</a>
+    </div>
+  </main>
+  <script src="../nav.js"></script>
+</body>
+</html>
